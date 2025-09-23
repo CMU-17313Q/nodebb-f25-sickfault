@@ -5,6 +5,7 @@ const _ = require('lodash');
 const db = require('../database');
 const user = require('../user');
 const categories = require('../categories');
+const posts = require('../posts');
 const messaging = require('../messaging');
 const privileges = require('../privileges');
 const meta = require('../meta');
@@ -110,6 +111,11 @@ async function loadCids(uid, parentCid) {
 	return resultCids;
 }
 
+searchApi.posts = async (caller) => {
+	const allPosts = await posts.getAllPosts(caller.uid);
+	return { posts: allPosts };
+};
+
 searchApi.roomUsers = async (caller, { query, roomId }) => {
 	const [isAdmin, inRoom, isRoomOwner] = await Promise.all([
 		user.isAdministrator(caller.uid),
@@ -179,7 +185,7 @@ searchApi.roomMessages = async (caller, { query, roomId, uid }) => {
 
 	let userjoinTimestamp = 0;
 	if (!roomData.public) {
-		userjoinTimestamp = await db.sortedSetScore(`chat:room:${roomId}:uids`, caller.uid);
+		userjoinTimestamp = await db.sortedSetScore(`chat: room:${roomId}: uids`, caller.uid);
 	}
 	let messageData = await messaging.getMessagesData(ids, caller.uid, roomId, false);
 	messageData = messageData
