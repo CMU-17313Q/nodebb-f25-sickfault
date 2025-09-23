@@ -185,7 +185,7 @@ searchApi.roomMessages = async (caller, { query, roomId, uid }) => {
 
 	let userjoinTimestamp = 0;
 	if (!roomData.public) {
-		userjoinTimestamp = await db.sortedSetScore(`chat: room:${roomId}: uids`, caller.uid);
+		userjoinTimestamp = await db.sortedSetScore(`chat:room:${roomId}:uids`, caller.uid);
 	}
 	let messageData = await messaging.getMessagesData(ids, caller.uid, roomId, false);
 	messageData = messageData
