@@ -17,3 +17,8 @@ async function bumpCount(uid) {
   const next = Number(settings.userPublicCatCount || 0) + 1;
   await User.updateSettings(uid, { ...settings, userPublicCatCount: next });
 }
+
+exports.init = async function init(params) {
+  router = params.router;
+  middleware = params.middleware;
+};
