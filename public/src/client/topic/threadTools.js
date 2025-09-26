@@ -88,7 +88,7 @@ define('forum/topic/threadTools', [
 			$('[component="topic/resolve"]').addClass('hidden');
 			$('[component="topic/unresolve"]').removeClass('hidden');
 			$('[component="topic/resolved"]').removeClass('hidden');
-			alerts.success('Topic marked as resolved (UI demo)');
+			alerts.success('Topic marked as resolved');
 			return false;
 		});
 
@@ -97,7 +97,7 @@ define('forum/topic/threadTools', [
 			$('[component="topic/unresolve"]').addClass('hidden');
 			$('[component="topic/resolve"]').removeClass('hidden');
 			$('[component="topic/resolved"]').addClass('hidden');
-			alerts.success('Topic marked as unresolved (UI demo)');
+			alerts.success('Topic marked as unresolved');
 			return false;
 		});
 
