@@ -21,4 +21,31 @@ async function bumpCount(uid) {
 exports.init = async function init(params) {
   router = params.router;
   middleware = params.middleware;
+  
+  router.post('/api/me/categories/public',
+    middleware.ensureLoggedIn,
+    middleware.applyCSRF,
+    async (req, res, next) => {
+      try {
+        const uid = req.user.uid;
+        const { name, description = '' } = req.body || {};
+        if (!name || name.trim().length < 3) {
+          return res.status(400).json({ error: 'Name must be at least 3 characters.' });
+        }
+        const count = await getCount(uid);
+        if (count >= MAX_PER_USER) {
+          return res.status(403).json({ error: 'Category creation limit reached.' });
+        }
+        const cid = await Categories.create({
+          name: name.trim(),
+          description: description.trim(),
+          parentCid: PARENT_CID,
+          icon: 'fa-comments',
+        });
+        await bumpCount(uid);
+        res.json({ ok: true, cid });
+      } catch (err) {
+        next(err);
+      }
+    });
 };
