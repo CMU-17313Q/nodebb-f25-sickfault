@@ -56,6 +56,12 @@ Posts.getPostsByPids = async function (pids, uid) {
 	return data.posts.filter(Boolean);
 };
 
+Posts.getAllPosts = async function (uid) {
+	let pids = await Posts.getPidsFromSet('posts:pid', 0, -1);
+	pids = pids.map(pid => parseInt(pid, 10)).slice();
+	return await Posts.getPostsByPids(pids, uid);
+};
+
 Posts.getPostSummariesFromSet = async function (set, uid, start, stop) {
 	let pids = await db.getSortedSetRevRange(set, start, stop);
 	pids = await privileges.posts.filter('topics:read', pids, uid);
