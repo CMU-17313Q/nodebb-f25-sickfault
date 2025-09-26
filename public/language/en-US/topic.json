@@ -33,6 +33,7 @@
     "share": "Share",
     "tools": "Tools",
     "locked": "Locked",
+    "resolved": "Resolved",
     "pinned": "Pinned",
     "pinned-with-expiry": "Pinned until %1",
     "scheduled": "Scheduled",
