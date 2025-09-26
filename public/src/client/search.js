@@ -16,7 +16,6 @@ define('forum/search', [
 	let selectedCids = [];
 	let searchFilters = {};
 	let searchTimeout;
-	let currentQuery = '';
 
 	Search.init = function () {
 		if (document.getElementById('simple-search-input')) {
@@ -140,7 +139,7 @@ define('forum/search', [
 		const advancedSearch = document.getElementById('advanced-search');
 
 		if (toggleAdvanced) {
-			toggleAdvanced.addEventListener('click', function() {
+			toggleAdvanced.addEventListener('click', function () {
 				simpleSearch.classList.add('d-none');
 				advancedSearch.classList.remove('d-none');
 				
@@ -154,7 +153,7 @@ define('forum/search', [
 		}
 
 		if (backToSimple) {
-			backToSimple.addEventListener('click', function() {
+			backToSimple.addEventListener('click', function () {
 				advancedSearch.classList.add('d-none');
 				simpleSearch.classList.remove('d-none');
 				
@@ -179,7 +178,7 @@ define('forum/search', [
 		api.get('/api/search', {
 			term: query,
 			in: 'titlesposts',
-			searchOnly: 1
+			searchOnly: 1,
 		})
 			.then(function (data) {
 				if (data && data.posts && data.posts.length > 0) {
@@ -199,7 +198,7 @@ define('forum/search', [
 	function displaySuggestions(posts, query) {
 		const searchSuggestions = document.getElementById('search-suggestions');
 		
-		let html = posts.map(function (post) {
+		const html = posts.map(function (post) {
 			const title = post.topic ? post.topic.title : (post.title || 'Untitled');
 			const content = post.content || '';
 			
@@ -215,8 +214,8 @@ define('forum/search', [
 		searchSuggestions.classList.add('active');
 
 		// Add click handlers to suggestions
-		searchSuggestions.querySelectorAll('.suggestion-item').forEach(function(item) {
-			item.addEventListener('click', function() {
+		searchSuggestions.querySelectorAll('.suggestion-item').forEach(function (item) {
+			item.addEventListener('click', function () {
 				const tid = this.getAttribute('data-tid');
 				const pid = this.getAttribute('data-pid');
 				if (tid) {
@@ -239,12 +238,10 @@ define('forum/search', [
 				type: 'warning',
 				title: 'No search query',
 				message: 'Please enter something to search for.',
-				timeout: 3000
+				timeout: 3000,
 			});
 			return;
 		}
-
-		currentQuery = query;
 		
 		searchSuggestions.classList.remove('active');
 		
@@ -258,7 +255,7 @@ define('forum/search', [
 		api.get('/api/search', {
 			term: query,
 			in: 'titlesposts',
-			searchOnly: 1
+			searchOnly: 1,
 		})
 			.then(function (data) {
 				if (data && data.posts && data.posts.length > 0) {
@@ -293,7 +290,7 @@ define('forum/search', [
 		
 		searchStatus.innerHTML = `Found ${posts.length} result${posts.length !== 1 ? 's' : ''} for "<strong>${escapeHtml(query)}</strong>"`;
 		
-		let html = posts.map(function (post) {
+		const html = posts.map(function (post) {
 			const user = post.user || {};
 			const topic = post.topic || {};
 			const timeAgo = getTimeAgo(post.timestamp);
@@ -354,7 +351,7 @@ define('forum/search', [
 			'<': '&lt;',
 			'>': '&gt;',
 			'"': '&quot;',
-			"'": '&#039;'
+			"'": '&#039;',
 		};
 		return (text || '').toString().replace(/[&<>"']/g, m => map[m]);
 	}
@@ -383,7 +380,7 @@ define('forum/search', [
 			{ label: 'day', seconds: 86400 },
 			{ label: 'hour', seconds: 3600 },
 			{ label: 'minute', seconds: 60 },
-			{ label: 'second', seconds: 1 }
+			{ label: 'second', seconds: 1 },
 		];
 
 		for (let i = 0; i < intervals.length; i++) {
