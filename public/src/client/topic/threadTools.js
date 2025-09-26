@@ -83,6 +83,32 @@ define('forum/topic/threadTools', [
 			});
 		});
 
+		topicContainer.on('click', '[component="topic/resolve"]', function () {
+			socket.emit('topics.resolve', tid, function (err) {
+				if (err) {
+					return alerts.error(err.message);
+				}
+				$('[component="topic/resolve"]').addClass('hidden');
+				$('[component="topic/unresolve"]').removeClass('hidden');
+				$('[component="topic/resolved"]').removeClass('hidden');
+				alerts.success('Topic marked as resolved');
+			});
+			return false;
+		});
+
+		topicContainer.on('click', '[component="topic/unresolve"]', function () {
+			socket.emit('topics.unresolve', tid, function (err) {
+				if (err) {
+					return alerts.error(err.message);
+				}
+				$('[component="topic/unresolve"]').addClass('hidden');
+				$('[component="topic/resolve"]').removeClass('hidden');
+				$('[component="topic/resolved"]').addClass('hidden');
+				alerts.success('Topic marked as unresolved');
+			});
+			return false;
+		});
+
 		topicContainer.on('click', '[component="topic/event/delete"]', function () {
 			const eventId = $(this).attr('data-topic-event-id');
 			const eventEl = $(this).parents('[data-topic-event-id]');
