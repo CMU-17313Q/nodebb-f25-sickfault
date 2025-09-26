@@ -274,10 +274,22 @@ TopicObjectSlim:
                 description: The topic thumbnail filename
               path:
                 type: string
-                description: Path to topic thumbnail without upload_url prefix
+                description: The relative path to the thumbnail
               url:
                 type: string
-                description: Relative path to the topic thumbnail
+                description: The full URL to the thumbnail
+        # Resolved status fields for marking topics as resolved
+        resolved:
+          type: number
+          description: Whether the topic is marked as resolved (0=unresolved, 1=resolved)
+        resolvedBy:
+          type: number
+          nullable: true
+          description: The user ID who marked the topic as resolved
+        resolvedAt:
+          type: number
+          nullable: true
+          description: Unix timestamp when the topic was marked as resolved
     - type: object
       description: Optional properties that may or may not be present (except for `tid`, which is always present, and is only here as a hack to pass validation)
       properties:
