@@ -25,9 +25,29 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
                 data: { name, description },
             });
             app.alertSuccess('Category created.');
-            if (res?.cid) ajaxify.go(`category/${res.cid}`);
+            if (res?.cid) {
+                // If we're already viewing /categories, do a soft refresh so the new one shows up
+                const onCategories = window.ajaxify?.data?.url && /^categories/.test(ajaxify.data.url);
+                if (onCategories && typeof ajaxify.refresh === 'function') {
+                    ajaxify.refresh();
+                } else if (typeof ajaxify.go === 'function') {
+                    ajaxify.go('categories');  // go to categories if we were elsewhere
+                } else {
+                    // hard fallback (rare)
+                    window.location.href = (window.config?.relative_path || '') + '/categories';
+                }
+            }
             } catch (e) {
-            app.alertError(e?.responseJSON?.error || 'Failed to create category.');
+                if (e?.status === 409) {
+                    app.alert({
+                        type: 'error',
+                        title: 'Duplicate name',
+                        message: 'No duplicates allowed. Please choose a different category name.',
+                        timeout: 5000,
+                    });
+                } else {
+                    app.alertError(e?.responseJSON?.error || 'Failed to create category.');
+                }
             }
   });
 
