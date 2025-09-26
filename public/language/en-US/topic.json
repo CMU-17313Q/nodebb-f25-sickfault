@@ -34,6 +34,8 @@
     "tools": "Tools",
     "locked": "Locked",
     "resolved": "Resolved",
+    "mark-resolved": "Mark Resolved",
+    "mark-unresolved": "Mark Unresolved",
     "pinned": "Pinned",
     "pinned-with-expiry": "Pinned until %1",
     "scheduled": "Scheduled",

@@ -105,6 +105,7 @@
 								<div class="d-flex flex-column gap-2" style="width: 170px;">
 									<!-- IMPORT partials/topic/reply-button.tpl -->
 									<!-- IMPORT partials/topic/mark-unread.tpl -->
+									<!-- IMPORT partials/topic/resolve.tpl -->
 									<!-- IMPORT partials/topic/watch.tpl -->
 									<!-- IMPORT partials/topic/sort.tpl -->
 									<!-- IMPORT partials/topic/tools.tpl -->
