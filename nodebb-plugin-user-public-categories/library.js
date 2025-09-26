@@ -22,7 +22,7 @@ exports.init = async function init(params) {
   router = params.router;
   middleware = params.middleware;
   
-  router.post('/api/me/categories/public',
+  router.post('/api/category/create',
     middleware.ensureLoggedIn,
     middleware.applyCSRF,
     async (req, res, next) => {

@@ -20,7 +20,7 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
         try {
             const res = await $.ajax({
                 method: 'POST',
-                url: '/api/me/categories/public',
+                url: '/api/category/create',
                 headers: { 'x-csrf-token': config.csrf_token },
                 data: { name, description },
             });
