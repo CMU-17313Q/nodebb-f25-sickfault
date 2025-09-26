@@ -2,6 +2,7 @@
 
 let router, middleware;
 const Categories = require.main.require('./src/categories');
+const Privileges  = require.main.require('./src/privileges');
 const User = require.main.require('./src/user');
 
 // Put 0 to place at root, or a parent category cid if you created one like "Student Hubs"
@@ -42,6 +43,17 @@ exports.init = async function init(params) {
           parentCid: PARENT_CID,
           icon: 'fa-comments',
         });
+
+        if (typeof Categories.setCategoryField === 'function') {
+          await Categories.setCategoryField(cid, 'ownerUid', uid);
+        }
+
+        try {
+          await Privileges.categories.give(['moderate'], cid, `uid:${uid}`);
+        } catch (e) {
+        }
+        
+
         await bumpCount(uid);
         res.json({ ok: true, cid });
       } catch (err) {

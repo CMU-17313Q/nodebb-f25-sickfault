@@ -10,10 +10,10 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
   if (!isLoggedIn()) return;
   if (document.getElementById('btn-new-public-category')) return;
 
-  const btn = $('<button id="btn-new-public-category" class="btn btn-primary">New Category</button>')
+  const btn = $('<button id="btn-new-public-category" class="btn btn-primary"> Create a New Category</button>')
     .css({ margin: '1rem 0' })
     .on('click', async () => {
-        const name = prompt('Category name (public):');
+        const name = prompt('Category name:');
         if (!name) return;
         const description = prompt('Description (optional):') || '';
 
@@ -31,5 +31,6 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
             }
   });
 
-  $('.categories, .page-categories, #content').first().prepend(btn);
+  $('#content').prepend(btn);
+
 });
