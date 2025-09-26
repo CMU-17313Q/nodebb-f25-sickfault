@@ -253,14 +253,6 @@ TopicObjectSlim:
         resolved:
           type: number
           description: Whether this topic has been marked as resolved (1) or not (0)
-        resolvedBy:
-          type: number
-          description: The user ID of the user who marked this topic as resolved
-          nullable: true
-        resolvedAt:
-          type: number
-          description: UNIX timestamp of when this topic was marked as resolved
-          nullable: true
         upvotes:
           type: number
         downvotes:
@@ -298,5 +290,13 @@ TopicObjectSlim:
         numThumbs:
           type: number
           description: The number of thumbnails associated with this topic
+        resolvedBy:
+          type: number
+          description: The user ID of the user who marked this topic as resolved
+          nullable: true
+        resolvedAt:
+          type: number
+          description: UNIX timestamp of when this topic was marked as resolved
+          nullable: true
       required:
         - tid
