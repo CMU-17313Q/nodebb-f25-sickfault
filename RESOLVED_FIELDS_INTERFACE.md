@@ -40,3 +40,4 @@ await Topics.setTopicFields(tid, {
 ## Implementation Files
 - Schema: `src/topics/data.js:17`
 - Migration: `src/upgrades/4.3.3/add_resolved_fields_to_topics.js`
+- OpenAPI Schema: `public/openapi/components/schemas/TopicObject.yaml:281-292`
