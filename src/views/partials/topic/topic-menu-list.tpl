@@ -31,6 +31,7 @@
 	<a component="topic/tag" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2" role="menuitem"><i class="fa fa-fw fa-tag text-secondary"></i> [[topic:thread-tools.tag]]</a>
 </li>
 
+{{{ if (category.name == "Comments & Feedback") }}}
 <li {{{ if resolved }}}hidden{{{ end }}}>
 	<a component="topic/resolve" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if resolved }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-check-circle text-secondary"></i> [[topic:thread-tools.resolve]]</a>
 </li>
@@ -38,6 +39,7 @@
 <li {{{ if !resolved }}}hidden{{{ end }}}>
 	<a component="topic/unresolve" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2 {{{ if !resolved }}}hidden{{{ end }}}" role="menuitem"><i class="fa fa-fw fa-undo text-secondary"></i> [[topic:thread-tools.unresolve]]</a>
 </li>
+{{{ end }}}
 
 {{{ if !scheduled }}}
 <li>
