@@ -121,6 +121,7 @@ searchApi.posts = async (caller, data) => {
 		query: data.search,
 		page: data.page,
 		paginate: false,
+		hardCap: data.searchOnly,
 	});
 
 	return { posts: result.posts };
