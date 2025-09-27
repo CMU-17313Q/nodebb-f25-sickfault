@@ -9,6 +9,10 @@ Search.categories = async (req, res) => {
 	helpers.formatApiResponse(200, res, await api.search.categories(req, req.query));
 };
 
+Search.posts = async (req, res) => {
+	helpers.formatApiResponse(200, res, await api.search.posts(req, req.query));
+};
+
 Search.roomUsers = async (req, res) => {
 	const { query, uid } = req.query;
 	helpers.formatApiResponse(200, res, await api.search.roomUsers(req, { query, uid, ...req.params }));
