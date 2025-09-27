@@ -486,7 +486,7 @@ describe('API', async () => {
 					}
 				});
 
-				it('should not error out when called', async function() {
+				it('should not error out when called', async function () {
 					this.timeout(5000); // Set explicit timeout
 					await setupData();
 
@@ -523,8 +523,8 @@ describe('API', async () => {
 									statusCode: 200,
 									status: 200,
 									statusText: 'OK',
-									headers: {}
-								}
+									headers: {},
+								},
 							};
 						}
 					} catch (e) {
