@@ -53,15 +53,16 @@ module.exports = function (Posts) {
         if (!query || String(query).length < 2) {
             return [];
         }
-        const data = await db.getSortedSetScan({
-            key: 'posts:pid',
-            limit: hardCap || 500,
-        });
-        return data.map((data) => {
-            const split = data.split(':');
-            split.shift();
-            const pid = split.join(':');
-            return utils.isNumber(pid) ? parseInt(pid, 10) : pid;
-        });
+        // this is how many recent posts to search
+        const latestPosts = 500
+        let pids = await db.getSortedSetRevRange('posts:pid', 0, latestPosts);
+        pids = pids.map(id => parseInt(id, 10)).filter(Boolean);
+        const rows = await Promise.all(pids.map(pid => Posts.getPostFields(pid, ['pid', 'content'])));
+
+        const strip = s => String(s || '').replace(/<[^>]*>/g, ' ').toLowerCase();
+        const matchedPids = rows.filter(r => r && r.content && strip(r.content).includes(query.toLowerCase()))
+            .map(r => r.pid);
+
+        return Array.from(new Set(matchedPids)).slice(0, hardCap);
     }
 };
