@@ -1,0 +1,9 @@
+{
+  "name": "nodebb-plugin-user-public-categories",
+  "version": "1.0.0",
+  "description": "Let logged-in users create public categories via a UI button",
+  "main": "library.js",
+  "author": "You",
+  "license": "MIT",
+  "nbbpm": { "compatibility": "^3.0.0" }
+}
