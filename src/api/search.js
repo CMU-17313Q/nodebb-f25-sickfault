@@ -111,9 +111,19 @@ async function loadCids(uid, parentCid) {
 	return resultCids;
 }
 
-searchApi.posts = async (caller) => {
-	const allPosts = await posts.getAllPosts(caller.uid);
-	return { posts: allPosts };
+searchApi.posts = async (caller, data) => {
+	if (!data.search) {
+		return { posts: await posts.getAllPosts(caller.uid, 50) };
+	}
+
+	const result = await posts.search({
+		uid: caller.uid,
+		query: data.search,
+		page: data.page,
+		paginate: false,
+	});
+
+	return { posts: result.posts };
 };
 
 searchApi.roomUsers = async (caller, { query, roomId }) => {
