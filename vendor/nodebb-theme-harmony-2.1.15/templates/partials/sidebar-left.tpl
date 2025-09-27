@@ -23,6 +23,18 @@
 		</li>
 		{{{ end }}}
 		{{{ end }}}
+		
+		<!-- Search Navigation Item -->
+		<li class="nav-item mx-2" title="Search Posts">
+			<a class="nav-link navigation-link d-flex gap-2 justify-content-between align-items-center" href="{config.relative_path}/search">
+				<span class="d-flex gap-2 align-items-center text-nowrap truncate-open">
+					<span class="position-relative">
+						<i class="fa fa-fw fa-search"></i>
+					</span>
+					<span class="nav-text small visible-open fw-semibold text-truncate">Search Posts</span>
+				</span>
+			</a>
+		</li>
 	</ul>
 	<div class="sidebar-toggle-container align-self-start">
 		{{{ if !config.disableCustomUserSkins }}}
