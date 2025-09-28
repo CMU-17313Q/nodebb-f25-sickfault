@@ -197,7 +197,7 @@ define('forum/search', [
 
 	function displaySuggestions(posts, query) {
 		const searchSuggestions = document.getElementById('search-suggestions');
-		
+
 		const html = posts.map(function (post) {
 			const title = post.topic ? post.topic.title : (post.title || 'Untitled');
 			const content = post.content || '';
@@ -242,6 +242,7 @@ define('forum/search', [
 			});
 			return;
 		}
+
 		
 		searchSuggestions.classList.remove('active');
 		
@@ -287,9 +288,9 @@ define('forum/search', [
 	function displayResults(posts, query) {
 		const searchResults = document.getElementById('simple-search-results');
 		const searchStatus = document.getElementById('search-status');
-		
+
 		searchStatus.innerHTML = `Found ${posts.length} result${posts.length !== 1 ? 's' : ''} for "<strong>${escapeHtml(query)}</strong>"`;
-		
+
 		const html = posts.map(function (post) {
 			const user = post.user || {};
 			const topic = post.topic || {};
