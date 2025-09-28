@@ -83,9 +83,3 @@ post:
                 $ref: ../../../../components/schemas/Status.yaml#/Status
               response:
                 type: object
-    '400':
-      description: Bad request - invalid type, invalid uid, or export already in progress
-      content:
-        application/json:
-          schema:
-            $ref: ../../../../components/schemas/Error.yaml#/Error
