@@ -14,7 +14,6 @@ const intFields = [
 	'deleted', 'locked', 'pinned', 'pinExpiry',
 	'timestamp', 'upvotes', 'downvotes',
 	'lastposttime', 'deleterUid',
-	'resolved', 'resolvedBy', 'resolvedAt', // Resolved status: boolean flag, resolver uid, timestamp
 ];
 
 module.exports = function (Topics) {
