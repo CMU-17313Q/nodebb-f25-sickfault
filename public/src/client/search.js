@@ -243,7 +243,6 @@ define('forum/search', [
 			return;
 		}
 
-		
 		searchSuggestions.classList.remove('active');
 		
 		const newUrl = window.location.pathname + '?term=' + encodeURIComponent(query);
