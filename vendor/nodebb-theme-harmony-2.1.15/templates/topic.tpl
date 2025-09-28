@@ -39,6 +39,11 @@
 						<span component="topic/locked" class="badge badge border border-gray-300 text-body {{{ if !locked }}}hidden{{{ end }}}">
 							<i class="fa fa-lock"></i> [[topic:locked]]
 						</span>
+{{{ if (category.name == "Comments & Feedback") }}}
+						<span component="topic/resolved" class="badge badge border border-success text-success {{{ if !resolved }}}hidden{{{ end }}}">
+							<i class="fa fa-check-circle"></i> [[topic:resolved]]
+						</span>
+{{{ end }}}
 						<a component="topic/moved" href="{config.relative_path}/category/{oldCid}" class="badge badge border border-gray-300 text-body text-decoration-none {{{ if (!oldCid || (oldCid == "-1")) }}}hidden{{{ end }}}">
 							<i class="fa fa-arrow-circle-right"></i> {{{ if privileges.isAdminOrMod }}}[[topic:moved-from, {oldCategory.name}]]{{{ else }}}[[topic:moved]]{{{ end }}}
 						</a>
@@ -100,6 +105,7 @@
 								<div class="d-flex flex-column gap-2" style="width: 170px;">
 									<!-- IMPORT partials/topic/reply-button.tpl -->
 									<!-- IMPORT partials/topic/mark-unread.tpl -->
+									<!-- IMPORT partials/topic/resolve.tpl -->
 									<!-- IMPORT partials/topic/watch.tpl -->
 									<!-- IMPORT partials/topic/sort.tpl -->
 									<!-- IMPORT partials/topic/tools.tpl -->
