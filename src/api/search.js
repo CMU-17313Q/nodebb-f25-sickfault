@@ -5,6 +5,7 @@ const _ = require('lodash');
 const db = require('../database');
 const user = require('../user');
 const categories = require('../categories');
+const posts = require('../posts');
 const messaging = require('../messaging');
 const privileges = require('../privileges');
 const meta = require('../meta');
@@ -109,6 +110,22 @@ async function loadCids(uid, parentCid) {
 	await getCidsRecursive(pageCids);
 	return resultCids;
 }
+
+searchApi.posts = async (caller, data) => {
+	if (!data.search) {
+		return { posts: await posts.getAllPosts(caller.uid, 50) };
+	}
+
+	const result = await posts.search({
+		uid: caller.uid,
+		query: data.search,
+		page: data.page,
+		paginate: false,
+		hardCap: data.searchOnly,
+	});
+
+	return { posts: result.posts };
+};
 
 searchApi.roomUsers = async (caller, { query, roomId }) => {
 	const [isAdmin, inRoom, isRoomOwner] = await Promise.all([

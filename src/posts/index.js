@@ -26,6 +26,8 @@ require('./bookmarks')(Posts);
 require('./queue')(Posts);
 require('./diffs')(Posts);
 require('./uploads')(Posts);
+require('./search')(Posts);
+
 
 Posts.attachments = require('./attachments');
 
@@ -48,12 +50,18 @@ Posts.getPostsByPids = async function (pids, uid) {
 	}
 
 	let posts = await Posts.getPostsData(pids);
-	posts = await Promise.all(posts.map(Posts.parsePost));
+	posts = await Promise.all(posts.map(p => Posts.parsePost(p, uid)));
 	const data = await plugins.hooks.fire('filter:post.getPosts', { posts: posts, uid: uid });
 	if (!data || !Array.isArray(data.posts)) {
 		return [];
 	}
 	return data.posts.filter(Boolean);
+};
+
+Posts.getAllPosts = async function (uid, limit) {
+	let pids = await Posts.getPidsFromSet('posts:pid', 0, limit ? limit : -1);
+	pids = pids.map(pid => parseInt(pid, 10)).slice();
+	return await Posts.getPostsByPids(pids, uid);
 };
 
 Posts.getPostSummariesFromSet = async function (set, uid, start, stop) {

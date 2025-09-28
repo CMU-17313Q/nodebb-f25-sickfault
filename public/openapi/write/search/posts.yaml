@@ -1,0 +1,108 @@
+get:
+  tags:
+    - search
+  summary: find posts by keyword
+  description: |
+    This operation returns a set of posts which their content match the keyword search.
+
+  parameters:
+    - in: query
+      name: "search"
+      schema:
+        type: string
+      required: false
+      description: The keyword used in the post search
+      example: "posts"
+  responses:
+    "200":
+      description: matching posts successfully retrieved
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: ../../components/schemas/Status.yaml#/Status
+              response:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        pid:
+                          type: number
+                          description: A post identifier assigned upon post creation (this value cannot be changed)
+                        tid:
+                          type: number
+                          description: A topic identifier assigned upon topic creation. The topic that the posts is under
+                        content:
+                          type: string
+                          description: The HTML content of the post (escaped)
+                        uid:
+                          type: number
+                          description: The identifier of the user who created the post
+                        timestamp:
+                          type: number
+                          description: Unix epoch time in milliseconds when the post was created
+                        deleted:
+                          type: number
+                          description: Soft-delete flag where 1 means deleted
+                        upvotes:
+                          type: number
+                        downvotes:
+                          type: number
+                        deleterUid:
+                          type: number
+                          description: User ID of the moderator who deleted the post, if any. 0 if not deleted by a user
+                        edited:
+                          type: number
+                          description: Edit flag where 1 means the post has been edited
+                        replies:
+                          type: number
+                        bookmarks:
+                          type: number
+                        announces:
+                          type: number
+                        votes:
+                          type: number
+                          description: Net vote score (upvotes - downvotes)
+                        timestampISO:
+                          type: string
+                          description: ISO-8601 timestamp of creation
+                        editedISO:
+                          type: string
+                          description: ISO-8601 timestamp of last edit; empty string if never edited
+                        attachments:
+                          type: array
+                          description: List of attachments associated with the post (empty if none)
+                          items:
+                            type: object
+                            additionalProperties: true
+          examples:
+            example:
+              summary: Example successful response
+              value:
+                status:
+                  code: "ok"
+                  message: "OK"
+                response:
+                  posts:
+                    - pid: 3
+                      uid: 1
+                      tid: 3
+                      content: "<p dir=\"auto\">Post your code here! Whether it's: <br />\n- C<br />\n- Python<br />\n- Or anything</p>\n"
+                      timestamp: 1758665393329
+                      upvotes: 0
+                      downvotes: 1
+                      deleted: 0
+                      deleterUid: 0
+                      edited: 0
+                      replies: 0
+                      bookmarks: 0
+                      announces: 0
+                      votes: -1
+                      timestampISO: "2025-09-23T22:09:53.329Z"
+                      editedISO: ""
+                      attachments: []
