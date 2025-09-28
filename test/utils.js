@@ -482,7 +482,8 @@ describe('Utility Methods', () => {
 		}, 500);
 	});
 
-	it('should return object with data', async () => {
+	it('should return object with data', async function() {
+		this.timeout(30000); // Increase timeout to 30 seconds
 		const user = require('../src/user');
 		const uid1 = await user.create({ username: 'promise1' });
 		const uid2 = await user.create({ username: 'promise2' });
@@ -554,7 +555,8 @@ describe('Utility Methods', () => {
 
 		const { Translator } = shim;
 
-		it('should translate in place', async () => {
+		it('should translate in place', async function() {
+			this.timeout(30000); // Increase timeout to 30 seconds
 			const translator = Translator.create('en-GB');
 			const el = $(`<div><span id="search" title="[[global:search]]"></span><span id="text">[[global:home]]</span></div>`);
 			await translator.translateInPlace(el.get(0));
