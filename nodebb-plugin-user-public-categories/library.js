@@ -75,45 +75,32 @@ exports.init = async function init(params) {
                 // Add ownerUid to the category data before creation
                 categoryData.ownerUid = uid;
 
-                const cid = await Categories.create(categoryData);
-                console.log('[user-public-categories] Created category', cid, 'with owner', uid);
-
-                // Verify it was set
-                const verifyOwner = await db.getObjectField(`category:${cid}`, 'ownerUid');
-                console.log('[user-public-categories] Verified ownerUid after setting:', verifyOwner);
+                const category = await Categories.create(categoryData);
+                const cid = category.cid;
 
                 // Add owner to members set
                 await db.setAdd(`category:${cid}:members`, uid);
 
-                // Remove default privileges from standard groups to make it private
-                const publicGroups = ['registered-users', 'guests', 'spiders'];
-                const allPrivileges = [
-                    'find', 'read', 'topics:read', 'topics:create', 'topics:reply', 'topics:tag',
-                    'posts:edit', 'posts:delete', 'posts:upvote', 'posts:downvote'
+                // Remove default group privileges to make category private
+                const publicGroups = ['registered-users', 'guests', 'spiders', 'fediverse'];
+                const allGroupPrivs = [
+                    'groups:find', 'groups:read', 'groups:topics:read', 'groups:topics:create',
+                    'groups:topics:reply', 'groups:topics:tag', 'groups:posts:edit', 'groups:posts:history',
+                    'groups:posts:delete', 'groups:posts:upvote', 'groups:posts:downvote', 'groups:topics:delete',
+                    'groups:topics:schedule', 'groups:posts:view_deleted', 'groups:purge'
                 ];
-                
-                // Remove privileges from public groups
+
                 for (const group of publicGroups) {
-                    await Privileges.categories.rescind(allPrivileges, cid, group);
+                    await Privileges.categories.rescind(allGroupPrivs, cid, group);
                 }
-                console.log('[user-public-categories] Made category private by removing public privileges');
 
                 // Grant full privileges to the owner
                 const ownerPrivileges = [
                     'find', 'read', 'topics:read', 'topics:create', 'topics:reply', 'topics:tag',
                     'posts:edit', 'posts:delete', 'posts:upvote', 'posts:downvote', 'moderate'
                 ];
-                
-                await Privileges.categories.give(ownerPrivileges, cid, uid);
-                console.log('[user-public-categories] Granted full privileges to owner uid', uid);
 
-                // Verify privileges
-                const userPrivs = await Privileges.categories.get(cid, uid);
-                console.log('[user-public-categories] Owner privileges verified:', {
-                    find: userPrivs.find,
-                    read: userPrivs.read,
-                    moderate: userPrivs.moderate
-                });
+                await Privileges.categories.give(ownerPrivileges, cid, uid);
                 
                 // Increment user's category count
                 await bumpCount(uid);
@@ -179,7 +166,6 @@ exports.init = async function init(params) {
                 ];
 
                 await Privileges.categories.give(memberPrivileges, cid, targetUid);
-                console.log('[user-public-categories] Granted privileges to uid', targetUid);
 
                 res.json({ ok: true, message: 'User invited successfully' });
             } catch (err) {
@@ -224,7 +210,6 @@ exports.init = async function init(params) {
                 ];
 
                 await Privileges.categories.rescind(memberPrivileges, cid, targetUid);
-                console.log('[user-public-categories] Revoked privileges from uid', targetUid);
 
                 res.json({ ok: true, message: 'Member removed successfully' });
             } catch (err) {
@@ -302,46 +287,29 @@ exports.init = async function init(params) {
 
 // Hook to preserve ownerUid when creating categories
 exports.preserveOwnerUidOnCreate = async function(hookData) {
-    console.log('[user-public-categories] create hook called, ownerUid:', hookData.data.ownerUid);
-
-    // If ownerUid is provided in the data, add it to the category object
     if (hookData.data.ownerUid) {
         hookData.category.ownerUid = hookData.data.ownerUid;
-        console.log('[user-public-categories] Added ownerUid to category:', hookData.category.ownerUid);
     }
-
     return hookData;
 };
 
 // Hook to ensure ownerUid is fetched from database
 exports.addOwnerUidToFields = async function(hookData) {
-    console.log('[user-public-categories] getFields hook called');
-
-    // Ensure ownerUid is included in the fields to fetch
     if (hookData.fields && Array.isArray(hookData.fields) && hookData.fields.length > 0) {
         if (!hookData.fields.includes('ownerUid')) {
             hookData.fields.push('ownerUid');
         }
     }
-    // If fields is empty array or not specified, all fields are fetched (no action needed)
-
     return hookData;
 };
 
 // Hook to add ownerUid to category data when fetched
 exports.addOwnerUidToCategory = async function(hookData) {
-    console.log('[user-public-categories] get hook called with:', JSON.stringify(Object.keys(hookData || {})));
-
     if (hookData && hookData.category && hookData.category.cid) {
         const ownerUid = await db.getObjectField(`category:${hookData.category.cid}`, 'ownerUid');
-        console.log('[user-public-categories] Hook - cid:', hookData.category.cid, 'ownerUid from DB:', ownerUid);
         if (ownerUid) {
             hookData.category.ownerUid = parseInt(ownerUid);
-        } else {
-            console.log('[user-public-categories] WARNING: ownerUid not found in DB for cid', hookData.category.cid);
         }
-    } else {
-        console.log('[user-public-categories] Hook called but no category.cid found');
     }
     return hookData;
 };
