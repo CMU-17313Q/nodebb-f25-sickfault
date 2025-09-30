@@ -108,14 +108,26 @@ exports.init = async function init(params) {
                 };
                 
                 const cid = await Categories.create(categoryData);
-                
+
                 // Set owner
                 await Categories.setCategoryField(cid, 'ownerUid', uid);
-                
+
+                // Make category private by revoking all default privileges
+                try {
+                    // Revoke privileges from guests and registered users
+                    await Privileges.categories.rescind(
+                        ['find', 'read', 'topics:read', 'topics:create'],
+                        cid,
+                        ['guests', 'registered-users']
+                    );
+                } catch (e) {
+                    console.error('[user-public-categories] Error revoking default privileges:', e);
+                }
+
                 // Give moderator privileges to the creator
                 try {
                     await Privileges.categories.give(
-                        ['topics:read', 'topics:create', 'posts:edit', 'posts:delete', 'moderate'],
+                        ['find', 'read', 'topics:read', 'topics:create', 'posts:edit', 'posts:delete', 'moderate'],
                         cid,
                         `uid:${uid}`
                     );
@@ -184,9 +196,9 @@ exports.init = async function init(params) {
                 // Add user to members set
                 await db.setAdd(`category:${cid}:members`, targetUid);
 
-                // Grant read and create privileges
+                // Grant find, read and create privileges
                 await Privileges.categories.give(
-                    ['topics:read', 'topics:create'],
+                    ['find', 'read', 'topics:read', 'topics:create'],
                     cid,
                     `uid:${targetUid}`
                 );
@@ -233,7 +245,7 @@ exports.init = async function init(params) {
 
                 // Revoke privileges
                 await Privileges.categories.rescind(
-                    ['topics:read', 'topics:create'],
+                    ['find', 'read', 'topics:read', 'topics:create'],
                     cid,
                     `uid:${targetUid}`
                 );
