@@ -63,16 +63,114 @@ async function searchInContent(data) {
 
 	async function doSearch(type, searchIn) {
 		if (searchIn.includes(data.searchIn)) {
-			const result = await plugins.hooks.fire('filter:search.query', {
-				index: type,
-				content: data.query,
-				matchWords: data.matchWords || 'all',
-				cid: searchCids,
-				uid: searchUids,
-				searchData: data,
-				ids: [],
-			});
-			return Array.isArray(result) ? result : result.ids;
+			// Check if there are any plugins listening
+			if (plugins.hooks.hasListeners('filter:search.query')) {
+				const result = await plugins.hooks.fire('filter:search.query', {
+					index: type,
+					content: data.query,
+					matchWords: data.matchWords || 'all',
+					cid: searchCids,
+					uid: searchUids,
+					searchData: data,
+					ids: [],
+				});
+				return Array.isArray(result) ? result : result.ids;
+			}
+
+			// Fallback: Basic database search when no plugin is installed
+			if (!data.query || !data.query.trim()) {
+				return [];
+			}
+
+			const query = data.query.toLowerCase().trim();
+			const matchWords = data.matchWords || 'all';
+			const tokens = query.split(/\s+/).filter(Boolean);
+
+			if (!tokens.length) {
+				return [];
+			}
+
+			if (type === 'post') {
+				// Search in post content
+				const allPids = [];
+				const batchSize = 500;
+
+				await batch.processSortedSet('posts:pid', async (pids) => {
+					const postData = await posts.getPostsFields(pids, ['pid', 'content', 'tid', 'uid', 'cid', 'deleted']);
+
+					const matchingPids = postData.filter(post => {
+						if (!post || !post.content || post.deleted) {
+							return false;
+						}
+
+						// Filter by category if specified
+						if (searchCids && searchCids.length && !searchCids.includes(String(post.cid))) {
+							return false;
+						}
+
+						// Filter by user if specified
+						if (searchUids && searchUids.length && !searchUids.includes(post.uid)) {
+							return false;
+						}
+
+						const content = post.content.toLowerCase();
+
+						if (matchWords === 'all') {
+							return tokens.every(token => content.includes(token));
+						} else {
+							return tokens.some(token => content.includes(token));
+						}
+					}).map(post => post.pid);
+
+					allPids.push(...matchingPids);
+				}, {
+					batch: batchSize,
+					reverse: false,
+				});
+
+				return allPids;
+			} else if (type === 'topic') {
+				// Search in topic titles
+				const allTids = [];
+				const batchSize = 500;
+
+				await batch.processSortedSet('topics:tid', async (tids) => {
+					const topicData = await topics.getTopicsFields(tids, ['tid', 'title', 'cid', 'uid', 'deleted']);
+
+					const matchingTids = topicData.filter(topic => {
+						if (!topic || !topic.title || topic.deleted) {
+							return false;
+						}
+
+						// Filter by category if specified
+						if (searchCids && searchCids.length && !searchCids.includes(String(topic.cid))) {
+							return false;
+						}
+
+						// Filter by user if specified
+						if (searchUids && searchUids.length && !searchUids.includes(topic.uid)) {
+							return false;
+						}
+
+						const title = topic.title.toLowerCase();
+
+						if (matchWords === 'all') {
+							return tokens.every(token => title.includes(token));
+						} else {
+							return tokens.some(token => title.includes(token));
+						}
+					}).map(topic => topic.tid);
+
+					allTids.push(...matchingTids);
+				}, {
+					batch: batchSize,
+					reverse: false,
+				});
+
+				return allTids;
+			}
+
+			return [];
 		}
 		return [];
 	}
