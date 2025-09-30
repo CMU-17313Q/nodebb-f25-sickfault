@@ -18,9 +18,23 @@ define('forum/search', [
 	let searchTimeout;
 
 	Search.init = function () {
+		// Check URL parameter to maintain advanced search state
+		const urlParams = new URLSearchParams(window.location.search);
+		const showAdvanced = urlParams.get('showAdvanced') === 'true';
+
 		if (document.getElementById('simple-search-input')) {
 			initializeSimpleSearch();
 			initializeToggle();
+
+			// Show advanced search if it was active before
+			if (showAdvanced) {
+				const simpleSearch = document.getElementById('simple-search');
+				const advancedSearch = document.getElementById('advanced-search');
+				if (simpleSearch && advancedSearch) {
+					simpleSearch.classList.add('d-none');
+					advancedSearch.classList.remove('d-none');
+				}
+			}
 		}
 
 		const searchIn = $('#search-in');
@@ -36,7 +50,9 @@ define('forum/search', [
 
 		$('#advanced-search form').off('submit').on('submit', function (e) {
 			e.preventDefault();
-			searchModule.query(getSearchDataFromDOM());
+			const searchData = getSearchDataFromDOM();
+			// Use AJAX to update results without page reload
+			updateSearchResults(searchData);
 			return false;
 		});
 
@@ -61,7 +77,8 @@ define('forum/search', [
 			const searchFiltersNew = getSearchDataFromDOM();
 			if (JSON.stringify(searchFilters) !== JSON.stringify(searchFiltersNew)) {
 				searchFilters = searchFiltersNew;
-				searchModule.query(searchFilters);
+				// Use AJAX to update results without page reload
+				updateSearchResults(searchFilters);
 			}
 		});
 
@@ -230,9 +247,9 @@ define('forum/search', [
 		const searchResults = document.getElementById('simple-search-results');
 		const searchStatus = document.getElementById('search-status');
 		const searchSuggestions = document.getElementById('search-suggestions');
-		
+
 		const query = searchInput.value.trim();
-		
+
 		if (!query) {
 			alerts.alert({
 				type: 'warning',
@@ -242,10 +259,13 @@ define('forum/search', [
 			});
 			return;
 		}
-		
+
 		searchSuggestions.classList.remove('active');
-		
-		const newUrl = window.location.pathname + '?term=' + encodeURIComponent(query);
+
+		// Build URL with search parameters
+		const params = new URLSearchParams();
+		params.set('term', query);
+		const newUrl = window.location.pathname + '?' + params.toString();
 		window.history.pushState({ path: newUrl }, '', newUrl);
 		
 		searchStatus.innerHTML = 'Searching for "' + escapeHtml(query) + '"...';
@@ -394,6 +414,58 @@ define('forum/search', [
 		return 'just now';
 	}
 
+	function updateSearchResults(searchData) {
+		// Build query string
+		const queryString = Object.entries(searchData)
+			.filter(([key, value]) => value !== undefined && value !== null && value !== '')
+			.map(([key, value]) => {
+				if (Array.isArray(value)) {
+					return value.map(v => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`).join('&');
+				}
+				return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+			})
+			.join('&');
+
+		// Update URL without navigating
+		const newUrl = window.location.pathname + '?' + queryString;
+		window.history.pushState({ path: newUrl }, '', newUrl);
+
+		// Show loading state
+		$('.search-results').html('<div class="text-center p-4"><i class="fa fa-spinner fa-spin"></i> Searching...</div>');
+
+		// Fetch results via AJAX
+		api.get('/api/search?' + queryString + '&searchOnly=1')
+			.then(function (data) {
+				// Update results section
+				if (data.posts && data.posts.length > 0) {
+					// Render the results
+					app.parseAndTranslate('partials/search-results', data, function (html) {
+						$('.search-results').html(html);
+						// Highlight search terms
+						searchModule.highlightMatches(
+							searchData.term,
+							$('.search-results .content p, .search-results .topic-title')
+						);
+						// Update timeago
+						$('.search-results .timeago').timeago();
+					});
+				} else {
+					$('.search-results').html('<div class="alert alert-info">No results found</div>');
+				}
+
+				// Update pagination if exists
+				if (data.pagination) {
+					app.parseAndTranslate('partials/pagination', data, function (html) {
+						$('[component="pagination"]').replaceWith(html);
+					});
+				}
+			})
+			.catch(function (err) {
+				console.error('Search error:', err);
+				$('.search-results').html('<div class="alert alert-danger">Error performing search</div>');
+			});
+	}
+
 	function updateTagFilter() {
 		const isActive = selectedTags.length > 0;
 		let labelText = '[[search:tags]]';
@@ -459,6 +531,12 @@ define('forum/search', [
 			searchData.sortBy = form.find('#post-sort-by').val();
 			searchData.sortDirection = form.find('#post-sort-direction').val();
 			searchData.showAs = form.find('#show-results-as').val();
+		}
+
+		// Add flag to maintain advanced search state
+		const advancedSearch = document.getElementById('advanced-search');
+		if (advancedSearch && !advancedSearch.classList.contains('d-none')) {
+			searchData.showAdvanced = 'true';
 		}
 
 		hooks.fire('action:search.getSearchDataFromDOM', {
