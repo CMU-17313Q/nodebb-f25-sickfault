@@ -2,7 +2,12 @@
   "id": "nodebb-plugin-user-public-categories",
   "name": "User Public Categories",
   "library": "library.js",
-  "hooks": [{ "hook": "static:app.load", "method": "init" }],
+  "hooks": [
+    { "hook": "static:app.load", "method": "init" },
+    { "hook": "filter:category.create", "method": "preserveOwnerUidOnCreate" },
+    { "hook": "filter:category.get", "method": "addOwnerUidToCategory" },
+    { "hook": "filter:category.getFields", "method": "addOwnerUidToFields" }
+  ],
   "staticDirs": { "static": "static" },
   "scripts": ["static/lib/client.js"]
 }
