@@ -141,6 +141,111 @@ exports.init = async function init(params) {
         }
     );
 
+    // Add member to category endpoint
+    router.post('/api/category/:cid/members',
+        middleware.ensureLoggedIn,
+        middleware.applyCSRF,
+        async (req, res, next) => {
+            try {
+                const cid = parseInt(req.params.cid);
+                const uid = req.user.uid;
+                const { username } = req.body || {};
+
+                if (!username || !username.trim()) {
+                    return res.status(400).json({ error: 'Username is required' });
+                }
+
+                // Check if category exists
+                const categoryData = await Categories.getCategoryData(cid);
+                if (!categoryData) {
+                    return res.status(404).json({ error: 'Category not found' });
+                }
+
+                // Check ownership
+                if (parseInt(categoryData.ownerUid) !== uid) {
+                    const isAdmin = await User.isAdministrator(uid);
+                    if (!isAdmin) {
+                        return res.status(403).json({ error: 'Only the category owner can add members' });
+                    }
+                }
+
+                // Get user by username
+                const targetUid = await User.getUidByUsername(username.trim());
+                if (!targetUid) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+
+                // Check if user is already a member
+                const isMember = await db.isSetMember(`category:${cid}:members`, targetUid);
+                if (isMember) {
+                    return res.status(409).json({ error: 'User is already a member of this category' });
+                }
+
+                // Add user to members set
+                await db.setAdd(`category:${cid}:members`, targetUid);
+
+                // Grant read and create privileges
+                await Privileges.categories.give(
+                    ['topics:read', 'topics:create'],
+                    cid,
+                    `uid:${targetUid}`
+                );
+
+                res.json({ ok: true, message: 'Member added successfully', uid: targetUid });
+            } catch (err) {
+                console.error('[user-public-categories] Error adding member:', err);
+                next(err);
+            }
+        }
+    );
+
+    // Remove member from category endpoint
+    router.delete('/api/category/:cid/members/:targetUid',
+        middleware.ensureLoggedIn,
+        middleware.applyCSRF,
+        async (req, res, next) => {
+            try {
+                const cid = parseInt(req.params.cid);
+                const uid = req.user.uid;
+                const targetUid = parseInt(req.params.targetUid);
+
+                // Check if category exists
+                const categoryData = await Categories.getCategoryData(cid);
+                if (!categoryData) {
+                    return res.status(404).json({ error: 'Category not found' });
+                }
+
+                // Check ownership
+                if (parseInt(categoryData.ownerUid) !== uid) {
+                    const isAdmin = await User.isAdministrator(uid);
+                    if (!isAdmin) {
+                        return res.status(403).json({ error: 'Only the category owner can remove members' });
+                    }
+                }
+
+                // Prevent removing the owner
+                if (targetUid === parseInt(categoryData.ownerUid)) {
+                    return res.status(400).json({ error: 'Cannot remove the category owner' });
+                }
+
+                // Remove user from members set
+                await db.setRemove(`category:${cid}:members`, targetUid);
+
+                // Revoke privileges
+                await Privileges.categories.rescind(
+                    ['topics:read', 'topics:create'],
+                    cid,
+                    `uid:${targetUid}`
+                );
+
+                res.json({ ok: true, message: 'Member removed successfully' });
+            } catch (err) {
+                console.error('[user-public-categories] Error removing member:', err);
+                next(err);
+            }
+        }
+    );
+
     // Admin endpoint to view all user-created categories
     router.get('/api/admin/user-categories',
         middleware.ensureLoggedIn,

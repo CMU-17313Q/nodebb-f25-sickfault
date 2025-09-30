@@ -141,10 +141,10 @@ function showCategoryModal() {
 $(window).on('action:ajaxify.end', (_ev, data) => {
     if (!/^categories/.test(data.url)) return;
     if (!isLoggedIn()) return;
-    
+
     // Check if buttons already exist
     if (document.getElementById('user-category-controls')) return;
-    
+
     const controls = $(`
         <div id="user-category-controls" style="margin: 1rem 0;">
             <button id="btn-new-public-category" class="btn btn-primary">
@@ -154,7 +154,7 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
     `);
 
     controls.find('#btn-new-public-category').on('click', showCategoryModal);
-    
+
     // Find the best place to insert the controls
     const pageHeader = $('.page-header, .category-header, #category-selector');
     if (pageHeader.length) {
