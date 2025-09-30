@@ -89,8 +89,8 @@ define('forum/search', [
 
 		searchFilters = getSearchDataFromDOM();
 
-		const urlParams = new URLSearchParams(window.location.search);
-		const queryParam = urlParams.get('term') || urlParams.get('query');
+		const searchParams = new URLSearchParams(window.location.search);
+		const queryParam = searchParams.get('term') || searchParams.get('query');
 		if (queryParam) {
 			const simpleInput = document.getElementById('simple-search-input');
 			if (simpleInput) {
@@ -417,7 +417,7 @@ define('forum/search', [
 	function updateSearchResults(searchData) {
 		// Build query string
 		const queryString = Object.entries(searchData)
-			.filter(([key, value]) => value !== undefined && value !== null && value !== '')
+			.filter(([, value]) => value !== undefined && value !== null && value !== '')
 			.map(([key, value]) => {
 				if (Array.isArray(value)) {
 					return value.map(v => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`).join('&');

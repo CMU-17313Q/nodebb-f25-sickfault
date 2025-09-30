@@ -98,7 +98,7 @@ async function searchInContent(data) {
 				await batch.processSortedSet('posts:pid', async (pids) => {
 					const postData = await posts.getPostsFields(pids, ['pid', 'content', 'tid', 'uid', 'cid', 'deleted']);
 
-					const matchingPids = postData.filter(post => {
+					const matchingPids = postData.filter((post) => {
 						if (!post || !post.content || post.deleted) {
 							return false;
 						}
@@ -117,9 +117,8 @@ async function searchInContent(data) {
 
 						if (matchWords === 'all') {
 							return tokens.every(token => content.includes(token));
-						} else {
-							return tokens.some(token => content.includes(token));
 						}
+						return tokens.some(token => content.includes(token));
 					}).map(post => post.pid);
 
 					allPids.push(...matchingPids);
@@ -137,7 +136,7 @@ async function searchInContent(data) {
 				await batch.processSortedSet('topics:tid', async (tids) => {
 					const topicData = await topics.getTopicsFields(tids, ['tid', 'title', 'cid', 'uid', 'deleted']);
 
-					const matchingTids = topicData.filter(topic => {
+					const matchingTids = topicData.filter((topic) => {
 						if (!topic || !topic.title || topic.deleted) {
 							return false;
 						}
@@ -156,9 +155,8 @@ async function searchInContent(data) {
 
 						if (matchWords === 'all') {
 							return tokens.every(token => title.includes(token));
-						} else {
-							return tokens.some(token => title.includes(token));
 						}
+						return tokens.some(token => title.includes(token));
 					}).map(topic => topic.tid);
 
 					allTids.push(...matchingTids);
