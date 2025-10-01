@@ -275,4 +275,38 @@ describe('User Public Categories Plugin', () => {
 			assert(isAdmin);
 		});
 	});
+
+	describe('User Categories Identification', () => {
+		it('should identify user-created categories by members set', async () => {
+			// Check if our test category has a members set
+			const hasMembersSet = await db.exists(`category:${categoryData.cid}:members`);
+			assert(hasMembersSet, 'User category should have members set');
+
+			// Create a regular category
+			const regularCategory = await Categories.create({
+				name: 'Regular Category 2',
+				description: 'Not a user category',
+			});
+
+			// Verify regular category does not have members set
+			const regularHasMembersSet = await db.exists(`category:${regularCategory.cid}:members`);
+			assert(!regularHasMembersSet, 'Regular category should not have members set');
+		});
+
+		it('should list all user-created categories', async () => {
+			const categories = await Categories.getAllCategories();
+
+			const memberSetChecks = await Promise.all(
+				categories.map(async (cat) => {
+					const hasMembersSet = await db.exists(`category:${cat.cid}:members`);
+					return hasMembersSet ? cat.cid : null;
+				})
+			);
+
+			const userCategoryCids = memberSetChecks.filter(cid => cid !== null);
+
+			assert(userCategoryCids.length >= 1, 'Should have at least one user category');
+			assert(userCategoryCids.includes(categoryData.cid), 'Should include our test category');
+		});
+	});
 });
