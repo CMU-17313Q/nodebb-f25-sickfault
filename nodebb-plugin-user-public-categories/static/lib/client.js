@@ -348,7 +348,46 @@ function showMembersModal(cid) {
     loadMembers();
 }
 
+async function addLockIconsToCategories() {
+    // Add lock icons to private categories created by users
+    if (ajaxify?.data?.categories && Array.isArray(ajaxify.data.categories)) {
+        // Get list of all user-created category IDs
+        try {
+            const response = await $.ajax({
+                method: 'GET',
+                url: '/api/user-categories/list'
+            });
+
+            const userCreatedCids = new Set(response.cids);
+
+            ajaxify.data.categories.forEach(function(category) {
+                // Only add lock if this is a user-created category
+                if (userCreatedCids.has(category.cid)) {
+                    // Find the category item by cid
+                    const categoryElement = $(`[data-cid="${category.cid}"]`);
+
+                    // Find the category name/title within this element
+                    const categoryName = categoryElement.find('.category-title, h2 a, .category-header-name, [component="category/link"]');
+
+                    // Add lock icon if not already present
+                    if (categoryName.length && !categoryName.find('.private-category-lock').length) {
+                        const lockIcon = $('<i class="fa fa-lock private-category-lock" style="color: #888; margin-right: 6px; font-size: 0.9em;"></i>');
+                        categoryName.prepend(lockIcon);
+                    }
+                }
+            });
+        } catch (e) {
+            console.error('[user-public-categories] Failed to load user categories:', e);
+        }
+    }
+}
+
 $(window).on('action:ajaxify.end', (_ev, data) => {
+    // Handle homepage (/) and categories list page - add lock icons
+    if (/^$|^categories/.test(data.url)) {
+        addLockIconsToCategories();
+    }
+
     if (!isLoggedIn()) return;
 
     // Handle categories list page
@@ -389,6 +428,17 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
         const currentUid = app?.user?.uid;
 
         console.log('[user-public-categories] Category page - cid:', cid, 'ownerUid:', ownerUid, 'currentUid:', currentUid);
+
+        // Add lock icon for private categories
+        if (ownerUid) {
+            // Find the category title/name element
+            const categoryTitle = $('[component="category/header"] h1, [component="category/header"] .category-title, h1[itemprop="name"]');
+
+            if (categoryTitle.length && !categoryTitle.find('.private-category-lock').length) {
+                const lockIcon = $('<i class="fa fa-lock private-category-lock" style="color: #888; margin-right: 8px; font-size: 0.85em;"></i>');
+                categoryTitle.prepend(lockIcon);
+            }
+        }
 
         // Only show button if user is the owner
         if (cid && ownerUid && parseInt(ownerUid) === parseInt(currentUid)) {

@@ -282,6 +282,29 @@ exports.init = async function init(params) {
         }
     );
 
+    // Get all user-created category IDs (for lock icon display)
+    router.get('/api/user-categories/list',
+        async (req, res, next) => {
+            try {
+                const categories = await Categories.getAllCategories();
+                const userCategoryCids = [];
+
+                for (const cat of categories) {
+                    // Check if this category has a members set (user-created)
+                    const hasMembersSet = await db.exists(`category:${cat.cid}:members`);
+                    if (hasMembersSet) {
+                        userCategoryCids.push(cat.cid);
+                    }
+                }
+
+                res.json({ cids: userCategoryCids });
+            } catch (err) {
+                console.error('[user-public-categories] Error getting user category list:', err);
+                next(err);
+            }
+        }
+    );
+
     // Get current user's owned categories
     router.get('/api/user/my-categories',
         middleware.ensureLoggedIn,
@@ -375,6 +398,21 @@ exports.addOwnerUidToCategory = async function(hookData) {
         if (ownerUid) {
             hookData.category.ownerUid = parseInt(ownerUid);
         }
+    }
+    return hookData;
+};
+
+// Hook to add ownerUid to multiple categories (for categories list)
+exports.addOwnerUidToCategories = async function(hookData) {
+    if (hookData && hookData.categories && Array.isArray(hookData.categories)) {
+        await Promise.all(hookData.categories.map(async (category) => {
+            if (category && category.cid) {
+                const ownerUid = await db.getObjectField(`category:${category.cid}`, 'ownerUid');
+                if (ownerUid) {
+                    category.ownerUid = parseInt(ownerUid);
+                }
+            }
+        }));
     }
     return hookData;
 };
