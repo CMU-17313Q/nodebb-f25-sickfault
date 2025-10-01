@@ -313,4 +313,66 @@ module.exports = function (Topics) {
 			db.sortedSetAdd(set, timestamp, tid),
 		]);
 	};
+
+	topicTools.resolve = async function (tid, uid) {
+		return await toggleResolve(tid, uid, true);
+	};
+
+	topicTools.unresolve = async function (tid, uid) {
+		return await toggleResolve(tid, uid, false);
+	};
+
+	async function toggleResolve(tid, uid, resolve) {
+		const topicData = await Topics.getTopicFields(tid, ['tid', 'uid', 'cid', 'resolved']);
+		if (!topicData || !topicData.cid) {
+			throw new Error('[[error:no-topic]]');
+		}
+
+		// Check if already in desired state
+		const isResolved = parseInt(topicData.resolved, 10) === 1;
+		if (isResolved === resolve) {
+			throw new Error(resolve ? '[[error:topic-already-resolved]]' : '[[error:topic-already-unresolved]]');
+		}
+
+		// Only topic author or moderators can resolve/unresolve
+		const isAuthor = parseInt(topicData.uid, 10) === parseInt(uid, 10);
+		const isAdminOrMod = await privileges.categories.isAdminOrMod(topicData.cid, uid);
+
+		if (!isAuthor && !isAdminOrMod) {
+			throw new Error('[[error:no-privileges]]');
+		}
+
+		// Update resolved status
+		const updateData = {
+			resolved: resolve ? 1 : 0,
+		};
+
+		if (resolve) {
+			updateData.resolvedBy = uid;
+			updateData.resolvedAt = Date.now();
+		} else {
+			// Clear resolver info when unresolving
+			updateData.resolvedBy = null;
+			updateData.resolvedAt = null;
+		}
+
+		await Topics.setTopicFields(tid, updateData);
+
+		// Log the event
+		const events = await Topics.events.log(tid, { type: resolve ? 'resolve' : 'unresolve', uid });
+
+		// Prepare return data
+		topicData.resolved = resolve ? 1 : 0;
+		topicData.resolvedBy = resolve ? uid : null;
+		topicData.resolvedAt = resolve ? updateData.resolvedAt : null;
+		topicData.events = events;
+
+		// Fire plugin hooks
+		plugins.hooks.fire(resolve ? 'action:topic.resolve' : 'action:topic.unresolve', {
+			topic: _.clone(topicData),
+			uid: uid
+		});
+
+		return topicData;
+	}
 };
