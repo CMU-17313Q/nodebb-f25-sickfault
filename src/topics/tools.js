@@ -371,7 +371,7 @@ module.exports = function (Topics) {
 		// Fire plugin hooks
 		plugins.hooks.fire(resolve ? 'action:topic.resolve' : 'action:topic.unresolve', {
 			topic: _.clone(topicData),
-			uid: uid
+			uid: uid,
 		});
 
 		return topicData;
