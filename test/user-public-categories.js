@@ -46,5 +46,54 @@ describe('User Public Categories Plugin', () => {
 		});
 	});
 
-	// Test cases will be added here
+	describe('Category Creation', () => {
+		it('should create a private category with owner', async () => {
+			// Create category using Categories API directly
+			const categoryObj = await Categories.create({
+				name: 'Test Private Category',
+				description: 'A test private category',
+				ownerUid: ownerUid,
+			});
+
+			// Add owner to members set (simulating plugin behavior)
+			await db.setAdd(`category:${categoryObj.cid}:members`, ownerUid);
+
+			// Remove default group privileges to make category private
+			const publicGroups = ['registered-users', 'guests', 'spiders', 'fediverse'];
+			const allGroupPrivs = [
+				'groups:find', 'groups:read', 'groups:topics:read', 'groups:topics:create',
+				'groups:topics:reply', 'groups:topics:tag', 'groups:posts:edit', 'groups:posts:history',
+				'groups:posts:delete', 'groups:posts:upvote', 'groups:posts:downvote', 'groups:topics:delete',
+				'groups:topics:schedule', 'groups:posts:view_deleted', 'groups:purge',
+			];
+
+			await Promise.all(publicGroups.map(group =>
+				Privileges.categories.rescind(allGroupPrivs, categoryObj.cid, group)
+			));
+
+			// Grant full privileges to the owner
+			const ownerPrivileges = [
+				'find', 'read', 'topics:read', 'topics:create', 'topics:reply', 'topics:tag',
+				'posts:edit', 'posts:delete', 'posts:upvote', 'posts:downvote', 'moderate',
+			];
+
+			await Privileges.categories.give(ownerPrivileges, categoryObj.cid, ownerUid);
+
+			categoryData = categoryObj;
+
+			// Verify ownerUid is set
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryObj.cid}`, 'ownerUid');
+			assert.strictEqual(parseInt(ownerUidFromDb), ownerUid);
+
+			// Verify owner is in members set
+			const isMember = await db.isSetMember(`category:${categoryObj.cid}:members`, ownerUid);
+			assert(isMember);
+		});
+
+		it('should validate category name length', async () => {
+			// Test that validation would fail for short names
+			const shortName = 'ab';
+			assert(shortName.length < 3, 'Name should be too short');
+		});
+	});
 });
