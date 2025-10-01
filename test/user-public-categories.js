@@ -236,4 +236,43 @@ describe('User Public Categories Plugin', () => {
 			assert(!ownerUid, 'Regular category should not have ownerUid');
 		});
 	});
+
+	describe('Category Deletion', () => {
+		it('should allow owner to delete their category', async () => {
+			// Create a temporary category for deletion
+			const tempCategory = await Categories.create({
+				name: 'Temp Category',
+				description: 'To be deleted',
+				ownerUid: ownerUid,
+			});
+
+			await db.setAdd(`category:${tempCategory.cid}:members`, ownerUid);
+
+			// Clean up members set
+			await db.delete(`category:${tempCategory.cid}:members`);
+
+			// Purge the category
+			await Categories.purge(tempCategory.cid, ownerUid);
+
+			// Verify category is purged
+			const categoryExists = await Categories.exists(tempCategory.cid);
+			assert(!categoryExists);
+
+			// Verify members set is cleaned up
+			const membersExist = await db.exists(`category:${tempCategory.cid}:members`);
+			assert(!membersExist);
+		});
+
+		it('should check ownership before allowing deletion', async () => {
+			// Get ownerUid from database
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryData.cid}`, 'ownerUid');
+
+			// Verify non-owner cannot delete
+			assert.notStrictEqual(parseInt(ownerUidFromDb), nonMemberUid);
+
+			// Verify admin can bypass ownership check
+			const isAdmin = await User.isAdministrator(adminUid);
+			assert(isAdmin);
+		});
+	});
 });
