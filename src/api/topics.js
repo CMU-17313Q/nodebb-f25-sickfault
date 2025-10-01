@@ -357,3 +357,15 @@ topicsAPI.move = async (caller, { tid, cid }) => {
 
 	await categories.onTopicsMoved(cids);
 };
+
+topicsAPI.resolve = async function (caller, data) {
+	await doTopicAction('resolve', 'event:topic_resolved', caller, {
+		tids: data.tids,
+	});
+};
+
+topicsAPI.unresolve = async function (caller, data) {
+	await doTopicAction('unresolve', 'event:topic_unresolved', caller, {
+		tids: data.tids,
+	});
+};
