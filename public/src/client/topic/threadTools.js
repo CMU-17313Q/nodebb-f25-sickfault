@@ -84,20 +84,38 @@ define('forum/topic/threadTools', [
 		});
 
 		topicContainer.on('click', '[component="topic/resolve"]', function () {
-			// For now, just toggle the UI to demonstrate functionality
-			$('[component="topic/resolve"]').addClass('hidden');
-			$('[component="topic/unresolve"]').removeClass('hidden');
-			$('[component="topic/resolved"]').removeClass('hidden');
-			alerts.success('Topic marked as resolved');
+			const tid = ajaxify.data.tid;
+			console.log('Resolving topic:', tid);
+			api.put(`/topics/${tid}/resolve`, {})
+				.then((response) => {
+					console.log('Resolve response:', response);
+					$('[component="topic/resolve"]').addClass('hidden');
+					$('[component="topic/unresolve"]').removeClass('hidden');
+					$('[component="topic/resolved"]').removeClass('hidden');
+					alerts.success('Topic marked as resolved');
+				})
+				.catch((err) => {
+					console.error('Resolve error:', err);
+					alerts.error(err);
+				});
 			return false;
 		});
 
 		topicContainer.on('click', '[component="topic/unresolve"]', function () {
-			// For now, just toggle the UI to demonstrate functionality
-			$('[component="topic/unresolve"]').addClass('hidden');
-			$('[component="topic/resolve"]').removeClass('hidden');
-			$('[component="topic/resolved"]').addClass('hidden');
-			alerts.success('Topic marked as unresolved');
+			const tid = ajaxify.data.tid;
+			console.log('Unresolving topic:', tid);
+			api.del(`/topics/${tid}/resolve`, {})
+				.then((response) => {
+					console.log('Unresolve response:', response);
+					$('[component="topic/unresolve"]').addClass('hidden');
+					$('[component="topic/resolve"]').removeClass('hidden');
+					$('[component="topic/resolved"]').addClass('hidden');
+					alerts.success('Topic marked as unresolved');
+				})
+				.catch((err) => {
+					console.error('Unresolve error:', err);
+					alerts.error(err);
+				});
 			return false;
 		});
 
