@@ -83,12 +83,14 @@ define('forum/topic/threadTools', [
 			});
 		});
 
+		// Mark topic as resolved: calls backend API and updates UI
 		topicContainer.on('click', '[component="topic/resolve"]', function () {
 			const tid = ajaxify.data.tid;
 			console.log('Resolving topic:', tid);
 			api.put(`/topics/${tid}/resolve`, {})
 				.then((response) => {
 					console.log('Resolve response:', response);
+					// Toggle button visibility
 					$('[component="topic/resolve"]').addClass('hidden');
 					$('[component="topic/unresolve"]').removeClass('hidden');
 					$('[component="topic/resolved"]').removeClass('hidden');
@@ -101,12 +103,14 @@ define('forum/topic/threadTools', [
 			return false;
 		});
 
+		// Mark topic as unresolved: calls backend API and updates UI
 		topicContainer.on('click', '[component="topic/unresolve"]', function () {
 			const tid = ajaxify.data.tid;
 			console.log('Unresolving topic:', tid);
 			api.del(`/topics/${tid}/resolve`, {})
 				.then((response) => {
 					console.log('Unresolve response:', response);
+					// Toggle button visibility
 					$('[component="topic/unresolve"]').addClass('hidden');
 					$('[component="topic/resolve"]').removeClass('hidden');
 					$('[component="topic/resolved"]').addClass('hidden');

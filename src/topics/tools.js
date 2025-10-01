@@ -314,14 +314,17 @@ module.exports = function (Topics) {
 		]);
 	};
 
+	// Mark topic as resolved: only author or moderators can resolve
 	topicTools.resolve = async function (tid, uid) {
 		return await toggleResolve(tid, uid, true);
 	};
 
+	// Mark topic as unresolved: clears resolver info
 	topicTools.unresolve = async function (tid, uid) {
 		return await toggleResolve(tid, uid, false);
 	};
 
+	// Core resolve/unresolve logic with permission checks
 	async function toggleResolve(tid, uid, resolve) {
 		const topicData = await Topics.getTopicFields(tid, ['tid', 'uid', 'cid', 'resolved']);
 		if (!topicData || !topicData.cid) {

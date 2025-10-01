@@ -358,12 +358,14 @@ topicsAPI.move = async (caller, { tid, cid }) => {
 	await categories.onTopicsMoved(cids);
 };
 
+// Mark topics as resolved: emits socket events for real-time updates
 topicsAPI.resolve = async function (caller, data) {
 	await doTopicAction('resolve', 'event:topic_resolved', caller, {
 		tids: data.tids,
 	});
 };
 
+// Mark topics as unresolved: emits socket events for real-time updates
 topicsAPI.unresolve = async function (caller, data) {
 	await doTopicAction('unresolve', 'event:topic_unresolved', caller, {
 		tids: data.tids,
