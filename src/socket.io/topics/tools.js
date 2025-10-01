@@ -3,6 +3,7 @@
 const topics = require('../../topics');
 const privileges = require('../../privileges');
 const plugins = require('../../plugins');
+const user = require('../../user');
 
 module.exports = function (SocketTopics) {
 	SocketTopics.loadTopicTools = async function (socket, data) {
@@ -37,5 +38,33 @@ module.exports = function (SocketTopics) {
 		}
 
 		await topics.tools.orderPinnedTopics(socket.uid, data);
+	};
+
+	SocketTopics.resolve = async function (socket, data) {
+		if (!data || !data.tid) {
+			throw new Error('[[error:invalid-data]]');
+		}
+
+		const result = await topics.tools.resolve(data.tid, socket.uid);
+
+		// Emit event to all users viewing the topic
+		const uids = await user.getUidsFromSet('users:online', 0, -1);
+		require('../../socket.io').in(`topic_${data.tid}`).emit('event:topic_resolved', result);
+
+		return result;
+	};
+
+	SocketTopics.unresolve = async function (socket, data) {
+		if (!data || !data.tid) {
+			throw new Error('[[error:invalid-data]]');
+		}
+
+		const result = await topics.tools.unresolve(data.tid, socket.uid);
+
+		// Emit event to all users viewing the topic
+		const uids = await user.getUidsFromSet('users:online', 0, -1);
+		require('../../socket.io').in(`topic_${data.tid}`).emit('event:topic_unresolved', result);
+
+		return result;
 	};
 };
