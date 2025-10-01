@@ -248,6 +248,94 @@ exports.init = async function init(params) {
         }
     );
 
+    // Delete category endpoint
+    router.delete('/api/category/:cid/delete',
+        middleware.ensureLoggedIn,
+        middleware.applyCSRF,
+        async (req, res, next) => {
+            try {
+                const cid = parseInt(req.params.cid);
+                const uid = req.user.uid;
+
+                // Get ownerUid from database
+                const ownerUid = await db.getObjectField(`category:${cid}`, 'ownerUid');
+
+                // Check ownership
+                if (!ownerUid || parseInt(ownerUid) !== uid) {
+                    const isAdmin = await User.isAdministrator(uid);
+                    if (!isAdmin) {
+                        return res.status(403).json({ error: 'Only the category owner can delete this category' });
+                    }
+                }
+
+                // Clean up members set
+                await db.delete(`category:${cid}:members`);
+
+                // Purge the category (removes category and all its content)
+                await Categories.purge(cid, uid);
+
+                res.json({ ok: true, message: 'Category deleted successfully' });
+            } catch (err) {
+                console.error('[user-public-categories] Error deleting category:', err);
+                next(err);
+            }
+        }
+    );
+
+    // Get all user-created category IDs (for lock icon display)
+    router.get('/api/user-categories/list',
+        async (req, res, next) => {
+            try {
+                const categories = await Categories.getAllCategories();
+                const userCategoryCids = [];
+
+                for (const cat of categories) {
+                    // Check if this category has a members set (user-created)
+                    const hasMembersSet = await db.exists(`category:${cat.cid}:members`);
+                    if (hasMembersSet) {
+                        userCategoryCids.push(cat.cid);
+                    }
+                }
+
+                res.json({ cids: userCategoryCids });
+            } catch (err) {
+                console.error('[user-public-categories] Error getting user category list:', err);
+                next(err);
+            }
+        }
+    );
+
+    // Get current user's owned categories
+    router.get('/api/user/my-categories',
+        middleware.ensureLoggedIn,
+        async (req, res, next) => {
+            try {
+                const uid = req.user.uid;
+                const categories = await Categories.getAllCategories();
+                const myCategories = [];
+
+                for (const cat of categories) {
+                    const ownerUid = await db.getObjectField(`category:${cat.cid}`, 'ownerUid');
+                    if (ownerUid && parseInt(ownerUid) === uid) {
+                        const memberCount = await db.setCount(`category:${cat.cid}:members`);
+                        myCategories.push({
+                            cid: cat.cid,
+                            name: cat.name,
+                            description: cat.description,
+                            slug: cat.slug,
+                            member_count: memberCount || 0
+                        });
+                    }
+                }
+
+                res.json({ categories: myCategories });
+            } catch (err) {
+                console.error('[user-public-categories] Error getting user categories:', err);
+                next(err);
+            }
+        }
+    );
+
     // Admin endpoint to view all user-created categories
     router.get('/api/admin/user-categories',
         middleware.ensureLoggedIn,
@@ -256,7 +344,7 @@ exports.init = async function init(params) {
             try {
                 const categories = await Categories.getAllCategories();
                 const userCategories = [];
-                
+
                 for (const cat of categories) {
                     const ownerUid = await db.getObjectField(`category:${cat.cid}`, 'ownerUid');
                     if (ownerUid && parseInt(ownerUid) > 0) {
@@ -264,7 +352,7 @@ exports.init = async function init(params) {
                             User.getUserField(ownerUid, 'username'),
                             db.setCount(`category:${cat.cid}:members`)
                         ]);
-                        
+
                         userCategories.push({
                             ...cat,
                             ownerUid,
@@ -273,7 +361,7 @@ exports.init = async function init(params) {
                         });
                     }
                 }
-                
+
                 res.json(userCategories);
             } catch (err) {
                 console.error('[user-public-categories] Error getting admin view:', err);
@@ -310,6 +398,21 @@ exports.addOwnerUidToCategory = async function(hookData) {
         if (ownerUid) {
             hookData.category.ownerUid = parseInt(ownerUid);
         }
+    }
+    return hookData;
+};
+
+// Hook to add ownerUid to multiple categories (for categories list)
+exports.addOwnerUidToCategories = async function(hookData) {
+    if (hookData && hookData.categories && Array.isArray(hookData.categories)) {
+        await Promise.all(hookData.categories.map(async (category) => {
+            if (category && category.cid) {
+                const ownerUid = await db.getObjectField(`category:${category.cid}`, 'ownerUid');
+                if (ownerUid) {
+                    category.ownerUid = parseInt(ownerUid);
+                }
+            }
+        }));
     }
     return hookData;
 };
