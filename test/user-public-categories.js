@@ -96,4 +96,21 @@ describe('User Public Categories Plugin', () => {
 			assert(shortName.length < 3, 'Name should be too short');
 		});
 	});
+
+	describe('Permission Enforcement', () => {
+		it('should allow owner to view their category', async () => {
+			const canRead = await Privileges.categories.can('topics:read', categoryData.cid, ownerUid);
+			assert(canRead);
+		});
+
+		it('should deny non-member access to private category', async () => {
+			const canRead = await Privileges.categories.can('topics:read', categoryData.cid, nonMemberUid);
+			assert(!canRead);
+		});
+
+		it('should allow admin to view private category', async () => {
+			const canRead = await Privileges.categories.can('topics:read', categoryData.cid, adminUid);
+			assert(canRead);
+		});
+	});
 });
