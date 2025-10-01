@@ -455,6 +455,26 @@ define('forum/topic/threadTools', [
 		components.get('topic/ignoring/check').toggleClass('fa-check', state === 'ignore');
 	}
 
+	// Handle socket events for resolve/unresolve: updates UI and adds event to history
+	ThreadTools.setResolvedState = function (data) {
+		const threadEl = components.get('topic');
+		if (String(data.tid) !== threadEl.attr('data-tid')) {
+			return;
+		}
+
+		const isResolved = data.resolved === 1;
+
+		// Toggle resolve/unresolve button visibility based on resolved status
+		components.get('topic/resolve').toggleClass('hidden', isResolved);
+		components.get('topic/unresolve').toggleClass('hidden', !isResolved);
+		components.get('topic/resolved').toggleClass('hidden', !isResolved);
+
+		// Update client-side topic data
+		ajaxify.data.resolved = isResolved;
+
+		// Add resolve/unresolve event to topic history timeline
+		posts.addTopicEvents(data.events);
+	};
 
 	return ThreadTools;
 });
