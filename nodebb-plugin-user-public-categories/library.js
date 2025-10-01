@@ -248,6 +248,37 @@ exports.init = async function init(params) {
         }
     );
 
+    // Get current user's owned categories
+    router.get('/api/user/my-categories',
+        middleware.ensureLoggedIn,
+        async (req, res, next) => {
+            try {
+                const uid = req.user.uid;
+                const categories = await Categories.getAllCategories();
+                const myCategories = [];
+
+                for (const cat of categories) {
+                    const ownerUid = await db.getObjectField(`category:${cat.cid}`, 'ownerUid');
+                    if (ownerUid && parseInt(ownerUid) === uid) {
+                        const memberCount = await db.setCount(`category:${cat.cid}:members`);
+                        myCategories.push({
+                            cid: cat.cid,
+                            name: cat.name,
+                            description: cat.description,
+                            slug: cat.slug,
+                            member_count: memberCount || 0
+                        });
+                    }
+                }
+
+                res.json({ categories: myCategories });
+            } catch (err) {
+                console.error('[user-public-categories] Error getting user categories:', err);
+                next(err);
+            }
+        }
+    );
+
     // Admin endpoint to view all user-created categories
     router.get('/api/admin/user-categories',
         middleware.ensureLoggedIn,
@@ -256,7 +287,7 @@ exports.init = async function init(params) {
             try {
                 const categories = await Categories.getAllCategories();
                 const userCategories = [];
-                
+
                 for (const cat of categories) {
                     const ownerUid = await db.getObjectField(`category:${cat.cid}`, 'ownerUid');
                     if (ownerUid && parseInt(ownerUid) > 0) {
@@ -264,7 +295,7 @@ exports.init = async function init(params) {
                             User.getUserField(ownerUid, 'username'),
                             db.setCount(`category:${cat.cid}:members`)
                         ]);
-                        
+
                         userCategories.push({
                             ...cat,
                             ownerUid,
@@ -273,7 +304,7 @@ exports.init = async function init(params) {
                         });
                     }
                 }
-                
+
                 res.json(userCategories);
             } catch (err) {
                 console.error('[user-public-categories] Error getting admin view:', err);

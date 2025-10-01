@@ -113,6 +113,91 @@ function showCategoryModal() {
     $modal.modal('show');
 }
 
+function showMyOwnedCategoriesModal() {
+    const modal = `
+        <div class="modal fade" id="myOwnedCategoriesModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">My Owned Categories</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="ownedCategoriesList">
+                            <div class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Remove any existing modal
+    $('#myOwnedCategoriesModal').remove();
+
+    $('body').append(modal);
+
+    const $modal = $('#myOwnedCategoriesModal');
+
+    // Load owned categories
+    async function loadOwnedCategories() {
+        try {
+            const res = await $.ajax({
+                method: 'GET',
+                url: '/api/user/my-categories'
+            });
+
+            const $list = $('#ownedCategoriesList');
+            $list.empty();
+
+            if (!res.categories || res.categories.length === 0) {
+                $list.html('<p class="text-muted">You haven\'t created any categories yet.</p>');
+                return;
+            }
+
+            const categoryItems = res.categories.map(cat => {
+                return `
+                    <div class="category-item mb-3 p-3 border rounded">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-2">
+                                    <a href="${(window.config?.relative_path || '')}/category/${cat.slug}" class="text-decoration-none">
+                                        ${cat.name}
+                                    </a>
+                                </h6>
+                                ${cat.description ? `<p class="text-muted mb-2">${cat.description}</p>` : ''}
+                                <small class="text-muted">
+                                    <i class="fa fa-users"></i> ${cat.member_count} member${cat.member_count !== 1 ? 's' : ''}
+                                </small>
+                            </div>
+                            <div>
+                                <a href="${(window.config?.relative_path || '')}/category/${cat.slug}" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-arrow-right"></i> View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            $list.html(categoryItems);
+        } catch (e) {
+            $('#ownedCategoriesList').html('<p class="text-danger">Error loading categories.</p>');
+        }
+    }
+
+    // Handle close button
+    $modal.find('.close').on('click', function() {
+        $modal.modal('hide');
+    });
+
+    // Show modal and load categories
+    $modal.modal('show');
+    loadOwnedCategories();
+}
+
 function showMembersModal(cid) {
     const modal = `
         <div class="modal fade" id="manageMembersModal" tabindex="-1" role="dialog">
@@ -276,10 +361,14 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
                 <button id="btn-new-public-category" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Create New Category
                 </button>
+                <button id="btn-my-owned-categories" class="btn btn-info" style="margin-left: 10px;">
+                    <i class="fa fa-list"></i> My Categories
+                </button>
             </div>
         `);
 
         controls.find('#btn-new-public-category').on('click', showCategoryModal);
+        controls.find('#btn-my-owned-categories').on('click', showMyOwnedCategoriesModal);
 
         // Find the best place to insert the controls
         const pageHeader = $('.page-header, .category-header, #category-selector');
