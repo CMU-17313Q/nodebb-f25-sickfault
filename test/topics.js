@@ -708,8 +708,11 @@ describe('Topic\'s', () => {
 		});
 
 		it('should not allow non-author or non-moderator to resolve topic', async () => {
-			// Create a different user
-			const otherUid = await user.create({ username: 'resolver_test' });
+			// Unresolve first (topic was resolved in previous test)
+			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
+
+			// Create a different user (not author, not moderator)
+			const otherUid = await User.create({ username: 'resolver_test' });
 			try {
 				await apiTopics.resolve({ uid: otherUid }, { tids: [newTopic.tid] });
 				assert.fail('Should have thrown error');
@@ -719,10 +722,7 @@ describe('Topic\'s', () => {
 		});
 
 		it('should allow moderator to resolve topic', async () => {
-			// Topic is already resolved, unresolve it first
-			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-
-			// Now resolve as admin/moderator
+			// Topic is already unresolved from previous test, so we can resolve as moderator
 			await apiTopics.resolve({ uid: adminUid }, { tids: [newTopic.tid] });
 			const topicData = await topics.getTopicFields(newTopic.tid, ['resolved', 'resolvedBy']);
 			assert.strictEqual(topicData.resolved, 1);
