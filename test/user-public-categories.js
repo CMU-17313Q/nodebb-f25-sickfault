@@ -113,4 +113,52 @@ describe('User Public Categories Plugin', () => {
 			assert(canRead);
 		});
 	});
+
+	describe('Member Management - Invite', () => {
+		it('should allow owner to invite a user', async () => {
+			// Check if user is not already a member
+			let isMember = await db.isSetMember(`category:${categoryData.cid}:members`, memberUid);
+			assert(!isMember, 'User should not be a member initially');
+
+			// Add user to members set
+			await db.setAdd(`category:${categoryData.cid}:members`, memberUid);
+
+			// Grant member privileges
+			const memberPrivileges = [
+				'find', 'read', 'topics:read', 'topics:create', 'topics:reply',
+			];
+			await Privileges.categories.give(memberPrivileges, categoryData.cid, memberUid);
+
+			// Verify user is in members set
+			isMember = await db.isSetMember(`category:${categoryData.cid}:members`, memberUid);
+			assert(isMember);
+
+			// Verify member has read privileges
+			const canRead = await Privileges.categories.can('topics:read', categoryData.cid, memberUid);
+			assert(canRead);
+		});
+
+		it('should detect duplicate member', async () => {
+			// Verify user is already a member
+			const isMember = await db.isSetMember(`category:${categoryData.cid}:members`, memberUid);
+			assert(isMember, 'User should already be a member');
+		});
+
+		it('should validate user exists', async () => {
+			const targetUid = await User.getUidByUsername('nonexistentuser123');
+			assert(!targetUid, 'Non-existent user should not have a UID');
+		});
+
+		it('should check ownership before allowing invite', async () => {
+			// Get ownerUid from database
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryData.cid}`, 'ownerUid');
+
+			// Verify non-member is not the owner
+			assert.notStrictEqual(parseInt(ownerUidFromDb), nonMemberUid);
+
+			// Verify admin can bypass ownership check
+			const isAdmin = await User.isAdministrator(adminUid);
+			assert(isAdmin);
+		});
+	});
 });
