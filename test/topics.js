@@ -733,8 +733,9 @@ describe('Topic\'s', () => {
 			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
 			const topicData = await topics.getTopicFields(newTopic.tid, ['resolved', 'resolvedBy', 'resolvedAt']);
 			assert.strictEqual(topicData.resolved, 0);
-			assert.strictEqual(topicData.resolvedBy, null);
-			assert.strictEqual(topicData.resolvedAt, null);
+			// Integer fields return 0 when deleted/missing, not null
+			assert.strictEqual(topicData.resolvedBy, 0);
+			assert.strictEqual(topicData.resolvedAt, 0);
 		});
 
 		it('should not resolve already resolved topic', async () => {

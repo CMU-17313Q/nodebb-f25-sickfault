@@ -343,28 +343,26 @@ module.exports = function (Topics) {
 		}
 
 		// Update resolved status
-		const updateData = {
-			resolved: resolve ? 1 : 0,
-		};
-
 		if (resolve) {
-			updateData.resolvedBy = uid;
-			updateData.resolvedAt = Date.now();
+			await Topics.setTopicFields(tid, {
+				resolved: 1,
+				resolvedBy: uid,
+				resolvedAt: Date.now(),
+			});
 		} else {
-			// Clear resolver info when unresolving
-			updateData.resolvedBy = null;
-			updateData.resolvedAt = null;
+			// Clear resolver info when unresolving by deleting the fields
+			await Topics.setTopicField(tid, 'resolved', 0);
+			await Topics.deleteTopicFields(tid, ['resolvedBy', 'resolvedAt']);
 		}
-
-		await Topics.setTopicFields(tid, updateData);
 
 		// Log the event
 		const events = await Topics.events.log(tid, { type: resolve ? 'resolve' : 'unresolve', uid });
 
 		// Prepare return data
 		topicData.resolved = resolve ? 1 : 0;
-		topicData.resolvedBy = resolve ? uid : null;
-		topicData.resolvedAt = resolve ? updateData.resolvedAt : null;
+		// Integer fields return 0 when deleted/missing
+		topicData.resolvedBy = resolve ? uid : 0;
+		topicData.resolvedAt = resolve ? Date.now() : 0;
 		topicData.events = events;
 
 		// Fire plugin hooks
