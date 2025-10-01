@@ -248,6 +248,40 @@ exports.init = async function init(params) {
         }
     );
 
+    // Delete category endpoint
+    router.delete('/api/category/:cid/delete',
+        middleware.ensureLoggedIn,
+        middleware.applyCSRF,
+        async (req, res, next) => {
+            try {
+                const cid = parseInt(req.params.cid);
+                const uid = req.user.uid;
+
+                // Get ownerUid from database
+                const ownerUid = await db.getObjectField(`category:${cid}`, 'ownerUid');
+
+                // Check ownership
+                if (!ownerUid || parseInt(ownerUid) !== uid) {
+                    const isAdmin = await User.isAdministrator(uid);
+                    if (!isAdmin) {
+                        return res.status(403).json({ error: 'Only the category owner can delete this category' });
+                    }
+                }
+
+                // Clean up members set
+                await db.delete(`category:${cid}:members`);
+
+                // Purge the category (removes category and all its content)
+                await Categories.purge(cid, uid);
+
+                res.json({ ok: true, message: 'Category deleted successfully' });
+            } catch (err) {
+                console.error('[user-public-categories] Error deleting category:', err);
+                next(err);
+            }
+        }
+    );
+
     // Get current user's owned categories
     router.get('/api/user/my-categories',
         middleware.ensureLoggedIn,

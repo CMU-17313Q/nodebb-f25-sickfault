@@ -398,18 +398,67 @@ $(window).on('action:ajaxify.end', (_ev, data) => {
                 </button>
             `);
 
+            const deleteCategoryBtn = $(`
+                <button id="delete-category-btn" class="btn btn-danger" style="margin-left: 10px;">
+                    <i class="fa fa-trash"></i> Delete Category
+                </button>
+            `);
+
             manageMembersBtn.on('click', function() {
                 showMembersModal(cid);
             });
 
-            // Try to find a good place to insert the button
+            deleteCategoryBtn.on('click', function() {
+                bootbox.confirm({
+                    title: 'Delete Category',
+                    message: 'Are you sure you want to delete this category? This will permanently remove all topics, posts, and members. This action cannot be undone.',
+                    buttons: {
+                        confirm: {
+                            label: 'Delete',
+                            className: 'btn-danger'
+                        },
+                        cancel: {
+                            label: 'Cancel',
+                            className: 'btn-secondary'
+                        }
+                    },
+                    callback: async function(confirmed) {
+                        if (confirmed) {
+                            const $btn = $('#delete-category-btn');
+                            $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Deleting...');
+
+                            try {
+                                await $.ajax({
+                                    method: 'DELETE',
+                                    url: `/api/category/${cid}/delete`,
+                                    headers: { 'x-csrf-token': config.csrf_token }
+                                });
+
+                                // Category deleted successfully - redirect to categories page
+                                if (typeof ajaxify.go === 'function') {
+                                    ajaxify.go('categories');
+                                } else {
+                                    window.location.href = (window.config?.relative_path || '') + '/categories';
+                                }
+                            } catch (e) {
+                                $btn.prop('disabled', false).html('<i class="fa fa-trash"></i> Delete Category');
+                                bootbox.alert(e?.responseJSON?.error || 'Failed to delete category. Please try again.');
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Try to find a good place to insert the buttons
             const tools = $('[component="category/controls"]');
             if (tools.length) {
                 tools.append(manageMembersBtn);
+                tools.append(deleteCategoryBtn);
             } else {
                 const header = $('[component="category/header"]');
                 if (header.length) {
                     header.append(manageMembersBtn);
+                    header.append(deleteCategoryBtn);
                 }
             }
         }
