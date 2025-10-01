@@ -202,4 +202,38 @@ describe('User Public Categories Plugin', () => {
 			assert(isAdmin);
 		});
 	});
+
+	describe('Member List', () => {
+		it('should retrieve category members', async () => {
+			// Get ownerUid from database
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryData.cid}`, 'ownerUid');
+			assert(ownerUidFromDb, 'Category should have an owner');
+
+			// Get member UIDs
+			const memberUids = await db.getSetMembers(`category:${categoryData.cid}:members`);
+			assert(Array.isArray(memberUids));
+			assert(memberUids.length >= 1); // at least the owner
+
+			// Get member details
+			const members = await Promise.all(memberUids.map(async (uid) => {
+				const userData = await User.getUserFields(uid, ['username', 'picture', 'uid']);
+				return userData;
+			}));
+
+			assert(members.length >= 1);
+			assert(members[0].username);
+		});
+
+		it('should identify non-user category', async () => {
+			// Create a regular admin category
+			const regularCategory = await Categories.create({
+				name: 'Regular Category',
+				description: 'Not a user category',
+			});
+
+			// Verify it has no ownerUid
+			const ownerUid = await db.getObjectField(`category:${regularCategory.cid}`, 'ownerUid');
+			assert(!ownerUid, 'Regular category should not have ownerUid');
+		});
+	});
 });
