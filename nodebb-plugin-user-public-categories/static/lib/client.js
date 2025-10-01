@@ -1,56 +1,328 @@
 'use strict';
-/* global $, ajaxify, app, config */
+/* global $, ajaxify, app, config, bootbox */
 
 function isLoggedIn() {
-  return (window.app && app.user && app.user.uid) || (window.config && config.loggedIn);
+    return (window.app && app.user && app.user.uid) || (window.config && config.loggedIn);
 }
 
-$(window).on('action:ajaxify.end', (_ev, data) => {
-  if (!/^categories/.test(data.url)) return;
-  if (!isLoggedIn()) return;
-  if (document.getElementById('btn-new-public-category')) return;
+function showCategoryModal() {
+    const modal = `
+        <div class="modal fade" id="createCategoryModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create New Category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="createCategoryForm">
+                            <div class="form-group">
+                                <label for="categoryName">Category Name *</label>
+                                <input type="text" class="form-control" id="categoryName" required minlength="3" maxlength="100" placeholder="Enter category name">
+                                <small class="form-text text-muted">3-100 characters</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="categoryDescription">Description (optional)</label>
+                                <textarea class="form-control" id="categoryDescription" rows="3" maxlength="500" placeholder="Enter category description"></textarea>
+                                <small class="form-text text-muted">Maximum 500 characters</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="submitCategory">Create Category</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Remove any existing modal
+    $('#createCategoryModal').remove();
 
-  const btn = $('<button id="btn-new-public-category" class="btn btn-primary"> Create a New Category</button>')
-    .css({ margin: '1rem 0' })
-    .on('click', async () => {
-        const name = prompt('Category name:');
-        if (!name) return;
-        const description = prompt('Description (optional):') || '';
+    $('body').append(modal);
 
+    const $modal = $('#createCategoryModal');
+
+    // Handle close button
+    $modal.find('.close').on('click', function() {
+        $modal.modal('hide');
+    });
+
+    // Handle form submission
+    $modal.find('#submitCategory').on('click', async function() {
+        const name = $('#categoryName').val().trim();
+        const description = $('#categoryDescription').val().trim();
+        
+        // Validate
+        if (!name || name.length < 3) {
+            bootbox.alert('Category name must be at least 3 characters.');
+            return;
+        }
+        
+        if (name.length > 100) {
+            bootbox.alert('Category name cannot exceed 100 characters.');
+            return;
+        }
+        
+        // Disable button and show loading state
+        const $btn = $(this);
+        $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Creating...');
+        
         try {
             const res = await $.ajax({
                 method: 'POST',
                 url: '/api/category/create',
                 headers: { 'x-csrf-token': config.csrf_token },
-                data: { name, description },
+                data: { name, description }
             });
-            app.alertSuccess('Category created.');
+            
+            // Category created successfully - will redirect
+            $('#createCategoryModal').modal('hide');
+            
             if (res?.cid) {
-                // If we're already viewing /categories, do a soft refresh so the new one shows up
+                // Refresh the page or redirect to the new category
                 const onCategories = window.ajaxify?.data?.url && /^categories/.test(ajaxify.data.url);
                 if (onCategories && typeof ajaxify.refresh === 'function') {
                     ajaxify.refresh();
                 } else if (typeof ajaxify.go === 'function') {
-                    ajaxify.go('categories');  // go to categories if we were elsewhere
+                    ajaxify.go('category/' + res.slug);
                 } else {
-                    // hard fallback (rare)
-                    window.location.href = (window.config?.relative_path || '') + '/categories';
+                    window.location.href = (window.config?.relative_path || '') + '/category/' + res.slug;
                 }
             }
-            } catch (e) {
-                if (e?.status === 409) {
-                    app.alert({
-                        type: 'error',
-                        title: 'Duplicate name',
-                        message: 'No duplicates allowed. Please choose a different category name.',
-                        timeout: 5000,
+        } catch (e) {
+            $btn.prop('disabled', false).text('Create Category');
+            bootbox.alert(e?.responseJSON?.error || 'Failed to create category. Please try again.');
+        }
+    });
+    
+    // Handle Enter key in form
+    $modal.find('#createCategoryForm').on('submit', function(e) {
+        e.preventDefault();
+        $modal.find('#submitCategory').trigger('click');
+    });
+
+    // Focus on name input when modal opens
+    $modal.on('shown.bs.modal', function() {
+        $('#categoryName').focus();
+    });
+
+    // Show the modal
+    $modal.modal('show');
+}
+
+function showMembersModal(cid) {
+    const modal = `
+        <div class="modal fade" id="manageMembersModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Manage Category Members</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inviteMemberUsername">Invite Member</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inviteMemberUsername" placeholder="Enter username">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" id="inviteMemberBtn">
+                                        <i class="fa fa-user-plus"></i> Invite
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6>Current Members</h6>
+                        <div id="membersList">
+                            <div class="text-center"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Remove any existing modal
+    $('#manageMembersModal').remove();
+
+    $('body').append(modal);
+
+    const $modal = $('#manageMembersModal');
+
+    // Load members list
+    async function loadMembers() {
+        try {
+            const res = await $.ajax({
+                method: 'GET',
+                url: `/api/category/${cid}/members`
+            });
+
+            const $list = $('#membersList');
+            $list.empty();
+
+            if (!res.members || res.members.length === 0) {
+                $list.html('<p class="text-muted">No members yet. Invite someone to get started!</p>');
+                return;
+            }
+
+            const memberItems = res.members.map(member => {
+                const isOwner = parseInt(member.uid) === parseInt(res.ownerUid);
+                const pictureHtml = member.picture
+                    ? `<img src="${member.picture}" alt="${member.username}" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">`
+                    : `<div style="width: 30px; height: 30px; border-radius: 50%; background: #ccc; margin-right: 10px; display: inline-block;"></div>`;
+
+                return `
+                    <div class="member-item d-flex justify-content-between align-items-center mb-2 p-2 border rounded">
+                        <div class="d-flex align-items-center">
+                            ${pictureHtml}
+                            <span>${member.username}</span>
+                            ${isOwner ? '<span class="badge badge-primary ml-2">Owner</span>' : ''}
+                        </div>
+                        ${!isOwner ? `<button class="btn btn-sm btn-danger remove-member-btn" data-uid="${member.uid}" data-username="${member.username}">
+                            <i class="fa fa-times"></i> Remove
+                        </button>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            $list.html(memberItems);
+
+            // Attach remove handlers
+            $list.find('.remove-member-btn').on('click', async function() {
+                const targetUid = $(this).data('uid');
+                const username = $(this).data('username');
+
+                try {
+                    await $.ajax({
+                        method: 'DELETE',
+                        url: `/api/category/${cid}/members/${targetUid}`,
+                        headers: { 'x-csrf-token': config.csrf_token }
                     });
-                } else {
-                    app.alertError(e?.responseJSON?.error || 'Failed to create category.');
+
+                    // Member removed successfully - list will refresh
+                    loadMembers();
+                } catch (e) {
+                    bootbox.alert(e?.responseJSON?.error || 'Failed to remove member.');
+                }
+            });
+        } catch (e) {
+            $('#membersList').html('<p class="text-danger">Error loading members.</p>');
+        }
+    }
+
+    // Handle invite member
+    $modal.find('#inviteMemberBtn').on('click', async function() {
+        const username = $('#inviteMemberUsername').val().trim();
+
+        if (!username) {
+            bootbox.alert('Please enter a username.');
+            return;
+        }
+
+        const $btn = $(this);
+        $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
+
+        try {
+            await $.ajax({
+                method: 'POST',
+                url: `/api/category/${cid}/invite`,
+                headers: { 'x-csrf-token': config.csrf_token },
+                data: { username }
+            });
+
+            // Member invited successfully - list will refresh
+            $('#inviteMemberUsername').val('');
+            loadMembers();
+        } catch (e) {
+            bootbox.alert(e?.responseJSON?.error || 'Failed to invite member.');
+        } finally {
+            $btn.prop('disabled', false).html('<i class="fa fa-user-plus"></i> Invite');
+        }
+    });
+
+    // Handle Enter key
+    $modal.find('#inviteMemberUsername').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            $modal.find('#inviteMemberBtn').trigger('click');
+        }
+    });
+
+    // Handle close button
+    $modal.find('.close').on('click', function() {
+        $modal.modal('hide');
+    });
+
+    // Show modal and load members
+    $modal.modal('show');
+    loadMembers();
+}
+
+$(window).on('action:ajaxify.end', (_ev, data) => {
+    if (!isLoggedIn()) return;
+
+    // Handle categories list page
+    if (/^categories/.test(data.url)) {
+        // Check if buttons already exist
+        if (document.getElementById('user-category-controls')) return;
+
+        const controls = $(`
+            <div id="user-category-controls" style="margin: 1rem 0;">
+                <button id="btn-new-public-category" class="btn btn-primary">
+                    <i class="fa fa-plus"></i> Create New Category
+                </button>
+            </div>
+        `);
+
+        controls.find('#btn-new-public-category').on('click', showCategoryModal);
+
+        // Find the best place to insert the controls
+        const pageHeader = $('.page-header, .category-header, #category-selector');
+        if (pageHeader.length) {
+            pageHeader.after(controls);
+        } else {
+            $('#content').prepend(controls);
+        }
+    }
+
+    // Handle individual category page
+    if (/^category\//.test(data.url)) {
+        // Check if button already exists
+        if (document.getElementById('manage-members-btn')) return;
+
+        const cid = ajaxify?.data?.cid;
+        const ownerUid = ajaxify?.data?.ownerUid;
+        const currentUid = app?.user?.uid;
+
+        console.log('[user-public-categories] Category page - cid:', cid, 'ownerUid:', ownerUid, 'currentUid:', currentUid);
+
+        // Only show button if user is the owner
+        if (cid && ownerUid && parseInt(ownerUid) === parseInt(currentUid)) {
+            const manageMembersBtn = $(`
+                <button id="manage-members-btn" class="btn btn-info" style="margin-left: 10px;">
+                    <i class="fa fa-users"></i> Manage Members
+                </button>
+            `);
+
+            manageMembersBtn.on('click', function() {
+                showMembersModal(cid);
+            });
+
+            // Try to find a good place to insert the button
+            const tools = $('[component="category/controls"]');
+            if (tools.length) {
+                tools.append(manageMembersBtn);
+            } else {
+                const header = $('[component="category/header"]');
+                if (header.length) {
+                    header.append(manageMembersBtn);
                 }
             }
-  });
-
-  $('#content').prepend(btn);
-
+        }
+    }
 });
