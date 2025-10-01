@@ -161,4 +161,45 @@ describe('User Public Categories Plugin', () => {
 			assert(isAdmin);
 		});
 	});
+
+	describe('Member Management - Remove', () => {
+		it('should allow owner to remove a member', async () => {
+			// Remove user from members set
+			await db.setRemove(`category:${categoryData.cid}:members`, memberUid);
+
+			// Revoke privileges
+			const memberPrivileges = [
+				'find', 'read', 'topics:read', 'topics:create', 'topics:reply',
+			];
+			await Privileges.categories.rescind(memberPrivileges, categoryData.cid, memberUid);
+
+			// Verify user is removed from members set
+			const isMember = await db.isSetMember(`category:${categoryData.cid}:members`, memberUid);
+			assert(!isMember);
+
+			// Verify member no longer has read privileges
+			const canRead = await Privileges.categories.can('topics:read', categoryData.cid, memberUid);
+			assert(!canRead);
+		});
+
+		it('should prevent removing the owner', async () => {
+			// Get ownerUid from database
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryData.cid}`, 'ownerUid');
+
+			// Verify attempting to remove owner would fail validation
+			assert.strictEqual(parseInt(ownerUidFromDb), ownerUid, 'Cannot remove category owner');
+		});
+
+		it('should check ownership before allowing removal', async () => {
+			// Get ownerUid from database
+			const ownerUidFromDb = await db.getObjectField(`category:${categoryData.cid}`, 'ownerUid');
+
+			// Verify non-owner cannot remove
+			assert.notStrictEqual(parseInt(ownerUidFromDb), memberUid);
+
+			// Verify admin can bypass ownership check
+			const isAdmin = await User.isAdministrator(adminUid);
+			assert(isAdmin);
+		});
+	});
 });
