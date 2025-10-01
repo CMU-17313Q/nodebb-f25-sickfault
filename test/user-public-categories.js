@@ -309,4 +309,47 @@ describe('User Public Categories Plugin', () => {
 			assert(userCategoryCids.includes(categoryData.cid), 'Should include our test category');
 		});
 	});
+
+	describe('Plugin Hooks', () => {
+		it('should preserve ownerUid on category create', async () => {
+			const hookData = {
+				data: { ownerUid: 123 },
+				category: {},
+			};
+
+			const result = await plugin.preserveOwnerUidOnCreate(hookData);
+			assert.strictEqual(result.category.ownerUid, 123);
+		});
+
+		it('should add ownerUid to fields list', async () => {
+			const hookData = {
+				fields: ['name', 'description'],
+			};
+
+			const result = await plugin.addOwnerUidToFields(hookData);
+			assert(result.fields.includes('ownerUid'));
+		});
+
+		it('should add ownerUid to category data', async () => {
+			const hookData = {
+				category: { cid: categoryData.cid },
+			};
+
+			const result = await plugin.addOwnerUidToCategory(hookData);
+			assert(result.category.ownerUid);
+			assert.strictEqual(result.category.ownerUid, ownerUid);
+		});
+
+		it('should add ownerUid to multiple categories', async () => {
+			const hookData = {
+				categories: [
+					{ cid: categoryData.cid },
+				],
+			};
+
+			const result = await plugin.addOwnerUidToCategories(hookData);
+			assert(result.categories[0].ownerUid);
+			assert.strictEqual(result.categories[0].ownerUid, ownerUid);
+		});
+	});
 });
