@@ -34,6 +34,8 @@
     "tools": "Tools",
     "locked": "Locked",
     "resolved": "Resolved",
+    "resolved-topics": "Resolved Topics",
+    "unresolved-topics": "Unresolved Topics",
     "mark-resolved": "Mark resolved",
     "mark-unresolved": "Mark unresolved",
     "pinned": "Pinned",
