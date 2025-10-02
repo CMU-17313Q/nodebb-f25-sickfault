@@ -83,11 +83,17 @@ define('topicList', [
 		TopicList.removeListeners();
 		socket.on('event:new_topic', onNewTopic);
 		socket.on('event:new_post', onNewPost);
+		// Listen for topic resolved/unresolved events to update UI dynamically
+		socket.on('event:topic_resolved', onTopicResolved);
+		socket.on('event:topic_unresolved', onTopicUnresolved);
 	};
 
 	TopicList.removeListeners = function () {
 		socket.removeListener('event:new_topic', onNewTopic);
 		socket.removeListener('event:new_post', onNewPost);
+		// Remove resolved/unresolved event listeners
+		socket.removeListener('event:topic_resolved', onTopicResolved);
+		socket.removeListener('event:topic_unresolved', onTopicUnresolved);
 	};
 
 	function onNewTopic(data) {
