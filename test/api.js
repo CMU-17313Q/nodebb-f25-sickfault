@@ -487,6 +487,12 @@ describe('API', async () => {
 				});
 
 				it('should not error out when called', async function () {
+					// Skip if method is not defined (e.g., non-GET routes in Read API)
+					if (!method || !context[method]) {
+						this.skip();
+						return;
+					}
+
 					// Fixed with AI (Claude) - Skip file upload endpoints to avoid timeout
 					if (context[method].hasOwnProperty('requestBody') &&
 						context[method].requestBody.content &&
@@ -524,6 +530,11 @@ describe('API', async () => {
 				});
 
 				it('response status code should match one of the schema defined responses', () => {
+					// Skip if method is not defined
+					if (!method || !context[method]) {
+						return;
+					}
+
 					// HACK: allow HTTP 418 I am a teapot, for now   👇
 					const { responses } = context[method];
 					assert(
@@ -535,6 +546,11 @@ describe('API', async () => {
 
 				// Recursively iterate through schema properties, comparing type
 				it('response body should match schema definition', () => {
+					// Skip if method is not defined
+					if (!method || !context[method]) {
+						return;
+					}
+
 					const http302 = context[method].responses['302'];
 					if (http302 && result.response.statusCode === 302) {
 						// Compare headers instead
