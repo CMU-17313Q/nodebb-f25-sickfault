@@ -18,6 +18,18 @@ module.exports = function (Categories) {
 		let topicsData = await topics.getTopicsByTids(tids, data.uid);
 		topicsData = await user.blocks.filter(data.uid, topicsData);
 
+		// Filter topics by resolved status if filter is 'resolved' or 'unresolved'
+		if (data.filter === 'resolved' || data.filter === 'unresolved') {
+			topicsData = topicsData.filter((topic) => {
+				if (data.filter === 'resolved') {
+					return topic && topic.resolved === 1;
+				} else if (data.filter === 'unresolved') {
+					return topic && topic.resolved !== 1;
+				}
+				return true;
+			});
+		}
+
 		if (!topicsData.length) {
 			return { topics: [], uid: data.uid };
 		}
