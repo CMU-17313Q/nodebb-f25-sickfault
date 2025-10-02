@@ -91,6 +91,8 @@ categoryController.get = async function (req, res, next) {
 	const stop = start + userSettings.topicsPerPage - 1;
 
 	const sort = validSorts.includes(req.query.sort) ? req.query.sort : userSettings.categoryTopicSort;
+	// Get filter parameter from query string (for resolved/unresolved filtering)
+	const filter = req.query.filter || '';
 
 	const categoryData = await categories.getCategoryById({
 		uid: req.uid,
@@ -102,6 +104,7 @@ categoryController.get = async function (req, res, next) {
 		query: req.query,
 		tag: req.query.tag,
 		targetUid: targetUid,
+		filter: filter, // Pass filter to enable resolved/unresolved filtering
 	});
 	if (!categoryData) {
 		return next();
@@ -150,6 +153,11 @@ categoryController.get = async function (req, res, next) {
 	categoryData.selectedTag = tagData.selectedTag;
 	categoryData.selectedTags = tagData.selectedTags;
 	categoryData.sortOptionLabel = `[[topic:${validator.escape(String(sort)).replace(/_/g, '-')}]]`;
+
+	// Add filter options for resolved/unresolved topics
+	const baseUrl = `category/${categoryData.slug}`;
+	categoryData.filters = helpers.buildFilters(baseUrl, filter, req.query);
+	categoryData.selectedFilter = categoryData.filters.find(f => f && f.selected);
 
 	if (!meta.config['feeds:disableRSS']) {
 		categoryData.rssFeedUrl = `${url}/category/${categoryData.cid}.rss`;

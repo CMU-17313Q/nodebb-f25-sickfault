@@ -117,6 +117,35 @@ get:
                     type: array
                     items:
                       type: string
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        url:
+                          type: string
+                        selected:
+                          type: boolean
+                        filter:
+                          type: string
+                        icon:
+                          type: string
+                  selectedFilter:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      selected:
+                        type: boolean
+                      filter:
+                        type: string
+                      icon:
+                        type: string
+                    nullable: true
                   sortOptionLabel:
                     type: string
                   handleFull:
