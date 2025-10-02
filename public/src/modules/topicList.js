@@ -159,6 +159,30 @@ define('topicList', [
 		}
 	}
 
+	// Handle topic resolved event - shows resolved badge on topic in list
+	function onTopicResolved(data) {
+		if (!data || !data.tid) {
+			return;
+		}
+		const topicEl = topicListEl.find('[component="category/topic"][data-tid="' + data.tid + '"]');
+		if (topicEl.length) {
+			// Show the resolved badge
+			topicEl.find('[component="topic/resolved"]').removeClass('hidden');
+		}
+	}
+
+	// Handle topic unresolved event - hides resolved badge on topic in list
+	function onTopicUnresolved(data) {
+		if (!data || !data.tid) {
+			return;
+		}
+		const topicEl = topicListEl.find('[component="category/topic"][data-tid="' + data.tid + '"]');
+		if (topicEl.length) {
+			// Hide the resolved badge
+			topicEl.find('[component="topic/resolved"]').addClass('hidden');
+		}
+	}
+
 	TopicList.loadMoreTopics = function (direction) {
 		if (!topicListEl.length || !topicListEl.children().length) {
 			return;
