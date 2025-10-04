@@ -19,11 +19,12 @@ module.exports = function (Categories) {
 		topicsData = await user.blocks.filter(data.uid, topicsData);
 
 		// Filter topics by resolved status if filter is 'resolved' or 'unresolved'
-		if (data.filter === 'resolved' || data.filter === 'unresolved') {
+		const filter = results.filter || data.filter;
+		if (filter === 'resolved' || filter === 'unresolved') {
 			topicsData = topicsData.filter((topic) => {
-				if (data.filter === 'resolved') {
+				if (filter === 'resolved') {
 					return topic && topic.resolved === 1;
-				} else if (data.filter === 'unresolved') {
+				} else if (filter === 'unresolved') {
 					return topic && topic.resolved !== 1;
 				}
 				return true;
