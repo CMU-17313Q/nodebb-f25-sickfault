@@ -192,6 +192,36 @@ describe('Mark Resolved - Comprehensive Feature Tests', () => {
 				assert.strictEqual(err.message, '[[error:no-privileges]]');
 			}
 		});
+
+		it('should not resolve already resolved topic', async () => {
+			await socketTopics.resolve({ uid: regularUid }, { tid: testTopic.tid });
+			try {
+				await socketTopics.resolve({ uid: regularUid }, { tid: testTopic.tid });
+				assert.fail('Should have thrown error');
+			} catch (err) {
+				assert.strictEqual(err.message, '[[error:topic-already-resolved]]');
+			}
+		});
+
+		it('should include resolved flag in topic data for UI indicator display', async () => {
+			await socketTopics.resolve({ uid: regularUid }, { tid: testTopic.tid });
+			const topicData = await topics.getTopicData(testTopic.tid);
+
+			assert(topicData.hasOwnProperty('resolved'));
+			assert.strictEqual(topicData.resolved, 1);
+			assert(topicData.hasOwnProperty('resolvedBy'));
+			assert(topicData.hasOwnProperty('resolvedAt'));
+			assert.strictEqual(topicData.resolvedBy, regularUid);
+			assert(topicData.resolvedAt > 0);
+		});
+
+		it('should unresolve topic and update UI data correctly', async () => {
+			await socketTopics.resolve({ uid: regularUid }, { tid: testTopic.tid });
+			await socketTopics.unresolve({ uid: regularUid }, { tid: testTopic.tid });
+
+			const topicData = await topics.getTopicData(testTopic.tid);
+			assert.strictEqual(topicData.resolved, 0);
+		});
 	});
 
 	describe('Filter Functionality Tests', () => {
