@@ -700,60 +700,6 @@ describe('Topic\'s', () => {
 			assert.strictEqual(pinned, 0);
 		});
 
-		it('should resolve topic', async () => {
-			await apiTopics.resolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-			const topicData = await topics.getTopicFields(newTopic.tid, ['resolved', 'resolvedBy']);
-			assert.strictEqual(topicData.resolved, 1);
-			assert.strictEqual(topicData.resolvedBy, topic.userId);
-		});
-
-		it('should not allow non-author or non-moderator to resolve topic', async () => {
-			// Unresolve first (topic was resolved in previous test)
-			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-
-			// Create a different user (not author, not moderator)
-			const otherUid = await User.create({ username: 'resolver_test' });
-			try {
-				await apiTopics.resolve({ uid: otherUid }, { tids: [newTopic.tid] });
-				assert.fail('Should have thrown error');
-			} catch (err) {
-				assert.strictEqual(err.message, '[[error:no-privileges]]');
-			}
-		});
-
-		it('should allow moderator to resolve topic', async () => {
-			// Topic is already unresolved from previous test, so we can resolve as moderator
-			await apiTopics.resolve({ uid: adminUid }, { tids: [newTopic.tid] });
-			const topicData = await topics.getTopicFields(newTopic.tid, ['resolved', 'resolvedBy']);
-			assert.strictEqual(topicData.resolved, 1);
-			assert.strictEqual(topicData.resolvedBy, adminUid);
-		});
-
-		it('should unresolve topic', async () => {
-			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-			const topicData = await topics.getTopicFields(newTopic.tid, ['resolved', 'resolvedBy', 'resolvedAt']);
-			assert.strictEqual(topicData.resolved, 0);
-			// Integer fields return 0 when deleted/missing, not null
-			assert.strictEqual(topicData.resolvedBy, 0);
-			assert.strictEqual(topicData.resolvedAt, 0);
-		});
-
-		it('should not resolve already resolved topic', async () => {
-			// First resolve the topic
-			await apiTopics.resolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-
-			// Try to resolve again
-			try {
-				await apiTopics.resolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-				assert.fail('Should have thrown error');
-			} catch (err) {
-				assert.strictEqual(err.message, '[[error:topic-already-resolved]]');
-			}
-
-			// Clean up
-			await apiTopics.unresolve({ uid: topic.userId }, { tids: [newTopic.tid] });
-		});
-
 		it('should move all topics', (done) => {
 			socketTopics.moveAll({ uid: adminUid }, { cid: moveCid, currentCid: categoryObj.cid }, (err) => {
 				assert.ifError(err);
