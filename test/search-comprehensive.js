@@ -353,6 +353,23 @@ describe('Comprehensive Search Tests', () => {
 	});
 
 	describe('Time Range Filter', () => {
+		it('should return full (unfiltered) results when timeRange=0 and timeFilter=older', async () => {
+			const base = await search.search({
+				query: 'Python',
+				searchIn: 'titlesposts',
+			});
+			const olderZero = await search.search({
+				query: 'Python',
+				searchIn: 'titlesposts',
+				timeRange: '0',
+				timeFilter: 'older',
+			});
+			assert(olderZero);
+			assert.strictEqual(olderZero.matchCount, base.matchCount);
+			assert(Array.isArray(olderZero.posts));
+			// Posts count on a page may differ if pagination defaults differ, but matchCount must be equal.
+		});
+
 		it('should filter posts newer than specified time', async () => {
 			const result = await search.search({
 				query: 'Python',
@@ -373,7 +390,7 @@ describe('Comprehensive Search Tests', () => {
 			const result = await search.search({
 				query: 'test',
 				searchIn: 'titlesposts',
-				timeRange: '0.01', // Very short time in seconds
+				timeRange: '1', // whole second to avoid parse issues
 				timeFilter: 'older',
 			});
 
@@ -383,53 +400,72 @@ describe('Comprehensive Search Tests', () => {
 	});
 
 	describe('Sorting', () => {
-		it('should sort by timestamp descending', async () => {
-			const result = await search.search({
+		it('should not change matchCount when sorting by timestamp desc', async () => {
+			const base = await search.search({
+				query: 'data',
+				searchIn: 'titlesposts',
+			});
+			const sorted = await search.search({
 				query: 'data',
 				searchIn: 'titlesposts',
 				sortBy: 'timestamp',
 				sortDirection: 'desc',
 			});
-
-			assert(result);
-			if (result.posts.length > 1) {
-				for (let i = 0; i < result.posts.length - 1; i++) {
-					assert(result.posts[i].timestamp >= result.posts[i + 1].timestamp);
+			assert(sorted);
+			assert.strictEqual(sorted.matchCount, base.matchCount);
+			if (sorted.posts.length > 1) {
+				for (let i = 0; i < sorted.posts.length - 1; i++) {
+					assert(sorted.posts[i].timestamp >= sorted.posts[i + 1].timestamp);
 				}
 			}
 		});
 
-		it('should sort by timestamp ascending', async () => {
-			const result = await search.search({
+		it('should sort by timestamp ascending without changing matchCount', async () => {
+			const base = await search.search({
+				query: 'JavaScript',
+				searchIn: 'titlesposts',
+			});
+			const sorted = await search.search({
 				query: 'JavaScript',
 				searchIn: 'titlesposts',
 				sortBy: 'timestamp',
 				sortDirection: 'asc',
 			});
 
-			assert(result);
-			if (result.posts.length > 1) {
-				for (let i = 0; i < result.posts.length - 1; i++) {
-					assert(result.posts[i].timestamp <= result.posts[i + 1].timestamp);
+			assert(sorted);
+			assert.strictEqual(sorted.matchCount, base.matchCount);
+			if (sorted.posts.length > 1) {
+				for (let i = 0; i < sorted.posts.length - 1; i++) {
+					assert(sorted.posts[i].timestamp <= sorted.posts[i + 1].timestamp);
 				}
 			}
 		});
 
-		it('should sort by votes', async () => {
-			const result = await search.search({
+		it('should sort by votes without changing matchCount', async () => {
+			const base = await search.search({
+				query: 'Python',
+				searchIn: 'titlesposts',
+			});
+			const sorted = await search.search({
 				query: 'Python',
 				searchIn: 'titlesposts',
 				sortBy: 'votes',
 				sortDirection: 'desc',
 			});
 
-			assert(result);
-			// Just verify it completes without error
+			assert(sorted);
+			assert.strictEqual(sorted.matchCount, base.matchCount);
+			// Just verify it completes without error and did not change total matches
 		});
 	});
 
 	describe('Pagination', () => {
-		it('should return correct page count', async () => {
+		it('should return correct page count and preserve total matchCount', async () => {
+			const baseline = await search.search({
+				query: 'data',
+				searchIn: 'titlesposts',
+			});
+
 			const result = await search.search({
 				query: 'data',
 				searchIn: 'titlesposts',
@@ -439,18 +475,19 @@ describe('Comprehensive Search Tests', () => {
 			assert(result);
 			assert(result.pageCount >= 1);
 			assert.strictEqual(typeof result.matchCount, 'number');
+			assert.strictEqual(result.matchCount, baseline.matchCount);
 		});
 
-		it('should return correct results for specific page', async () => {
+		it('should return correct results for specific page with smaller itemsPerPage', async () => {
 			const result = await search.search({
 				query: 'test',
 				searchIn: 'titlesposts',
 				page: 1,
-				itemsPerPage: 5,
+				itemsPerPage: 2,
 			});
 
 			assert(result);
-			assert(result.posts.length <= 5);
+			assert(result.posts.length <= 2);
 		});
 	});
 
@@ -502,14 +539,16 @@ describe('Comprehensive Search Tests', () => {
 	});
 
 	describe('Tag Search', () => {
-		it('should search for tags', async () => {
+		it('should search for tags and contain "javascript"', async () => {
 			const result = await search.search({
 				query: 'javascript',
 				searchIn: 'tags',
 			});
 
 			assert(result);
-			assert(result.tags);
+			assert(Array.isArray(result.tags));
+			const tagValues = result.tags.map(t => (typeof t === 'object' ? t.value : t)).map(String.toLowerCase);
+			assert(tagValues.includes('javascript'));
 		});
 	});
 
@@ -607,6 +646,7 @@ describe('Comprehensive Search Tests', () => {
 					searchIn: 'invalid',
 				});
 				// If no error is thrown, the function may return empty results or handle gracefully
+				// Just verify it doesn't crash
 				assert(result !== undefined);
 			} catch (err) {
 				// If an error is thrown, verify it's the expected error
