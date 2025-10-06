@@ -15,19 +15,19 @@ The Mark Resolved feature allows users to mark forum topics as resolved or unres
 ### 1. Mark Resolved/Unresolved Button
 
 #### Location
-The Mark Resolved button appears on individual topic pages in the topic toolbar, alongside other topic management tools (lock, pin, delete, etc.).
+The Mark Resolved button appears on individual topic pages in the topic toolbar, alongside other topic management tools such as Mark Unread, Watching, etc.
 
 #### Who Can Use It
 - **Topic Author**: Can mark their own topics as resolved or unresolved
 - **Administrators**: Can mark any topic as resolved or unresolved
 - **Moderators**: Can mark any topic as resolved or unresolved
-- **Regular Users**: Cannot mark other users' topics as resolved
+- **Regular Users**: **CANNOT** mark other users' topics as resolved
 
 #### How to Use
 
 **To mark a topic as resolved:**
 1. Navigate to the topic page you want to mark as resolved
-2. Look for the "Mark Resolved" button (with a green checkmark icon) in the topic toolbar
+2. Look for the "Mark Resolved" button (with a blue checkmark icon) in the topic toolbar
 3. Click the "Mark Resolved" button
 4. The button will change to "Mark Unresolved" (undo icon)
 5. A green success message will pop up and indicate: "Topic marked as resolved"
@@ -53,8 +53,8 @@ The Mark Resolved button appears on individual topic pages in the topic toolbar,
 The resolved indicator provides a visual cue that a topic has been marked as resolved. It appears both on the topic page and in the category page.
 
 #### Location
-- On the topic page: Appears in the topic labels section alongside other indicators (locked, pinned, etc.)
-- In the category page: Appears next to the topic title in category views
+- On the topic page: Resolving/unresolving will show in the topic action/event history
+- In the category page: Appears underneath the topic title in category views
 
 #### Visual Appearance
 The indicator displays a checkmark icon with styling that matches the forum's theme, making it easy to spot resolved topics at a glance.
@@ -97,7 +97,7 @@ The filter provides the following options:
 
 **To view all topics:**
 1. Click the filter dropdown
-2. Select "All Topics" or the default filter option
+2. Select "All Topics" which is the default filter option
 3. The page will show all topics regardless of resolved status
 
 ---
@@ -162,8 +162,8 @@ These tests ensure the database layer correctly stores and retrieves resolved st
 - Resolved status updates immediately after button click
 - Topic author can resolve their own topic
 - Administrators can resolve any topic
-- General users cannot resolve topics they don't own
-- Cannot resolve already-resolved topics (prevents duplicate actions)
+- General users **CANNOT** resolve topics they don't own
+- **CANNOT** resolve already-resolved topics (prevents duplicate actions)
 - Topic data includes resolved flag for UI indicator
 - Unresolve updates UI data correctly
 
@@ -222,29 +222,6 @@ The tests follow best practices by:
 
 ---
 
-## Technical Implementation Details
-
-### Frontend Components
-- **Button Component**: `/public/src/client/topic/threadTools.js` (lines 86-124)
-- **State Management**: `/public/src/client/topic/threadTools.js` (lines 459-477)
-- **Template**: `/vendor/nodebb-theme-harmony-2.1.15/templates/partials/topic/resolve.tpl`
-- **Filter Template**: `/vendor/nodebb-theme-harmony-2.1.15/templates/partials/topic-filters.tpl`
-
-### Backend Components
-- **Socket Handlers**: Defined in `/src/socket.io/topics.js`
-- **Database Schema**: Integer fields `resolved`, `resolvedBy`, `resolvedAt` in topics table
-- **Filter Logic**: Implemented in `/src/categories.js` (getCategoryTopics function)
-
-### API Endpoints
-- **Mark Resolved**: `PUT /api/topics/:tid/resolve`
-- **Mark Unresolved**: `DELETE /api/topics/:tid/resolve`
-
-### Socket Events
-- **resolve**: Emits when topic is marked as resolved
-- **unresolve**: Emits when topic is marked as unresolved
-
----
-
 ## Troubleshooting
 
 ### Button Not Appearing
@@ -254,6 +231,6 @@ The tests follow best practices by:
 - **Solution**: Clear your browser cache and refresh the page.
 - **Solution**: Check that the URL includes the filter parameter (`?filter=resolved` or `?filter=unresolved`).
 
-### Cannot Mark Topic as Resolved
+### CANNOT Mark Topic as Resolved
 - **Error**: "No privileges" - You must be the topic author, moderator, or administrator.
 - **Error**: "Topic already resolved" - The topic is already marked as resolved. Use the unresolve button instead.
