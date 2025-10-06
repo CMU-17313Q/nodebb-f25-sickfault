@@ -547,7 +547,7 @@ describe('Comprehensive Search Tests', () => {
 
 			assert(result);
 			assert(Array.isArray(result.tags));
-			const tagValues = result.tags.map(t => (typeof t === 'object' ? t.value : t)).map(String.toLowerCase);
+			const tagValues = result.tags.map(t => (t && typeof t === 'object' ? t.value : t)).map(s => String(s).toLowerCase());
 			assert(tagValues.includes('javascript'));
 		});
 	});
