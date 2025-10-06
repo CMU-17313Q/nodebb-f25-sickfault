@@ -607,7 +607,6 @@ describe('Comprehensive Search Tests', () => {
 					searchIn: 'invalid',
 				});
 				// If no error is thrown, the function may return empty results or handle gracefully
-				// Just verify it doesn't crash
 				assert(result !== undefined);
 			} catch (err) {
 				// If an error is thrown, verify it's the expected error
