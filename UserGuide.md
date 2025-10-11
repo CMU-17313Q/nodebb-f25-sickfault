@@ -1,7 +1,7 @@
 # Features
-## [Mark Resolved](#mark-resolved-feature---user-guide)
-## [User Public Categories](#user-public-categories-feature---user-guide)
-## [Search](#search-feature---user-guide)
+- ## [Mark Resolved](#mark-resolved-feature---user-guide)
+- ## [User Public Categories](#user-public-categories-feature---user-guide)
+- ## [Search](#search-feature---user-guide)
 
 ---
 
