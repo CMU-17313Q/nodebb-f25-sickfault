@@ -1,4 +1,4 @@
-# Mark Resolved Feature - User-Guide
+# Mark Resolved & Searching Posts Features - User-Guide
 
 ## Overview
 
@@ -102,10 +102,64 @@ The filter provides the following options:
 
 ---
 
+### 4. Search
+
+#### Purpose
+The search feature lets users search a set of keywords that appears in any post (or other entites, see [UI-Features](#ui-features)) across different categories and topics. Users can search using the web UI or by using the API. 
+
+#### Location
+- On any page: The search button can be found on the bottom of the left bar
+- Search page: Can be accessed through this new URI: `/search`
+- API: The new endpoint can be access through this new URI: `/api/v3/search/posts` 
+<img width="145" height="379" alt="image" src="https://github.com/user-attachments/assets/300e9b56-5b24-4333-895b-7ed3b19c0dc2" />
+
+#### API Documentation
+To access the API documentation:
+1. set to development mode
+ - For linux / macOS
+```bash
+set NODE_ENV=development
+```
+ - For windows
+```bas
+set NODE_ENV=development
+```
+2. Access this URI: `/debug/spec/write#tag/search/paths/~1search~1posts/get`
+
+#### UI Features
+The UI for searching offers has a simple interface and an advanced one, the advanced one does more than what the API does, it can:
+ - Filter by:
+   - Category
+   - Tags
+   - Poster
+   - Number of replies
+   - Time (e.g. in the last three month)
+ - Search:
+   - Titles and posts
+   - Titles only
+   - Posts only
+   - Bookmarks
+   - Categories
+   - Usernames
+   - Tags
+ - Sort by (in ascending / descending order of):
+   - Relevance
+   - Post time
+   - Votes
+   - Last reply time
+   - Topic title
+   - Number of replies
+   - Number of views
+   - Topic votes
+   - Topic start date
+   - Username
+   - Category
+ - Show results as posts or as the topics they were found in
+ - Save searching options 
+
 ## Common Use Cases
 
-### For Question-Based Forums
-1. User posts a question
+1. Searching for a topic across all categories 
 2. Community members provide answers
 3. Original poster or moderator marks the topic as resolved once the question is answered
 4. Other users can filter for unresolved questions to find topics that still need help and provide answers to those posts
@@ -118,12 +172,13 @@ The filter provides the following options:
 
 ---
 
-## Automated Testing
+## Automated Testing (All Features)
 
 ### Test File Location
-Automated tests for the mark-resolved feature are located at:
+Automated tests are located at:
 ```
 /test/mark-resolved.js
+/test/search-comprehensive.js
 ```
 
 ### Running Tests
@@ -132,9 +187,15 @@ To run the automated tests:
 npm run test
 ```
 
-The tests will run automatically as part of the full test suite. To run only the mark-resolved tests:
+The tests will run automatically as part of the full test suite.
+To run only the mark-resolved tests:
 ```bash
 npx mocha test/mark-resolved.js
+```
+
+To run only the searching tests:
+```bash
+npx mocha test/search-comprehensive.js
 ```
 
 ### Test Coverage
@@ -234,6 +295,9 @@ The tests follow best practices by:
 ### CANNOT Mark Topic as Resolved
 - **Error**: "No privileges" - You must be the topic author, moderator, or administrator.
 - **Error**: "Topic already resolved" - The topic is already marked as resolved. Use the unresolve button instead.
+
+### Advanced search not showing results
+ - **Temporary Solution**: Refresh the page without changing anything
 
 ---
 
