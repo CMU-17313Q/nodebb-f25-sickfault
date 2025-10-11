@@ -124,7 +124,7 @@ The filter provides the following options:
 
 ---
 
-## Automated Testing (All Features)
+## Automated Testing
 
 ### Test File Location
 Automated tests are located at:
@@ -636,6 +636,69 @@ The tests will run automatically as part of the full test suite. To run only the
 ```bash
 npx mocha test/search-comprehensive.js
 ```
+### Test Coverage
+Testing has comprehensive coverage and it fouces on the core search function across:
+
+#### 1. Core Search Functionality & Logic
+**What is tested:**
+ - Search queries correctly find matches in post titles, post content, or both
+ - The "match words" logic correctly handles finding results with "any" of the keywords (OR search) versus "all" of the keywords (AND search)
+ - Search is case-insensitive, returning the same results regardless of capitalization
+ - Queries with special characters (e.g., '&') and extra whitespace are handled gracefully
+ - Searching for terms that do not exist returns an empty result set as expected
+ - Performance and timing information is included in search results
+
+**Why these tests are sufficient:**
+These tests validate the fundamental search algorithm. By confirming that the system can correctly identify keywords in the specified locations (titles/posts) and handle logical operators (any/all), we ensure the core of the search feature is reliable and predictable for the end-user.
+
+#### 2. Advanced Filtering and Combination Tests
+**What is tested:**
+- Category Filter: Results are correctly limited to one or more specified categories, including an option to search within child categories
+- User Filter: Results can be filtered to show posts made by one or more specific users
+- Tag Filter: Search is correctly constrained to topics containing one or more specified tags
+- Reply Count Filter: Topics can be filtered by having "at least" or "at most" a certain number of replies
+- Time Range Filter: Posts can be filtered to be "newer" or "older" than a specified time duration
+- Bookmark Filter: Users can search exclusively within their own bookmarked posts
+- Combied Filters: A complex search using multiple filters at once (e.g., by user, category, and tag simultaneously) returns the correct, highly-specific results
+
+**Why these tests are sufficient:**
+This group of tests guarantees that all the advanced filtering options work both independently and, most importantly, in combination. The "Combined Filters" test is critical as it verifies that the query-building logic correctly applies all user-selected criteria, which is the most complex part of the feature.
+
+#### 3. API, Sorting, and Pagination Tests
+**What is tested:**
+- The public API endpoint successfully returns search results
+- API calls correctly process parameters for search term
+- The API gracefully handles empty or invalid search terms
+- Soritng: Results can be sorted by timestamp (ascending/descending) and votes without changing the total number of matches
+
+**Why these tests are sufficient:**
+These tests validate the system-level behavior and the public-facing contract of the feature. By testing the API directly, we ensure that the front-end UI and any external integrations can reliably interact with the search backend. Verifying sorting and pagination confirms that users can effectively navigate large sets of results.
+
+#### 4. Targeted Entity Search Tests
+**What is tested:**
+- The search system can specifically target and find Users by their username
+- The search system can specifically target and find Categories by their name
+- The search system can specifically target and find Tags by their value
+
+**Why these tests are sufficient:**
+These tests confirm that the search feature is truly platform-wide and not just limited to post content. By verifying that each primary entity (Users, Categories, Tags) can be searched for directly, we ensure that all aspects of the UI's search capabilities are supported by the backend.
+
+### Test Methodology
+- Comprehensive Coverage: Tests cover the core search algorithm, every individual filter, combinations of filters, API endpoints, and different search targets (posts, users, tags)
+- Filter Interaction: Explicitly tests that combining multiple filters produces the correct intersection of results
+- API Validation: Directly tests the API endpoints to ensure the public contract is stable and correct
+- Edge Cases: Includes tests for non-existent terms, special characters, whitespace, and invalid parameters to ensure system stability
+- Integration Testing: The test suite inherently acts as an integration test, verifying the interaction between the search module and other core components like topics, users, and categories
+
+### Why We Believe Test Coverage is Sufficient
+- The test suite provides sufficient coverage because it validates the search feature from the ground up
+- Confirms the basic keyword matching works as expected
+- Verifies each filter works in isolation and, critically, in combination with others
+- Guarantees that the backend API can be reliably controlled by the front-end or other services
+- Ensures that users can effectively sort and page through results
+- Confirms that searching extends beyond posts to other key entities like users, categories, and tags
+- Checks for graceful failure and predictable behavior with invalid input
+- The tests cover all features and their interactions, simulating complex, real-world user queries to ensure the system is robust, accurate, and reliable
 
 ## Troubleshooting
 
