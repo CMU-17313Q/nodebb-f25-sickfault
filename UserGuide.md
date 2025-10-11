@@ -555,16 +555,18 @@ These tests verify that the plugin correctly hooks into NodeBB's category system
 
 # Search Feature - User Guide
 
-#### Purpose
+## Overview
+Users can search posts, topics, users, etc. from various interfaces. Admin can view popular searches from the dashboard.
 The search feature lets users search a set of keywords that appears in any post (or other entites, see [UI-Features](#ui-features)) across different categories and topics. Users can search using the web UI or by using the API. 
 
-#### Location
-- On any page: The search button can be found on the bottom of the left bar
-- Search page: Can be accessed through this new URI: `/search`
-- API: The new endpoint can be access through this new URI: `/api/v3/search/posts` 
-<img width="145" height="379" alt="image" src="https://github.com/user-attachments/assets/300e9b56-5b24-4333-895b-7ed3b19c0dc2" />
+## Feature Components
 
-#### API Documentation
+### 1. API
+
+#### Endpoint 
+The new endpoint `/search/posts` can be access through this new URI: `/api/v3/search/posts`.
+
+#### Documentation 
 To access the API documentation:
 1. set to development mode
  - For linux / macOS
@@ -577,36 +579,46 @@ set NODE_ENV=development
 ```
 2. Access this URI: `/debug/spec/write#tag/search/paths/~1search~1posts/get`
 
-#### UI Features
-The UI for searching offers has a simple interface and an advanced one, the advanced one does more than what the API does, it can:
- - Filter by:
-   - Category
-   - Tags
-   - Poster
-   - Number of replies
-   - Time (e.g. in the last three month)
- - Search:
-   - Titles and posts
-   - Titles only
-   - Posts only
-   - Bookmarks
-   - Categories
-   - Usernames
-   - Tags
- - Sort by (in ascending / descending order of):
-   - Relevance
-   - Post time
-   - Votes
-   - Last reply time
-   - Topic title
-   - Number of replies
-   - Number of views
-   - Topic votes
-   - Topic start date
-   - Username
-   - Category
- - Show results as posts or as the topics they were found in
- - Save searching options
+### 2. Search Bar Page
+#### Features
+The UI for searching offers has a simple interface and an advanced one, the advanced one offer more features than what the API does, it can:
+   - **Filter by:**
+      - Category
+      - Tags
+      - Poster
+      - Number of replies
+      - Time (e.g. in the last three month)
+   - **Search:**
+      - Titles and posts
+      - Titles only
+      - Posts only
+      - Bookmarks
+      - Categories
+      - Usernames
+      - Tags
+   - **Sort by (in ascending / descending order of):**
+      - Relevance
+      - Post time
+      - Votes
+      - Last reply time
+      - Topic title
+      - Number of replies
+      - Number of views
+      - Topic votes
+      - Topic start date
+      - Username
+      - Category
+   - **Show results as posts or as the topics they were found in**
+   - **Save searching options**
+
+## Common Use Cases
+   1. User searches for a term within a specific Category and displays results as Topics
+   2. User searches for posts with a specific tag by certain user
+   3. Admin checks trending searches for a certain week
+   4. User searches for a keyword but limits the search to titles only
+   5. User applies a Saved searching option to quickly re-run a complex filter configuration.
+
+## Automated Testing
 
 ### Test File Location
 Automated tests are located at:
@@ -628,4 +640,4 @@ npx mocha test/search-comprehensive.js
 ## Troubleshooting
 
 ### Advanced search not showing results
- - **Temporary Solution**: Refresh the page without changing anything
+ - **Temporary Solution**: Refresh the page without changing anything, this reruns the page's javascript with the correct parameters in the URL
