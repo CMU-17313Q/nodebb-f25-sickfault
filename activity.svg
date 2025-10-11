@@ -1,0 +1,529 @@
+<svg height="400" width="970" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect fill="#CCE4CC" height="99.5%" rx="4.5" stroke="#003D00" width="99.5%" x="0.5" y="0.5"/>
+<defs>
+<image height="100" id="Jeremy" width="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAIAAAAxBA+LAAAZ9ElEQVR4Ae3AA6AkWZbG8f937o3IzKdyS2Oubdu2bdu2bdu2bWmMnpZKr54yMyLu+Xa3anqmhztr1a/u7u5y1VVXXXXVVf9PUbnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXPW/3D2f9x1cddVV/32u+4z346r/xahcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrvp/47rPeD+uetHc83nfwVVX/b9A5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7/Q7u4uV131/8M9n/cdXPWiue4z3o+rrvp/gcpVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/od3dXa666qqrrrrq/ykqV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqv/l7vm87+Cqq67673PdZ7wfV/0vRuWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/0O7uLlddddVVV131/xSVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i38EOaIgmCedqTUAAAAASUVORK5CYII="/>
+<image height="100" id="tbouri" width="100" xlink:href="data:image/png;base64,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"/>
+<image height="100" id="Frenzy-code" width="100" xlink:href="data:image/png;base64,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"/>
+<image height="100" id="jeremy-ru" width="100" xlink:href="data:image/png;base64,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"/>
+<image height="100" id="Mannai" width="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAIAAAAxBA+LAAAaAUlEQVR4Ae3AA6AkWZbG8f937o3IzKdyS2Oubdu2bdu2bdu2bWmMnpZKr54yMyLu+Xa3anqmhztr1a/u7u5y1VVXXXXVVf9PUbnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+o/I+0/3Xvx1VX/Ufb/ojv4KoXzf7XvR9XXfUfbfsjvoP/cahcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F9rd3eWq/832v+79uOqqq/77bH/Ed3DV/2JUrrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/wvt7u5y1VX/P+x/3ftx1Ytm+yO+g6uu+n+BylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/39Rueqqq6666qr/v6hcddVVV1111f9fVK666qqrrrrq/y8qV1111VVXXfX/F5Wrrrrqqquu+v+LylVXXXXVVVf9/0Xlqquuuuqqq/7/onLVVVddddVV/3+h3d1drvrfbP/r3o+rrrrqv8/2R3wHV/0vRuWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/4vKVVddddVVV/3/ReWqq6666qqr/v+ictVVV1111VX/f1G56qqrrrrqqv+/qFx11VVXXXXV/19Urrrqqquuuur/LypXXXXVVVdd9f8Xlauuuuqqq676/wvt7u5y1VVXXXXVVf9PUbnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7+oXHXVVVddddX/X1Suuuqqq6666v8vKlddddVVV131/xeVq6666qqrrvr/i8pVV1111VVX/f9F5aqrrrrqqqv+/6Jy1VVXXXXVVf9/Ubnqqquuuuqq/7/4R62LJmUwdDnmAAAAAElFTkSuQmCC"/>
+<image height="100" id="HairyCrabW" width="100" xlink:href="data:image/png;base64,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"/>
+<image height="100" id="yza-cmu" width="100" xlink:href="data:image/png;base64,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"/>
+</defs>
+<g transform="translate(0, 30)">
+<g transform="translate(25, 10)">
+<text class="header">
+Fall 2025 (2025-08-24–2025-12-31)
+
+</text>
+</g>
+<g transform="translate(0, 25)">
+<g transform="translate(0, 0)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/HairyCrabW">
+<text class="stat bold">
+HairyCrabW
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#HairyCrabW"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=HairyCrabW&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+24
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+713
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+539
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3AHairyCrabW+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+4
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3AHairyCrabW+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+8
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+20
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(190, 0)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/tbouri">
+<text class="stat bold">
+tbouri
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#tbouri"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=tbouri&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+19
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+1986
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+323
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3Atbouri+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+4
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3Atbouri+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+6
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+3
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(380, 0)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/Jeremy">
+<text class="stat bold">
+Jeremy
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#Jeremy"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=Jeremy&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+12
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+742
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+197
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3AJeremy+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3AJeremy+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(570, 0)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/yza-cmu">
+<text class="stat bold">
+yza-cmu
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#yza-cmu"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=yza-cmu&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+11
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+1480
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+854
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3Ayza-cmu+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+4
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3Ayza-cmu+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+5
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+12
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(760, 0)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/Frenzy-code">
+<text class="stat bold">
+Frenzy-code
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#Frenzy-code"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=Frenzy-code&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+6
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+278
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+117
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3AFrenzy-code+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+4
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3AFrenzy-code+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+2
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+11
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(0, 170)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/Mannai">
+<text class="stat bold">
+Mannai
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#Mannai"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=Mannai&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+6
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+181
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+62
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3AMannai+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3AMannai+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(190, 170)">
+<g transform="translate(25, 20)">
+<g>
+<a xlink:href="https://github.com/jeremy-ru">
+<text class="stat bold">
+jeremy-ru
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<use xlink:href="#jeremy-ru"/>
+</g>
+</g>
+<g transform="translate(140, 25)">
+<g transform="translate(0, 0)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/commits?author=jeremy-ru&amp;amp;since=2025-08-24T00:00:00+00:00&amp;amp;until=2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</a>
+</g>
+<g transform="translate(0, 20)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</g>
+<g transform="translate(0, 40)">
+<svg class="icon" height="15" viewBox="0 0 25 25" width="15" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10h24v4h-24z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+0
+</text>
+</g>
+<g transform="translate(0, 60)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/issues?q=author%3Ajeremy-ru+type%3Aissue+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+3
+</text>
+</a>
+</g>
+<g transform="translate(0, 80)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M7.177 3.073L9.573.677A.25.25 0 0110 .854v4.792a.25.25 0 01-.427.177L7.177 3.427a.25.25 0 010-.354zM3.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122v5.256a2.251 2.251 0 11-1.5 0V5.372A2.25 2.25 0 011.5 3.25zM11 2.5h-1V4h1a1 1 0 011 1v5.628a2.251 2.251 0 101.5 0V5A2.5 2.5 0 0011 2.5zm1 10.25a.75.75 0 111.5 0 .75.75 0 01-1.5 0zM3.75 12a.75.75 0 100 1.5.75.75 0 000-1.5z" fill-rule="evenodd"/>
+</svg>
+<a xlink:href="https://github.com/CMU-17313Q/nodebb-f25-sickfault/pulls?q=author%3Ajeremy-ru+type%3Apr+created%3A2025-08-24T00:00:00+00:00..2025-12-31T23:59:59+00:00">
+<text class="stat" x="25" y="12.5">
+4
+</text>
+</a>
+</g>
+<g transform="translate(0, 100)">
+<svg class="icon" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.75 1h8.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 10.25 10H7.061l-2.574 2.573A1.458 1.458 0 0 1 2 11.543V10h-.25A1.75 1.75 0 0 1 0 8.25v-5.5C0 1.784.784 1 1.75 1ZM1.5 2.75v5.5c0 .138.112.25.25.25h1a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h3.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25Zm13 2a.25.25 0 0 0-.25-.25h-.5a.75.75 0 0 1 0-1.5h.5c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 14.25 12H14v1.543a1.458 1.458 0 0 1-2.487 1.03L9.22 12.28a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215l2.22 2.22v-2.19a.75.75 0 0 1 .75-.75h1a.25.25 0 0 0 .25-.25Z" fill-rule="evenodd"/>
+</svg>
+<text class="stat" x="25" y="12.5">
+11
+</text>
+</g>
+</g>
+</g>
+</g>
+</g>
+<style>
+
+.header {
+    font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+    fill: #007A00;
+    animation: fadeInAnimation 0.8s ease-in-out forwards;
+}
+.stat {
+    font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #444;
+}
+.bold { font-weight: 700 }
+.icon {
+    fill: #003D00;
+    display: block;
+}
+
+</style>
+</svg>
