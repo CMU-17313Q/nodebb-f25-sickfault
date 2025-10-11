@@ -83,11 +83,17 @@ define('topicList', [
 		TopicList.removeListeners();
 		socket.on('event:new_topic', onNewTopic);
 		socket.on('event:new_post', onNewPost);
+		// Listen for topic resolved/unresolved events to update UI dynamically
+		socket.on('event:topic_resolved', onTopicResolved);
+		socket.on('event:topic_unresolved', onTopicUnresolved);
 	};
 
 	TopicList.removeListeners = function () {
 		socket.removeListener('event:new_topic', onNewTopic);
 		socket.removeListener('event:new_post', onNewPost);
+		// Remove resolved/unresolved event listeners
+		socket.removeListener('event:topic_resolved', onTopicResolved);
+		socket.removeListener('event:topic_unresolved', onTopicUnresolved);
 	};
 
 	function onNewTopic(data) {
@@ -150,6 +156,30 @@ define('topicList', [
 		if (newTopicCount > 0 || newPostCount > 0) {
 			$('#new-topics-alert').removeClass('hide').fadeIn('slow');
 			$('#category-no-topics').addClass('hide');
+		}
+	}
+
+	// Handle topic resolved event - shows resolved badge on topic in list
+	function onTopicResolved(data) {
+		if (!data || !data.tid) {
+			return;
+		}
+		const topicEl = topicListEl.find('[component="category/topic"][data-tid="' + data.tid + '"]');
+		if (topicEl.length) {
+			// Show the resolved badge
+			topicEl.find('[component="topic/resolved"]').removeClass('hidden');
+		}
+	}
+
+	// Handle topic unresolved event - hides resolved badge on topic in list
+	function onTopicUnresolved(data) {
+		if (!data || !data.tid) {
+			return;
+		}
+		const topicEl = topicListEl.find('[component="category/topic"][data-tid="' + data.tid + '"]');
+		if (topicEl.length) {
+			// Hide the resolved badge
+			topicEl.find('[component="topic/resolved"]').addClass('hidden');
 		}
 	}
 

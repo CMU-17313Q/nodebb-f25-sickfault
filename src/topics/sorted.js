@@ -245,6 +245,7 @@ module.exports = function (Topics) {
 	async function filterTids(tids, params) {
 		const { filter, uid } = params;
 
+		// Apply initial filter based on filter type
 		if (filter === 'new') {
 			tids = await Topics.filterNewTids(tids, uid);
 		} else if (filter === 'unreplied') {
@@ -254,7 +255,8 @@ module.exports = function (Topics) {
 		}
 
 		tids = await privileges.topics.filterTids('topics:read', tids, uid);
-		let topicData = await Topics.getTopicsFields(tids, ['uid', 'tid', 'cid', 'tags']);
+		// Fetch topic data including resolved field for filtering
+		let topicData = await Topics.getTopicsFields(tids, ['uid', 'tid', 'cid', 'tags', 'resolved']);
 		const topicCids = _.uniq(topicData.map(topic => topic.cid)).filter(Boolean);
 
 		async function getIgnoredCids() {
@@ -273,13 +275,17 @@ module.exports = function (Topics) {
 
 		const cids = params.cids && params.cids.map(String);
 		const { tags } = params;
+		// Filter topics based on various criteria including resolved status
 		tids = topicData.filter(t => (
 			t &&
 			t.cid &&
 			!isCidIgnored[t.cid] &&
 			(cids || parseInt(t.cid, 10) !== -1) &&
 			(!cids || cids.includes(String(t.cid))) &&
-			(!tags.length || tags.every(tag => t.tags.find(topicTag => topicTag.value === tag)))
+			(!tags.length || tags.every(tag => t.tags.find(topicTag => topicTag.value === tag))) &&
+			// Filter by resolved status if filter is 'resolved' or 'unresolved'
+			(filter !== 'resolved' || t.resolved === 1) &&
+			(filter !== 'unresolved' || t.resolved !== 1)
 		)).map(t => t.tid);
 
 		const result = await plugins.hooks.fire('filter:topics.filterSortedTids', { tids: tids, params: params });

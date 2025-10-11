@@ -70,6 +70,7 @@ helpers.addLinkTags = function (params) {
 	});
 };
 
+// Build filter options for topic filtering - includes resolved/unresolved filter
 helpers.buildFilters = function (url, filter, query) {
 	return [{
 		name: '[[unread:all-topics]]',
@@ -95,6 +96,20 @@ helpers.buildFilters = function (url, filter, query) {
 		selected: filter === 'unreplied',
 		filter: 'unreplied',
 		icon: 'fa-reply',
+	}, {
+		// Filter to show only resolved topics
+		name: '[[topic:resolved-topics]]',
+		url: url + helpers.buildQueryString(query, 'filter', 'resolved'),
+		selected: filter === 'resolved',
+		filter: 'resolved',
+		icon: 'fa-check-circle',
+	}, {
+		// Filter to show only unresolved topics
+		name: '[[topic:unresolved-topics]]',
+		url: url + helpers.buildQueryString(query, 'filter', 'unresolved'),
+		selected: filter === 'unresolved',
+		filter: 'unresolved',
+		icon: 'fa-circle-o',
 	}];
 };
 

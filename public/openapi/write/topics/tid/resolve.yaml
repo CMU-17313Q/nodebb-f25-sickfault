@@ -1,0 +1,82 @@
+put:
+  tags:
+    - topics
+  summary: mark a topic as resolved
+  description: |
+    This operation marks an existing topic as resolved.
+    Only the topic author or moderators/admins can resolve a topic.
+    The system tracks who resolved the topic and when it was resolved.
+  parameters:
+    - in: path
+      name: tid
+      schema:
+        type: string
+      required: true
+      description: a valid topic id
+      example: 1
+  responses:
+    '200':
+      description: Topic successfully marked as resolved
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: ../../../components/schemas/Status.yaml#/Status
+              response:
+                type: object
+                properties: {}
+    '403':
+      description: User does not have permission to resolve this topic
+      content:
+        application/json:
+          schema:
+            $ref: ../../../components/schemas/Error.yaml#/Error
+    '400':
+      description: Topic is already resolved
+      content:
+        application/json:
+          schema:
+            $ref: ../../../components/schemas/Error.yaml#/Error
+delete:
+  tags:
+    - topics
+  summary: mark a topic as unresolved
+  description: |
+    This operation marks a resolved topic as unresolved.
+    Only the topic author or moderators/admins can unresolve a topic.
+    This clears the resolved status and removes the resolver information.
+  parameters:
+    - in: path
+      name: tid
+      schema:
+        type: string
+      required: true
+      description: a valid topic id
+      example: 1
+  responses:
+    '200':
+      description: Topic successfully marked as unresolved
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: ../../../components/schemas/Status.yaml#/Status
+              response:
+                type: object
+                properties: {}
+    '403':
+      description: User does not have permission to unresolve this topic
+      content:
+        application/json:
+          schema:
+            $ref: ../../../components/schemas/Error.yaml#/Error
+    '400':
+      description: Topic is already unresolved
+      content:
+        application/json:
+          schema:
+            $ref: ../../../components/schemas/Error.yaml#/Error

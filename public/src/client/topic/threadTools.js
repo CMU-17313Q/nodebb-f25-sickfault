@@ -83,6 +83,46 @@ define('forum/topic/threadTools', [
 			});
 		});
 
+		// Mark topic as resolved: calls backend API and updates UI
+		topicContainer.on('click', '[component="topic/resolve"]', function () {
+			const tid = ajaxify.data.tid;
+			console.log('Resolving topic:', tid);
+			api.put(`/topics/${tid}/resolve`, {})
+				.then((response) => {
+					console.log('Resolve response:', response);
+					// Toggle button visibility
+					$('[component="topic/resolve"]').addClass('hidden');
+					$('[component="topic/unresolve"]').removeClass('hidden');
+					$('[component="topic/resolved"]').removeClass('hidden');
+					alerts.success('Topic marked as resolved');
+				})
+				.catch((err) => {
+					console.error('Resolve error:', err);
+					alerts.error(err);
+				});
+			return false;
+		});
+
+		// Mark topic as unresolved: calls backend API and updates UI
+		topicContainer.on('click', '[component="topic/unresolve"]', function () {
+			const tid = ajaxify.data.tid;
+			console.log('Unresolving topic:', tid);
+			api.del(`/topics/${tid}/resolve`, {})
+				.then((response) => {
+					console.log('Unresolve response:', response);
+					// Toggle button visibility
+					$('[component="topic/unresolve"]').addClass('hidden');
+					$('[component="topic/resolve"]').removeClass('hidden');
+					$('[component="topic/resolved"]').addClass('hidden');
+					alerts.success('Topic marked as unresolved');
+				})
+				.catch((err) => {
+					console.error('Unresolve error:', err);
+					alerts.error(err);
+				});
+			return false;
+		});
+
 		topicContainer.on('click', '[component="topic/event/delete"]', function () {
 			const eventId = $(this).attr('data-topic-event-id');
 			const eventEl = $(this).parents('[data-topic-event-id]');
@@ -415,6 +455,26 @@ define('forum/topic/threadTools', [
 		components.get('topic/ignoring/check').toggleClass('fa-check', state === 'ignore');
 	}
 
+	// Handle socket events for resolve/unresolve: updates UI and adds event to history
+	ThreadTools.setResolvedState = function (data) {
+		const threadEl = components.get('topic');
+		if (String(data.tid) !== threadEl.attr('data-tid')) {
+			return;
+		}
+
+		const isResolved = data.resolved === 1;
+
+		// Toggle resolve/unresolve button visibility based on resolved status
+		components.get('topic/resolve').toggleClass('hidden', isResolved);
+		components.get('topic/unresolve').toggleClass('hidden', !isResolved);
+		components.get('topic/resolved').toggleClass('hidden', !isResolved);
+
+		// Update client-side topic data
+		ajaxify.data.resolved = isResolved;
+
+		// Add resolve/unresolve event to topic history timeline
+		posts.addTopicEvents(data.events);
+	};
 
 	return ThreadTools;
 });
