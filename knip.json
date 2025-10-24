@@ -1,0 +1,30 @@
+{
+  "$schema": "https://unpkg.com/knip/schema.json",
+  "entry": [
+    "app.js",
+    "loader.js",
+    "require-main.js",
+    "src/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "public/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "nodebb-plugin-user-public-categories/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "vendor/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "test/**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "**/*.config.{js,ts,cjs,mjs}"
+  ],
+  "project": [
+    "src/**/*",
+    "public/**/*",
+    "nodebb-plugin-user-public-categories/**/*",
+    "vendor/**/*",
+    "test/**/*"
+  ],
+  "ignore": [
+    "**/node_modules/**",
+    "**/coverage/**",
+    "**/logs/**",
+    "**/.devcontainer/**",
+    "**/.docker/**",
+    "**/build/**",
+    "**/dist/**"
+  ]
+}

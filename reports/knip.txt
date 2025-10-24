@@ -1,0 +1,62 @@
+[@stylistic/eslint-plugin-js] This package is deprecated in favor of the unified @stylistic/eslint-plugin, please consider migrating to the main package
+Unused dependencies (42)
+@adactive/bootstrap-tagsinput         package.json:33:10 
+@fontsource/inter                     package.json:34:10 
+@fontsource/poppins                   package.json:35:10 
+@fortawesome/fontawesome-free         package.json:36:10 
+@textcomplete/contenteditable         package.json:41:10 
+@textcomplete/core                    package.json:42:10 
+@textcomplete/textarea                package.json:43:10 
+bootswatch                            package.json:53:10 
+compare-versions                      package.json:59:10 
+esbuild                               package.json:72:10 
+imagesloaded                          package.json:82:10 
+jquery-deserialize                    package.json:86:10 
+jquery-serializeobject                package.json:88:10 
+jquery-ui                             package.json:89:10 
+mousetrap                             package.json:100:10
+multiparty                            package.json:101:10
+nodebb-plugin-2factor                 package.json:103:10
+nodebb-plugin-composer-default        package.json:104:10
+nodebb-plugin-dbsearch                package.json:105:10
+nodebb-plugin-emoji                   package.json:106:10
+nodebb-plugin-emoji-android           package.json:107:10
+nodebb-plugin-location-to-map         package.json:108:10
+nodebb-plugin-markdown                package.json:109:10
+nodebb-plugin-mentions                package.json:110:10
+nodebb-plugin-spam-be-gone            package.json:111:10
+nodebb-plugin-user-public-categories  package.json:112:10
+nodebb-plugin-web-push                package.json:113:10
+nodebb-rewards-essentials             package.json:114:10
+nodebb-theme-harmony                  package.json:115:10
+nodebb-theme-lavender                 package.json:116:10
+nodebb-theme-peace                    package.json:117:10
+nodebb-theme-persona                  package.json:118:10
+nodebb-widget-essentials              package.json:119:10
+nprogress                             package.json:121:10
+progress-webpack-plugin               package.json:129:10
+sortablejs                            package.json:143:10
+spdx-license-list                     package.json:144:10
+terser-webpack-plugin                 package.json:145:10
+textcomplete                          package.json:146:10
+textcomplete.contenteditable          package.json:147:10
+tinycon                               package.json:149:10
+webpack-merge                         package.json:154:10
+Unused devDependencies (5)
+grunt                package.json:171:10
+grunt-contrib-watch  package.json:172:10
+husky                package.json:173:10
+mocha                package.json:177:10
+mocha-lcov-reporter  package.json:178:10
+Unlisted dependencies (5)
+eslint/config      eslint.config.mjs:7:10        
+globals            eslint.config.mjs:10:21       
+hooks              public/src/modules/api.js:3:34
+alerts             public/src/sockets.js:6:19    
+winston-transport  test/defer-logger.js:4:28     
+Unlisted binaries (1)
+eslint  package.json
+Unresolved imports (2)
+../../scripts-admin  public/src/admin/admin.js:3:20
+../scripts-client    public/src/client.js:3:19     
+Configuration hints (2)
