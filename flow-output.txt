@@ -1,0 +1,71 @@
+
+> nodebb@4.4.6 flow
+> flow
+
+Launching Flow server for /workspaces/nodebb-f25-sickfault
+Spawned flow server (pid=11800)
+Logs will go to /tmp/flow/zSworkspaceszSnodebb-f25-sickfault.log
+Monitor logs will go to /tmp/flow/zSworkspaceszSnodebb-f25-sickfault.monitor_log
+Started a new flow server: -Please wait. Server is starting up
+Please wait. Server is initializing (parsed files 0)
+Please wait. Server is initializing (parsed files 0)
+Please wait. Server is initializing (parsed files 0)
+Please wait. Server is initializing (parsed files 713)
+Please wait. Server is initializing (parsed files 713)
+Please wait. Server is initializing (loading libraries)
+Please wait. Server is initializing (resolving dependencies)
+Please wait. Server is initializing (indexing files 0/12 (0.0%))
+Please wait. Server is initializing (indexing files (post-process))
+Please wait. Server is initializing (post-Indexing work)
+Please wait. Server is initializing (parsed files 0/0 (0.0%))
+Please wait. Server is initializing (calculating dependencies)
+Please wait. Server is initializing (merged module interfaces 0/12 (0.0%))
+Please wait. Server is initializing (checked files 1/12 (8.3%))
+Please wait. Server is initializing (checked files 7/12 (58.3%))
+Please wait. Server is initializing (collating errors)
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+Please wait. Dfind file watcher is still initializing
+No errors!
