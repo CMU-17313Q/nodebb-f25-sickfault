@@ -1,0 +1,16 @@
+[ignore]
+.*/node_modules/.*
+.*/vendor/.*
+.*/build/.*
+.*/public/.*
+.*/coverage/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]
