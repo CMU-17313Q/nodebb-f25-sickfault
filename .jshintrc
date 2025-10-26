@@ -1,0 +1,7 @@
+{
+    "undef": false,
+    "unused": false,
+    "curly": false,
+    "eqeqeq": false,
+    "nocomma": false,
+}
