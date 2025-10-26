@@ -1,4 +1,11 @@
-# Mark Resolved Feature - User-Guide
+# Features
+- ## [Mark Resolved](#mark-resolved-feature---user-guide)
+- ## [User Public Categories](#user-public-categories-feature---user-guide)
+- ## [Search](#search-feature---user-guide)
+
+---
+
+# Mark Resolved Feature - User Guide
 
 ## Overview
 
@@ -104,8 +111,7 @@ The filter provides the following options:
 
 ## Common Use Cases
 
-### For Question-Based Forums
-1. User posts a question
+1. User posts a question 
 2. Community members provide answers
 3. Original poster or moderator marks the topic as resolved once the question is answered
 4. Other users can filter for unresolved questions to find topics that still need help and provide answers to those posts
@@ -121,7 +127,7 @@ The filter provides the following options:
 ## Automated Testing
 
 ### Test File Location
-Automated tests for the mark-resolved feature are located at:
+Automated tests are located at:
 ```
 /test/mark-resolved.js
 ```
@@ -132,7 +138,8 @@ To run the automated tests:
 npm run test
 ```
 
-The tests will run automatically as part of the full test suite. To run only the mark-resolved tests:
+The tests will run automatically as part of the full test suite.
+To run only the mark-resolved tests:
 ```bash
 npx mocha test/mark-resolved.js
 ```
@@ -234,3 +241,466 @@ The tests follow best practices by:
 ### CANNOT Mark Topic as Resolved
 - **Error**: "No privileges" - You must be the topic author, moderator, or administrator.
 - **Error**: "Topic already resolved" - The topic is already marked as resolved. Use the unresolve button instead.
+
+---
+
+# User Public Categories Feature - User Guide
+
+## Overview
+
+The User Public Categories feature allows logged-in users to create and manage their own private categories with granular member control. This feature includes five main components:
+
+1. **Create New Category Button** - Button to create a private category you own
+2. **My Categories Button** - View and manage categories you have created
+3. **Manage Members Button** - Invite or remove members from your category
+4. **Delete Category Button** - Permanently delete your owned category
+5. **Lock Icon Indicator** - Visual indicator showing user-created private categories
+
+---
+
+## Activation
+
+To activate the User Public Categories plugin:
+
+1. Install the plugin:
+```bash
+npm install
+```
+
+2. Navigate plugin:
+- Login as Admin
+- Go to Admin Panel
+- Extend > Plugins > nodebb-plugin-user-public-categories
+- Activate the plugin
+
+3. Rebuild and restart NodeBB:
+```bash
+./nodebb build
+./nodebb restart
+```
+
+The plugin is now active and the buttons will appear on the categories page for logged-in users.
+
+---
+
+## Feature Components
+
+### 1. Create New Category Button
+
+#### Location
+The Create New Category button appears on the categories list page (`/categories`), displayed below the page header alongside the "My Categories" button.
+
+#### Who Can Use It
+- **Logged-in Users**: Can create their own private categories
+- **Guests**: **CANNOT** create categories (must be logged in)
+
+#### How to Use
+
+**To create a new category:**
+1. Navigate to the categories page (`/categories`)
+2. Look for the "Create New Category" button (blue button with plus icon)
+3. Click the "Create New Category" button
+4. A modal dialog will appear with a form
+5. Enter the category name 
+6. Optionally enter a description 
+7. Click "Create Category" button
+10. The category is private by default - only you can access it until you invite members
+
+**Validation rules:**
+- Category name must be at least 3 characters
+- Category name cannot exceed 100 characters
+- Description is optional but limited to 500 characters
+
+#### Visual Elements
+- **Create New Category button**: Blue primary button with plus icon (`fa-plus`)
+- **Modal dialog**: Standard Bootstrap modal with form fields
+
+---
+
+### 2. My Categories Button
+
+#### Purpose
+The My Categories button allows users to view a list of all categories they have created, along with member counts and quick access links.
+
+#### Location
+The button appears on the categories list page (`/categories`), displayed below the page header next to the "Create New Category" button.
+
+#### How to Use
+
+**To view your owned categories:**
+1. Navigate to the categories page (`/categories`)
+2. Look for the "My Categories" button (blue info button with list icon)
+3. Click the "My Categories" button
+4. A modal dialog will appear showing all categories you own
+5. Each category displays:
+   - Category name (clickable link)
+   - Category description (if provided)
+   - Member count
+   - "View" button to navigate to the category
+6. Click any category name or "View" button to navigate to that category
+7. If you haven't created any categories, a message will display: "You haven't created any categories yet."
+
+---
+
+### 3. Manage Members Button
+
+#### Location
+The Manage Members button appears on individual category pages, in the category controls/header area, but ONLY for categories you own.
+
+#### Who Can Use It
+- **Category Owner**: Can manage members of their own categories
+- **Other Users**: **CANNOT** see or use this button
+
+#### How to Use
+
+**To invite a member:**
+1. Navigate to a category you own
+2. Look for the "Manage Members" button (blue info button with users icon)
+3. Click the "Manage Members" button
+4. A modal dialog will appear with an invite form and member list
+5. Enter the username of the person you want to invite
+6. Click the "Invite" button (or press Enter)
+7. If successful, the user will be added to the member list
+8. The invited user will receive read and create privileges for the category
+
+**To remove a member:**
+1. Open the Manage Members modal
+2. Find the member you want to remove in the "Current Members" list
+3. Click the red "Remove" button next to their name
+4. The member will be removed from the category immediately
+5. The removed user will lose all access to the category
+
+**Invite validation:**
+- Username must exist in the system
+- User cannot already be a member of the category
+- Owner cannot remove themselves from the category
+- Empty username field will show an error
+
+#### Visual Elements
+- **Manage Members button**: Blue info button with users icon (`fa-users`)
+- **Member list**: Shows profile picture, username, and owner badge
+- **Remove button**: Red danger button (only shows for non-owner members)
+- **Invite input**: Text field with attached "Invite" button
+
+---
+
+### 4. Delete Category Button
+
+#### Location
+The Delete Category button appears on individual category pages, in the category controls/header area, next to the "Manage Members" button, but ONLY for categories you own.
+
+#### Who Can Use It
+- **Category Owner**: Can delete their own categories
+- **Other Users**: **CANNOT** see or use this button
+
+#### How to Use
+
+**To delete a category:**
+1. Navigate to a category you own
+2. Look for the "Delete Category" button (red button with trash icon)
+3. Click the "Delete Category" button
+4. A confirmation dialog will appear warning that this action is permanent
+6. Click "Delete" to confirm
+7. If confirmed, the category and all its content will be permanently deleted
+8. You will be redirected to the categories page
+
+**Important warnings:**
+- Deletion is permanent and **CANNOT** be undone
+
+#### Visual Elements
+- **Delete Category button**: Red danger button with trash icon (`fa-trash`)
+- **Confirmation dialog**: Bootstrap confirmation modal with warning message
+- **Loading state**: Spinner icon shows while category is being deleted
+
+---
+
+## Common Use Cases
+
+### For Study Groups
+1. User creates a private category for their study group
+2. Invites fellow students using their usernames
+3. Group members can create topics for different subjects
+4. Only invited members can see and participate
+5. Owner can remove members if they leave the group
+
+### For Project Teams
+1. Project leader creates a category for team collaboration
+2. Invites team members to the private category
+3. Team can discuss project details privately
+4. Track project progress through dedicated topics
+5. Delete category when project is completed
+
+### For Private Communities
+1. Community organizer creates a category for their interest group
+2. Carefully curates membership by inviting trusted members
+3. Members can engage in focused discussions
+4. Lock icon indicates exclusive/private nature
+5. Organizer maintains control over membership
+
+---
+
+## Automated Testing
+
+### Test File Location
+Automated tests for the user-public-categories feature are located at:
+```
+/test/user-public-categories.js
+```
+
+### Running Tests
+To run the automated tests:
+```bash
+npm run test
+```
+
+The tests will run automatically as part of the full test suite. To run only the user-public-categories tests:
+```bash
+npx mocha test/user-public-categories.js
+```
+
+### Test Coverage
+
+The test suite includes comprehensive coverage across seven main areas:
+
+#### 1. Category Creation Tests (Lines 49-98)
+**What is tested:**
+- Private category creation with owner assignment
+- ownerUid field is properly set in database
+- Owner is automatically added to members set
+- Category name length validation (minimum 3 characters)
+- Default group privileges are removed for privacy
+- Owner receives full privileges upon creation
+
+**Why these tests are sufficient:**
+These tests ensure the foundation of the feature works correctly. By verifying that categories are created with proper ownership, privacy settings, and privilege assignments, we confirm that the core category creation flow operates as designed.
+
+#### 2. Permission Enforcement Tests (Lines 100-115)
+**What is tested:**
+- Category owner can view their own category
+- Non-members **CANNOT** view private category
+- Administrators can view any private category
+- Permission system correctly enforces access control
+
+**Why these tests are sufficient:**
+Permission enforcement is critical for private categories. These tests verify that the privacy model works correctly - owners have access, non-members are blocked, and admins have override capabilities. This ensures categories remain private as intended.
+
+#### 3. Member Management - Invite Tests (Lines 117-163)
+**What is tested:**
+- Owner can invite users to their category
+- Invited users are added to members set
+- Invited users receive proper read and create privileges
+- Duplicate invitation detection (user already a member)
+- Username validation (user must exist)
+- Ownership verification before allowing invites
+- Administrators can bypass ownership checks
+
+**Why these tests are sufficient:**
+These tests cover the complete invite flow including validation, authorization, and privilege assignment. By testing both success and error cases (duplicates, non-existent users, ownership), we ensure the invite feature is robust and secure.
+
+#### 4. Member Management - Remove Tests (Lines 165-204)
+**What is tested:**
+- Owner can remove members from their category
+- Removed users are removed from members set
+- Removed users lose all category privileges
+- Owner **CANNOT** be removed from their own category
+- Ownership verification before allowing removal
+- Administrators can bypass ownership checks
+
+**Why these tests are sufficient:**
+These tests verify that member removal works correctly and includes critical safeguards like preventing owner removal. The privilege revocation check ensures removed members truly lose access to the category.
+
+#### 5. Member List Tests (Lines 206-238)
+**What is tested:**
+- Category members can be retrieved from database
+- Member details (username, picture, uid) are fetched correctly
+- Members set exists for user-created categories
+- Regular admin categories do **NOT** have members sets
+- Member list includes at least the owner
+
+**Why these tests are sufficient:**
+These tests ensure the member list feature works correctly and can distinguish between user-created categories and system categories. This is important for UI display and determining which categories support member management.
+
+#### 6. Category Deletion Tests (Lines 240-277)
+**What is tested:**
+- Owner can delete their own category
+- Members set is cleaned up upon deletion
+- Category is fully purged from system
+- Category no longer exists after deletion
+- Ownership verification before allowing deletion
+- Administrators can bypass ownership checks
+
+**Why these tests are sufficient:**
+Deletion is a destructive operation, so these tests verify that it works completely (category and members set are both removed) and that proper authorization checks are in place. This prevents unauthorized deletions while ensuring cleanup is thorough.
+
+#### 7. Plugin Hooks Tests (Lines 313-354)
+**What is tested:**
+- preserveOwnerUidOnCreate hook preserves ownerUid during category creation
+- addOwnerUidToFields hook adds ownerUid to field list
+- addOwnerUidToCategory hook adds ownerUid to single category data
+- addOwnerUidToCategories hook adds ownerUid to multiple categories
+- Hooks properly integrate with NodeBB's filter system
+
+**Why these tests are sufficient:**
+These tests verify that the plugin correctly hooks into NodeBB's category system. The hooks ensure ownerUid data persists and is available throughout the application, which is essential for all ownership checks and UI features.
+
+### Test Methodology
+- **Comprehensive coverage**: Tests cover creation, permissions, member management, deletion, and hooks
+- **Permission testing**: Verifies authorization rules for owners, members, non-members, and admins
+- **State validation**: Checks database state before and after operations
+- **Edge cases**: Includes tests for duplicate invites, owner removal prevention, and non-existent users
+- **Integration testing**: Tests verify the entire flow from UI actions to database updates
+- **Cleanup verification**: Ensures deletion properly removes all traces of category
+
+--- 
+
+# Search Feature - User Guide
+
+## Overview
+Users can search posts, topics, users, etc. from various interfaces. Admin can view popular searches from the dashboard.
+The search feature lets users search a set of keywords that appears in any post (or other entites, see [UI-Features](#ui-features)) across different categories and topics. Users can search using the web UI or by using the API. 
+
+## Feature Components
+
+### 1. API
+
+#### Endpoint 
+The new endpoint `/search/posts` can be access through this new URI: `/api/v3/search/posts`.
+
+#### Documentation 
+To access the API documentation:
+1. set to development mode
+ - For linux / macOS
+```bash
+set NODE_ENV=development
+```
+ - For windows
+```bas
+set NODE_ENV=development
+```
+2. Access this URI: `/debug/spec/write#tag/search/paths/~1search~1posts/get`
+
+### 2. Search Bar Page
+#### Features
+The UI for searching offers has a simple interface and an advanced one, the advanced one offer more features than what the API does, it can:
+   - **Filter by:**
+      - Category
+      - Tags
+      - Poster
+      - Number of replies
+      - Time (e.g. in the last three month)
+   - **Search:**
+      - Titles and posts
+      - Titles only
+      - Posts only
+      - Bookmarks
+      - Categories
+      - Usernames
+      - Tags
+   - **Sort by (in ascending / descending order of):**
+      - Relevance
+      - Post time
+      - Votes
+      - Last reply time
+      - Topic title
+      - Number of replies
+      - Number of views
+      - Topic votes
+      - Topic start date
+      - Username
+      - Category
+   - **Show results as posts or as the topics they were found in**
+   - **Save searching options**
+
+## Common Use Cases
+   1. User searches for a term within a specific Category and displays results as Topics
+   2. User searches for posts with a specific tag by certain user
+   3. Admin checks trending searches for a certain week
+   4. User searches for a keyword but limits the search to titles only
+   5. User applies a Saved searching option to quickly re-run a complex filter configuration.
+
+## Automated Testing
+
+### Test File Location
+Automated tests are located at:
+```
+/test/search-comprehensive.js
+```
+
+### Running Tests
+To run the automated tests:
+```bash
+npm run test
+```
+
+The tests will run automatically as part of the full test suite. To run only the searching tests:
+```bash
+npx mocha test/search-comprehensive.js
+```
+### Test Coverage
+Testing has comprehensive coverage and it fouces on the core search function across:
+
+#### 1. Core Search Functionality & Logic
+**What is tested:**
+ - Search queries correctly find matches in post titles, post content, or both
+ - The "match words" logic correctly handles finding results with "any" of the keywords (OR search) versus "all" of the keywords (AND search)
+ - Search is case-insensitive, returning the same results regardless of capitalization
+ - Queries with special characters (e.g., '&') and extra whitespace are handled gracefully
+ - Searching for terms that do not exist returns an empty result set as expected
+ - Performance and timing information is included in search results
+
+**Why these tests are sufficient:**
+These tests validate the fundamental search algorithm. By confirming that the system can correctly identify keywords in the specified locations (titles/posts) and handle logical operators (any/all), we ensure the core of the search feature is reliable and predictable for the end-user.
+
+#### 2. Advanced Filtering and Combination Tests
+**What is tested:**
+- Category Filter: Results are correctly limited to one or more specified categories, including an option to search within child categories
+- User Filter: Results can be filtered to show posts made by one or more specific users
+- Tag Filter: Search is correctly constrained to topics containing one or more specified tags
+- Reply Count Filter: Topics can be filtered by having "at least" or "at most" a certain number of replies
+- Time Range Filter: Posts can be filtered to be "newer" or "older" than a specified time duration
+- Bookmark Filter: Users can search exclusively within their own bookmarked posts
+- Combied Filters: A complex search using multiple filters at once (e.g., by user, category, and tag simultaneously) returns the correct, highly-specific results
+
+**Why these tests are sufficient:**
+This group of tests guarantees that all the advanced filtering options work both independently and, most importantly, in combination. The "Combined Filters" test is critical as it verifies that the query-building logic correctly applies all user-selected criteria, which is the most complex part of the feature.
+
+#### 3. API, Sorting, and Pagination Tests
+**What is tested:**
+- The public API endpoint successfully returns search results
+- API calls correctly process parameters for search term
+- The API gracefully handles empty or invalid search terms
+- Soritng: Results can be sorted by timestamp (ascending/descending) and votes without changing the total number of matches
+
+**Why these tests are sufficient:**
+These tests validate the system-level behavior and the public-facing contract of the feature. By testing the API directly, we ensure that the front-end UI and any external integrations can reliably interact with the search backend. Verifying sorting and pagination confirms that users can effectively navigate large sets of results.
+
+#### 4. Targeted Entity Search Tests
+**What is tested:**
+- The search system can specifically target and find Users by their username
+- The search system can specifically target and find Categories by their name
+- The search system can specifically target and find Tags by their value
+
+**Why these tests are sufficient:**
+These tests confirm that the search feature is truly platform-wide and not just limited to post content. By verifying that each primary entity (Users, Categories, Tags) can be searched for directly, we ensure that all aspects of the UI's search capabilities are supported by the backend.
+
+### Test Methodology
+- Comprehensive Coverage: Tests cover the core search algorithm, every individual filter, combinations of filters, API endpoints, and different search targets (posts, users, tags)
+- Filter Interaction: Explicitly tests that combining multiple filters produces the correct intersection of results
+- API Validation: Directly tests the API endpoints to ensure the public contract is stable and correct
+- Edge Cases: Includes tests for non-existent terms, special characters, whitespace, and invalid parameters to ensure system stability
+- Integration Testing: The test suite inherently acts as an integration test, verifying the interaction between the search module and other core components like topics, users, and categories
+
+### Why We Believe Test Coverage is Sufficient
+- The test suite provides sufficient coverage because it validates the search feature from the ground up
+- Confirms the basic keyword matching works as expected
+- Verifies each filter works in isolation and, critically, in combination with others
+- Guarantees that the backend API can be reliably controlled by the front-end or other services
+- Ensures that users can effectively sort and page through results
+- Confirms that searching extends beyond posts to other key entities like users, categories, and tags
+- Checks for graceful failure and predictable behavior with invalid input
+- The tests cover all features and their interactions, simulating complex, real-world user queries to ensure the system is robust, accurate, and reliable
+
+## Troubleshooting
+
+### Advanced search not showing results
+ - **Temporary Solution**: Refresh the page without changing anything, this reruns the page's javascript with the correct parameters in the URL
