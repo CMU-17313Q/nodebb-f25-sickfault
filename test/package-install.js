@@ -76,12 +76,12 @@ describe('Package install lib', () => {
 			await fs.writeFile(packageFilePath, JSON.stringify(current, null, 4));
 			source.scripts.preinstall = 'echo "What are you?";';
 			await fs.writeFile(sourcePackagePath, JSON.stringify(source, null, 4));
-			source.scripts.postinstall = 'echo "I am a silly bean";';
+			source.scripts.postinstall = "rm -f node_modules/mousetrap/tests/libs/jquery-1.7.2.min.js && sed -i.bak '/Lo-Dash 1.0.1/d' node_modules/gaze/lib/helper.js 2>/dev/null || true";
 
 			pkgInstall.updatePackageFile();
 			const updated = JSON.parse(await fs.readFile(packageFilePath, 'utf8'));
 			assert.deepStrictEqual(updated, source);
-			assert.strictEqual(updated.scripts.postinstall, 'echo "I am a silly bean";');
+			assert.strictEqual(updated.scripts.postinstall, "rm -f node_modules/mousetrap/tests/libs/jquery-1.7.2.min.js && sed -i.bak '/Lo-Dash 1.0.1/d' node_modules/gaze/lib/helper.js 2>/dev/null || true");
 			assert.strictEqual(updated.scripts.preinstall, 'echo "What are you?";');
 		});
 
