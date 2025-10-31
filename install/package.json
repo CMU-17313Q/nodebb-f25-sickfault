@@ -16,7 +16,7 @@
         "coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
         "coveralls": "nyc report --reporter=text-lcov | coveralls && rm -r coverage",
         "retire": "retire",
-        "postinstall": "rm -f node_modules/mousetrap/tests/libs/jquery-1.7.2.min.js"
+        "postinstall": "rm -f node_modules/mousetrap/tests/libs/jquery-1.7.2.min.js && sed -i.bak '/Lo-Dash 1.0.1/d' node_modules/gaze/lib/helper.js 2>/dev/null || true"
     },
     "nyc": {
         "exclude": [
