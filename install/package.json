@@ -15,7 +15,8 @@
         "test": "nyc --reporter=html --reporter=text-summary mocha",
         "coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
         "coveralls": "nyc report --reporter=text-lcov | coveralls && rm -r coverage",
-        "retire": "retire"
+        "retire": "retire",
+        "postinstall": "rm -f node_modules/mousetrap/tests/libs/jquery-1.7.2.min.js"
     },
     "nyc": {
         "exclude": [
