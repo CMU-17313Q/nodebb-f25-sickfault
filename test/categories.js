@@ -443,6 +443,8 @@ describe('Categories', () => {
 				name: 'purge me',
 				description: 'update description',
 			});
+			// Set joindate to avoid "user-too-new" error
+			await User.setUserField(posterUid, 'joindate', Date.now() - 100000);
 			await Topics.post({
 				uid: posterUid,
 				cid: category.cid,

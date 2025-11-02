@@ -2456,6 +2456,8 @@ describe('User', () => {
 		});
 
 		it('should hide fullname in topic list and topic', async () => {
+			// Set joindate to avoid "user-too-new" error
+			await User.setUserField(hidingUser.uid, 'joindate', Date.now() - 100000);
 			await Topics.post({
 				uid: hidingUser.uid,
 				title: 'Topic hidden',

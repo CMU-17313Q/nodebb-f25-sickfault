@@ -508,7 +508,7 @@ describe('Post\'s', () => {
 
 		it('should disallow post editing for new users if post was made past the threshold for editing', async () => {
 			meta.config.newbiePostEditDuration = 1;
-			await sleep(1000);
+			await sleep(1100);
 			try {
 				await apiPosts.edit({ uid: voterUid }, { pid: pid, content: 'edited post content again', title: 'edited title again', tags: ['edited-twice'] });
 			} catch (err) {
