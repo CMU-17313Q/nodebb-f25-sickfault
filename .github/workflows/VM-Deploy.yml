@@ -43,7 +43,7 @@ jobs:
       - name: Run pytest on translator API machine
         uses: appleboy/ssh-action@v1.2.1
         with:
-          host: crs-17313-sickfault-gpu
+          host: ${{ secrets.TRANSLATOR_IP }}
           username: ${{ secrets.SERVER_ADMIN }}
           password: ${{ secrets.ADMIN_PASSWORD }}
           script: |
