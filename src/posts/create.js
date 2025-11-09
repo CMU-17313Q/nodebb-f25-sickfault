@@ -21,8 +21,8 @@ module.exports = function (Posts) {
 		const isMain = data.isMain || false;
 
 		// Set defaults immediately - translation will happen in background
-		let isEnglish = true;
-		let translatedContent = '';
+		const isEnglish = true;
+		const translatedContent = '';
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
