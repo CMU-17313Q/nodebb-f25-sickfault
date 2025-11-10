@@ -22,8 +22,8 @@ module.exports = function (Posts) {
 		const isMain = data.isMain || false;
 
 		// Set defaults immediately - translation will happen in background
-		const isEnglish = true;
-		const translatedContent = '';
+		let isEnglish = true;
+		let translatedContent = '';
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
@@ -34,31 +34,46 @@ module.exports = function (Posts) {
 		}
 
 		const pid = data.pid || await db.incrObjectField('global', 'nextPid');
-		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
 
-		// Start translation in background (non-blocking)
-		translate.translate(data).then(async ([detected, translated]) => {
-			// Update post asynchronously when translation completes
-			await Posts.setPostFields(pid, {
-				isEnglish: detected,
-				translatedContent: translated,
-			});
-
-			// Emit socket event to notify clients of translation update
-			websockets.in(`topic_${tid}`).emit('event:post_edited', {
-				post: {
-					pid: pid,
-					tid: tid,
+		// Check if translation is cached - if so, include it in initial post creation
+		const isCached = translate.isCached(data);
+		if (isCached) {
+			try {
+				const [detected, translated] = await translate.translate(data);
+				isEnglish = detected;
+				translatedContent = translated;
+				// No socket event needed - button will appear in initial render
+			} catch (err) {
+				console.error('[translator] Cached translation retrieval failed:', err.message);
+				// Keep defaults
+			}
+		} else {
+			// Translation not cached - start in background and emit socket when done
+			translate.translate(data).then(async ([detected, translated]) => {
+				// Update post asynchronously when translation completes
+				await Posts.setPostFields(pid, {
 					isEnglish: detected,
 					translatedContent: translated,
-					deleted: false,
-				},
-				topic: { tid: tid },
+				});
+
+				// Emit socket event to notify clients of translation update
+				websockets.in(`topic_${tid}`).emit('event:post_edited', {
+					post: {
+						pid: pid,
+						tid: tid,
+						isEnglish: detected,
+						translatedContent: translated,
+						deleted: false,
+					},
+					topic: { tid: tid },
+				});
+			}).catch((err) => {
+				// Translation failed - post already created with English defaults
+				console.error('[translator] Background translation failed:', err.message);
 			});
-		}).catch((err) => {
-			// Translation failed - post already created with English defaults
-			console.error('[translator] Background translation failed:', err.message);
-		});
+		}
+
+		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
 
 		if (data.toPid) {
 			postData.toPid = data.toPid;

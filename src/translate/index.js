@@ -13,6 +13,11 @@ const translationCache = new LRUCache({
 	updateAgeOnGet: true, // Reset TTL on cache hit
 });
 
+translatorApi.isCached = function (postData) {
+	const contentHash = crypto.createHash('md5').update(postData.content).digest('hex');
+	return translationCache.has(contentHash);
+};
+
 translatorApi.translate = async function (postData) {
 	// Generate cache key from content hash
 	const contentHash = crypto.createHash('md5').update(postData.content).digest('hex');
