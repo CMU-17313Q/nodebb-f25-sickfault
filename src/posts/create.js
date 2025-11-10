@@ -57,7 +57,7 @@ module.exports = function (Posts) {
 				});
 
 				// Emit socket event to notify clients of translation update
-				websockets.in(`topic_${tid}`).emit('event:post_edited', {
+				const eventData = {
 					post: {
 						pid: pid,
 						tid: tid,
@@ -66,7 +66,11 @@ module.exports = function (Posts) {
 						deleted: false,
 					},
 					topic: { tid: tid },
-				});
+				};
+				// Emit to topic room (for users viewing the topic)
+				websockets.in(`topic_${tid}`).emit('event:post_edited', eventData);
+				// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
+				websockets.in(`uid_${uid}`).emit('event:post_edited', eventData);
 			}).catch((err) => {
 				// Translation failed - post already created with English defaults
 				console.error('[translator] Background translation failed:', err.message);
