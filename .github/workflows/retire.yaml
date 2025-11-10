@@ -3,12 +3,7 @@ name: Retire.js Security Scan
 on:
   push:
     branches:
-      - '**'  # Run on all branches
-  pull_request:
-    branches:
-      - main
-      - master
-      - develop
+      - '**'  # Run on all pushes to any branch, including main
 
 defaults:
   run:
