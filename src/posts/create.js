@@ -50,6 +50,7 @@ module.exports = function (Posts) {
 					pid: pid,
 					isEnglish: detected,
 					translatedContent: translated,
+					deleted: false,
 				},
 				topic: { tid: tid },
 			});

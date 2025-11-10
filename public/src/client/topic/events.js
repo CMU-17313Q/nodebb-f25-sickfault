@@ -173,6 +173,34 @@ define('forum/topic/events', [
 			hooks.fire('action:posts.edited', data);
 		}
 
+		// Handle translation updates
+		if (data.post.isEnglish !== undefined && data.post.translatedContent !== undefined) {
+			const contentEl = editedPostEl;
+			const existingTranslateSection = contentEl.find('.sensitive-content-message, .translated-content');
+
+			if (!data.post.isEnglish && data.post.translatedContent && !data.post.deleted) {
+				// Post is not in English and has translation - add/update translate button
+				if (existingTranslateSection.length === 0) {
+					// Add new translate button section
+					const translateHTML = `
+						<div class="sensitive-content-message">
+							<a class="btn btn-sm btn-primary view-translated-btn">Click here to view the translated message.</a>
+						</div>
+						<div class="translated-content" style="display:none;">
+							${translator.unescape(data.post.translatedContent)}
+						</div>
+					`;
+					contentEl.append(translateHTML);
+				} else {
+					// Update existing translated content
+					contentEl.find('.translated-content').html(translator.unescape(data.post.translatedContent));
+				}
+			} else if (data.post.isEnglish && existingTranslateSection.length > 0) {
+				// Post is in English - remove translate button section
+				existingTranslateSection.remove();
+			}
+		}
+
 		if (data.topic.tags && data.topic.tagsupdated) {
 			require(['forum/topic/tag'], function (tag) {
 				tag.updateTopicTags([data.topic]);
