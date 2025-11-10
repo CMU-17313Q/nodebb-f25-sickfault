@@ -1,9 +1,27 @@
 
 /* eslint-disable strict */
 
+const crypto = require('crypto');
+const { LRUCache } = require('lru-cache');
+
 const translatorApi = module.exports;
 
+// LRU cache for translations with max size and TTL
+const translationCache = new LRUCache({
+	max: 500, // Maximum 500 entries
+	ttl: 1000 * 60 * 60, // 1 hour TTL
+	updateAgeOnGet: true, // Reset TTL on cache hit
+});
+
 translatorApi.translate = async function (postData) {
+	// Generate cache key from content hash
+	const contentHash = crypto.createHash('md5').update(postData.content).digest('hex');
+
+	// Check if translation is already cached
+	if (translationCache.has(contentHash)) {
+		return translationCache.get(contentHash);
+	}
+
 	try {
 		const TRANSLATOR_API = 'http://crs-17313-sickfault-gpu.qatar.cmu.edu';
 
@@ -18,7 +36,18 @@ translatorApi.translate = async function (postData) {
 		clearTimeout(timeoutId);
 
 		const data = await response.json();
-		return [data.is_english, data.translated_content];
+
+		// Validate API response format
+		if (typeof data.is_english !== 'boolean' || typeof data.translated_content !== 'string') {
+			throw new Error('Invalid API response format');
+		}
+
+		const result = [data.is_english, data.translated_content];
+
+		// Cache the result
+		translationCache.set(contentHash, result);
+
+		return result;
 	} catch (error) {
 		// Fallback: assume English if translation fails (timeout, network error, etc.)
 		if (error.name === 'AbortError') {
@@ -26,6 +55,6 @@ translatorApi.translate = async function (postData) {
 		} else {
 			console.error('[translator] Translation failed:', error.message);
 		}
-		return [true, postData.content];
+		return [true, ''];
 	}
 };
