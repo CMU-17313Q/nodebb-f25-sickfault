@@ -11,6 +11,7 @@ const privileges = require('../privileges');
 const activitypub = require('../activitypub');
 const utils = require('../utils');
 const translate = require('../translate');
+const websockets = require('../socket.io');
 
 module.exports = function (Posts) {
 	Posts.create = async function (data) {
@@ -36,14 +37,21 @@ module.exports = function (Posts) {
 		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
 
 		// Start translation in background (non-blocking)
-		translate.translate(data).then(([detected, translated]) => {
+		translate.translate(data).then(async ([detected, translated]) => {
 			// Update post asynchronously when translation completes
-			Posts.setPostFields(pid, {
+			await Posts.setPostFields(pid, {
 				isEnglish: detected,
 				translatedContent: translated,
-			}).catch((err) => {
-				// Silent fail - post already created successfully
-				console.error('[translator] Failed to update translation:', err.message);
+			});
+
+			// Emit socket event to notify clients of translation update
+			websockets.in(`topic_${tid}`).emit('event:post_edited', {
+				post: {
+					pid: pid,
+					isEnglish: detected,
+					translatedContent: translated,
+				},
+				topic: { tid: tid },
 			});
 		}).catch((err) => {
 			// Translation failed - post already created with English defaults
