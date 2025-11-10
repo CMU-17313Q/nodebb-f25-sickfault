@@ -48,6 +48,7 @@ module.exports = function (Posts) {
 			websockets.in(`topic_${tid}`).emit('event:post_edited', {
 				post: {
 					pid: pid,
+					tid: tid,
 					isEnglish: detected,
 					translatedContent: translated,
 					deleted: false,
