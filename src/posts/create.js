@@ -19,7 +19,10 @@ module.exports = function (Posts) {
 		const content = data.content.toString();
 		const timestamp = data.timestamp || Date.now();
 		const isMain = data.isMain || false;
-		const [isEnglish, translatedContent] = await translate.translate(data);
+
+		// Set defaults immediately - translation will happen in background
+		const isEnglish = true;
+		const translatedContent = '';
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
@@ -31,6 +34,21 @@ module.exports = function (Posts) {
 
 		const pid = data.pid || await db.incrObjectField('global', 'nextPid');
 		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
+
+		// Start translation in background (non-blocking)
+		translate.translate(data).then(([detected, translated]) => {
+			// Update post asynchronously when translation completes
+			Posts.setPostFields(pid, {
+				isEnglish: detected,
+				translatedContent: translated,
+			}).catch((err) => {
+				// Silent fail - post already created successfully
+				console.error('[translator] Failed to update translation:', err.message);
+			});
+		}).catch((err) => {
+			// Translation failed - post already created with English defaults
+			console.error('[translator] Background translation failed:', err.message);
+		});
 
 		if (data.toPid) {
 			postData.toPid = data.toPid;
