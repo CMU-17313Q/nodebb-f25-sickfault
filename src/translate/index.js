@@ -32,7 +32,7 @@ translatorApi.translate = async function (postData) {
 
 		// Set up timeout to prevent hanging
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+		const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 second timeout
 
 		const response = await fetch(
 			`${TRANSLATOR_API}/?content=${encodeURIComponent(postData.content)}`,
