@@ -49,13 +49,15 @@ module.exports = function (Posts) {
 			}
 		} else {
 			// Translation not cached - emit PENDING status immediately
-			const pendingStatusData = {
-				pid: pid,
-				tid: tid,
-				status: 'pending',
-			};
-			websockets.in(`topic_${tid}`).emit('event:post_translation_status', pendingStatusData);
-			websockets.in(`uid_${uid}`).emit('event:post_translation_status', pendingStatusData);
+			if (websockets) {
+				const pendingStatusData = {
+					pid: pid,
+					tid: tid,
+					status: 'pending',
+				};
+				websockets.in(`topic_${tid}`).emit('event:post_translation_status', pendingStatusData);
+				websockets.in(`uid_${uid}`).emit('event:post_translation_status', pendingStatusData);
+			}
 
 			// Start translation in background
 			translate.translate(data).then(async ([detected, translated]) => {
@@ -66,45 +68,51 @@ module.exports = function (Posts) {
 				});
 
 				// Emit SUCCESS status
-				const successStatusData = {
-					pid: pid,
-					tid: tid,
-					status: 'success',
-					isEnglish: detected,
-					translatedContent: translated,
-				};
-				websockets.in(`topic_${tid}`).emit('event:post_translation_status', successStatusData);
-				websockets.in(`uid_${uid}`).emit('event:post_translation_status', successStatusData);
-
-				// Also emit post_edited event for backward compatibility
-				const eventData = {
-					post: {
+				if (websockets) {
+					const successStatusData = {
 						pid: pid,
 						tid: tid,
-						content: content,
+						status: 'success',
 						isEnglish: detected,
 						translatedContent: translated,
-						deleted: false,
-						changed: false,
-					},
-					topic: { tid: tid },
-				};
-				// Emit to topic room (for users viewing the topic)
-				websockets.in(`topic_${tid}`).emit('event:post_edited', eventData);
-				// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
-				websockets.in(`uid_${uid}`).emit('event:post_edited', eventData);
+					};
+					websockets.in(`topic_${tid}`).emit('event:post_translation_status', successStatusData);
+					websockets.in(`uid_${uid}`).emit('event:post_translation_status', successStatusData);
+				}
+
+				// Also emit post_edited event for backward compatibility
+				if (websockets) {
+					const eventData = {
+						post: {
+							pid: pid,
+							tid: tid,
+							content: content,
+							isEnglish: detected,
+							translatedContent: translated,
+							deleted: false,
+							changed: false,
+						},
+						topic: { tid: tid },
+					};
+					// Emit to topic room (for users viewing the topic)
+					websockets.in(`topic_${tid}`).emit('event:post_edited', eventData);
+					// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
+					websockets.in(`uid_${uid}`).emit('event:post_edited', eventData);
+				}
 			}).catch((err) => {
 				// Translation failed - emit FAIL status
 				console.error('[translator] Background translation failed:', err.message);
 
-				const failStatusData = {
-					pid: pid,
-					tid: tid,
-					status: 'fail',
-					error: err.message,
-				};
-				websockets.in(`topic_${tid}`).emit('event:post_translation_status', failStatusData);
-				websockets.in(`uid_${uid}`).emit('event:post_translation_status', failStatusData);
+				if (websockets) {
+					const failStatusData = {
+						pid: pid,
+						tid: tid,
+						status: 'fail',
+						error: err.message,
+					};
+					websockets.in(`topic_${tid}`).emit('event:post_translation_status', failStatusData);
+					websockets.in(`uid_${uid}`).emit('event:post_translation_status', failStatusData);
+				}
 			});
 		}
 
