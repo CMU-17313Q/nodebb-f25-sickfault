@@ -49,6 +49,7 @@ define('forum/topic/events', [
 
 		'event:new_notification': onNewNotification,
 		'event:new_post': posts.onNewPost,
+		'event:post_translation_status': onPostTranslationStatus,
 	};
 
 	Events.init = function () {
@@ -287,6 +288,42 @@ define('forum/topic/events', [
 		const tid = ajaxify.data.tid;
 		if (data && data.tid && String(data.tid) === String(tid)) {
 			socket.emit('topics.markTopicNotificationsRead', [tid]);
+		}
+	}
+
+	function onPostTranslationStatus(data) {
+		if (!data || !data.pid || String(data.tid) !== String(ajaxify.data.tid)) {
+			return;
+		}
+
+		const postContainer = $(`[data-pid="${data.pid}"]`);
+		if (!postContainer.length) {
+			return;
+		}
+
+		// Find or create the translation status badge container
+		let statusBadge = postContainer.find('.translation-status-badge');
+		if (statusBadge.length === 0) {
+			// Create the badge and insert it after the post content
+			const contentEl = postContainer.find('[component="post/content"]');
+			statusBadge = $('<div class="translation-status-badge" style="margin-top: 10px;"></div>');
+			contentEl.after(statusBadge);
+		}
+
+		// Update badge based on status
+		if (data.status === 'pending') {
+			statusBadge.html('<span class="badge bg-warning text-dark"><i class="fa fa-spinner fa-spin"></i> Translating...</span>');
+			statusBadge.show();
+		} else if (data.status === 'success') {
+			statusBadge.html('<span class="badge bg-success"><i class="fa fa-check"></i> Translation ready</span>');
+			statusBadge.show();
+			// Auto-hide success message after 3 seconds
+			setTimeout(function () {
+				statusBadge.fadeOut(500);
+			}, 3000);
+		} else if (data.status === 'fail') {
+			statusBadge.html('<span class="badge bg-danger"><i class="fa fa-times"></i> Translation failed</span>');
+			statusBadge.show();
 		}
 	}
 
