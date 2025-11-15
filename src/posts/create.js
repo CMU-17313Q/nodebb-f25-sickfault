@@ -52,6 +52,17 @@ module.exports = function (Posts) {
 			// Translation not cached - mark status as pending for initial render
 			translationStatus = 'pending';
 
+			// Emit PENDING status for real-time updates
+			if (websockets && typeof websockets.in === 'function') {
+				const pendingStatusData = {
+					pid: pid,
+					tid: tid,
+					status: 'pending',
+				};
+				websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', pendingStatusData);
+				websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', pendingStatusData);
+			}
+
 			// Start translation in background
 			translate.translate(data).then(async ([detected, translated]) => {
 				// Update post asynchronously when translation completes
