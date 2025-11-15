@@ -92,11 +92,14 @@
 	        {{{end}}}
 		</div>
 
-		{{{ if posts.translationStatus }}}
+		{{{ if (posts.translationStatus == "pending") }}}
 		<div class="translation-status-badge" style="margin-top: 10px;">
-			{{{ if (posts.translationStatus == "pending") }}}
 			<span class="badge bg-warning text-dark"><i class="fa fa-spinner fa-spin"></i> Translating...</span>
-			{{{ end }}}
+		</div>
+		{{{ end }}}
+		{{{ if (posts.translationStatus == "fail") }}}
+		<div class="translation-status-badge" style="margin-top: 10px;">
+			<span class="badge bg-danger"><i class="fa fa-times"></i> Translation failed</span>
 		</div>
 		{{{ end }}}
 

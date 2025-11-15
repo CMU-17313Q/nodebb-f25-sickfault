@@ -58,7 +58,7 @@ module.exports = function (Posts) {
 				await Posts.setPostFields(pid, {
 					isEnglish: detected,
 					translatedContent: translated,
-					translationStatus: null, // Clear pending status
+					translationStatus: 'success', // Mark as completed
 				});
 
 				// Emit SUCCESS status
@@ -100,9 +100,13 @@ module.exports = function (Posts) {
 					// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
 					websockets.in(`uid_${uid}`)?.emit('event:post_edited', eventData);
 				}
-			}).catch((err) => {
-				// Translation failed - emit FAIL status
+			}).catch(async (err) => {
+				// Translation failed - update status in database
 				console.error('[translator] Background translation failed:', err.message);
+
+				await Posts.setPostFields(pid, {
+					translationStatus: 'fail', // Mark as failed
+				});
 
 				if (websockets && typeof websockets.in === 'function') {
 					const failStatusData = {
