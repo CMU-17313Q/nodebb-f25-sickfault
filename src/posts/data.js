@@ -76,5 +76,9 @@ function modifyPost(post, fields) {
 		if (post.translatedContent === undefined) {
 			post.translatedContent = '';
 		}
+		// If translationStatus is undefined, default to null (for existing posts)
+		if (post.translationStatus === undefined) {
+			post.translationStatus = null;
+		}
 	}
 }
