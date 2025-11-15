@@ -68,7 +68,7 @@ module.exports = function (Posts) {
 				});
 
 				// Emit SUCCESS status
-				if (websockets && typeof websockets.in === 'function') {
+				if (websockets) {
 					const successStatusData = {
 						pid: pid,
 						tid: tid,
@@ -81,7 +81,7 @@ module.exports = function (Posts) {
 				}
 
 				// Also emit post_edited event for backward compatibility
-				if (websockets && typeof websockets.in === 'function') {
+				if (websockets) {
 					const eventData = {
 						post: {
 							pid: pid,
@@ -103,7 +103,7 @@ module.exports = function (Posts) {
 				// Translation failed - emit FAIL status
 				console.error('[translator] Background translation failed:', err.message);
 
-				if (websockets && typeof websockets.in === 'function') {
+				if (websockets) {
 					const failStatusData = {
 						pid: pid,
 						tid: tid,
