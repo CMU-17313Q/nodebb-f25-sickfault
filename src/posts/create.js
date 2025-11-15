@@ -24,6 +24,7 @@ module.exports = function (Posts) {
 		// Set defaults immediately - translation will happen in background
 		let isEnglish = true;
 		let translatedContent = '';
+		let translationStatus = null;
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
@@ -48,16 +49,8 @@ module.exports = function (Posts) {
 				// Keep defaults
 			}
 		} else {
-			// Translation not cached - emit PENDING status immediately
-			if (websockets && typeof websockets.in === 'function') {
-				const pendingStatusData = {
-					pid: pid,
-					tid: tid,
-					status: 'pending',
-				};
-				websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', pendingStatusData);
-				websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', pendingStatusData);
-			}
+			// Translation not cached - mark status as pending for initial render
+			translationStatus = 'pending';
 
 			// Start translation in background
 			translate.translate(data).then(async ([detected, translated]) => {
@@ -65,6 +58,7 @@ module.exports = function (Posts) {
 				await Posts.setPostFields(pid, {
 					isEnglish: detected,
 					translatedContent: translated,
+					translationStatus: 'success', // Mark as completed
 				});
 
 				// Emit SUCCESS status
@@ -76,8 +70,15 @@ module.exports = function (Posts) {
 						isEnglish: detected,
 						translatedContent: translated,
 					};
-					websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', successStatusData);
-					websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', successStatusData);
+					const topicRoom = websockets.in(`topic_${tid}`);
+					const userRoom = websockets.in(`uid_${uid}`);
+					if (topicRoom) {
+						topicRoom.emit('event:post_translation_status', successStatusData);
+						console.log(`[translator] Emitted SUCCESS status for post ${pid} to topic room`);
+					}
+					if (userRoom) {
+						userRoom.emit('event:post_translation_status', successStatusData);
+					}
 				}
 
 				// Also emit post_edited event for backward compatibility
@@ -99,9 +100,13 @@ module.exports = function (Posts) {
 					// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
 					websockets.in(`uid_${uid}`)?.emit('event:post_edited', eventData);
 				}
-			}).catch((err) => {
-				// Translation failed - emit FAIL status
+			}).catch(async (err) => {
+				// Translation failed - update status in database
 				console.error('[translator] Background translation failed:', err.message);
+
+				await Posts.setPostFields(pid, {
+					translationStatus: 'fail', // Mark as failed
+				});
 
 				if (websockets && typeof websockets.in === 'function') {
 					const failStatusData = {
@@ -116,7 +121,10 @@ module.exports = function (Posts) {
 			});
 		}
 
-		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
+		let postData = {
+			pid, uid, tid, content, sourceContent, timestamp,
+			isEnglish, translatedContent, translationStatus,
+		};
 
 		if (data.toPid) {
 			postData.toPid = data.toPid;

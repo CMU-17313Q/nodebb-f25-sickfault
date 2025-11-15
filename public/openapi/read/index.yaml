@@ -81,6 +81,10 @@ get:
                                               type: boolean
                                             translatedContent:
                                               type: string
+                                            translationStatus:
+                                              type: string
+                                              nullable: true
+                                              description: The current translation status (pending, success, fail)
                                             timestampISO:
                                               type: string
                                               description: An ISO 8601 formatted date string (complementing `timestamp`)
@@ -151,7 +155,11 @@ get:
                                   isEnglish:
                                     type: boolean
                                   translatedContent:
-                                    type: string                                  
+                                    type: string
+                                  translationStatus:
+                                    type: string
+                                    nullable: true
+                                    description: The current translation status (pending, success, fail)
                                   sourceContent:
                                     type: string
                                     nullable: true
