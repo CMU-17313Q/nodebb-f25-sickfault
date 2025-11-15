@@ -22,6 +22,14 @@ PostObject:
       type: boolean
     translatedContent:
       type: string
+    translationStatus:
+      type: string
+      nullable: true
+      description: The current translation status (pending, success, fail)
+      enum:
+        - pending
+        - success
+        - fail
     sourceContent:
       type: string
       nullable: true
@@ -178,6 +186,14 @@ PostDataObject:
           type: boolean
         translatedContent:
           type: string
+        translationStatus:
+          type: string
+          nullable: true
+          description: The current translation status (pending, success, fail)
+          enum:
+            - pending
+            - success
+            - fail
         timestamp:
           type: number
         votes:
