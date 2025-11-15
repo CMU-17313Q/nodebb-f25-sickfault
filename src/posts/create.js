@@ -58,6 +58,7 @@ module.exports = function (Posts) {
 				await Posts.setPostFields(pid, {
 					isEnglish: detected,
 					translatedContent: translated,
+					translationStatus: null, // Clear pending status
 				});
 
 				// Emit SUCCESS status
@@ -69,8 +70,15 @@ module.exports = function (Posts) {
 						isEnglish: detected,
 						translatedContent: translated,
 					};
-					websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', successStatusData);
-					websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', successStatusData);
+					const topicRoom = websockets.in(`topic_${tid}`);
+					const userRoom = websockets.in(`uid_${uid}`);
+					if (topicRoom) {
+						topicRoom.emit('event:post_translation_status', successStatusData);
+						console.log(`[translator] Emitted SUCCESS status for post ${pid} to topic room`);
+					}
+					if (userRoom) {
+						userRoom.emit('event:post_translation_status', successStatusData);
+					}
 				}
 
 				// Also emit post_edited event for backward compatibility
