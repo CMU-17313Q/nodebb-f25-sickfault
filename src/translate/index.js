@@ -32,7 +32,7 @@ translatorApi.translate = async function (postData) {
 
 		// Set up timeout to prevent hanging
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 second timeout
+		const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minute timeout
 
 		const response = await fetch(
 			`${TRANSLATOR_API}/?content=${encodeURIComponent(postData.content)}`,
@@ -56,7 +56,7 @@ translatorApi.translate = async function (postData) {
 	} catch (error) {
 		// Fallback: assume English if translation fails (timeout, network error, etc.)
 		if (error.name === 'AbortError') {
-			console.warn('[translator] Request timeout after 10 seconds');
+			console.warn('[translator] Request timeout after 5 minutes');
 		} else {
 			console.error('[translator] Translation failed:', error.message);
 		}
