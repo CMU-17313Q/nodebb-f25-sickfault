@@ -24,6 +24,7 @@ module.exports = function (Posts) {
 		// Set defaults immediately - translation will happen in background
 		let isEnglish = true;
 		let translatedContent = '';
+		let translationStatus = null;
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
@@ -48,16 +49,8 @@ module.exports = function (Posts) {
 				// Keep defaults
 			}
 		} else {
-			// Translation not cached - emit PENDING status immediately
-			if (websockets && typeof websockets.in === 'function') {
-				const pendingStatusData = {
-					pid: pid,
-					tid: tid,
-					status: 'pending',
-				};
-				websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', pendingStatusData);
-				websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', pendingStatusData);
-			}
+			// Translation not cached - mark status as pending for initial render
+			translationStatus = 'pending';
 
 			// Start translation in background
 			translate.translate(data).then(async ([detected, translated]) => {
@@ -116,7 +109,10 @@ module.exports = function (Posts) {
 			});
 		}
 
-		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
+		let postData = {
+			pid, uid, tid, content, sourceContent, timestamp,
+			isEnglish, translatedContent, translationStatus,
+		};
 
 		if (data.toPid) {
 			postData.toPid = data.toPid;
