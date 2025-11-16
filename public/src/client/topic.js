@@ -90,6 +90,13 @@ define('forum/topic', [
 				$(this).text('Click here to view the translated message.');
 			}
 		});
+
+		$('.topic').on('click', '.view-translated-title-btn', function () {
+			const wrapper = $(this).closest('.topic-title-wrapper');
+			const translated = wrapper.find('.translated-title');
+			translated.toggle();
+			$(this).text(translated.is(':visible') ? 'Hide translated title' : 'Click here to view the translated title');
+		});
 	}
 
 
