@@ -135,6 +135,10 @@ get:
                                                   type: string
                                                 title:
                                                   type: string
+                                                isEnglish:
+                                                  type: boolean
+                                                translatedContent:
+                                                  type: string
                                       imageClass:
                                         type: string
                                       timesClicked:
