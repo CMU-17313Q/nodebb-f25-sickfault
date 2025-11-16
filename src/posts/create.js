@@ -24,6 +24,7 @@ module.exports = function (Posts) {
 		// Set defaults immediately - translation will happen in background
 		let isEnglish = true;
 		let translatedContent = '';
+		let translationStatus = null;
 
 		if (!uid && parseInt(uid, 10) !== 0) {
 			throw new Error('[[error:invalid-uid]]');
@@ -48,36 +49,93 @@ module.exports = function (Posts) {
 				// Keep defaults
 			}
 		} else {
-			// Translation not cached - start in background and emit socket when done
+			// Translation not cached - mark status as pending for initial render
+			translationStatus = 'pending';
+
+			// Emit PENDING status for real-time updates
+			if (websockets && typeof websockets.in === 'function') {
+				const pendingStatusData = {
+					pid: pid,
+					tid: tid,
+					status: 'pending',
+				};
+				websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', pendingStatusData);
+				websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', pendingStatusData);
+			}
+
+			// Start translation in background
 			translate.translate(data).then(async ([detected, translated]) => {
 				// Update post asynchronously when translation completes
 				await Posts.setPostFields(pid, {
 					isEnglish: detected,
 					translatedContent: translated,
+					translationStatus: 'success', // Mark as completed
 				});
 
-				// Emit socket event to notify clients of translation update
-				const eventData = {
-					post: {
+				// Emit SUCCESS status
+				if (websockets && typeof websockets.in === 'function') {
+					const successStatusData = {
 						pid: pid,
 						tid: tid,
+						status: 'success',
 						isEnglish: detected,
 						translatedContent: translated,
-						deleted: false,
-					},
-					topic: { tid: tid },
-				};
-				// Emit to topic room (for users viewing the topic)
-				websockets.in(`topic_${tid}`).emit('event:post_edited', eventData);
-				// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
-				websockets.in(`uid_${uid}`).emit('event:post_edited', eventData);
-			}).catch((err) => {
-				// Translation failed - post already created with English defaults
+					};
+					const topicRoom = websockets.in(`topic_${tid}`);
+					const userRoom = websockets.in(`uid_${uid}`);
+					if (topicRoom) {
+						topicRoom.emit('event:post_translation_status', successStatusData);
+						console.log(`[translator] Emitted SUCCESS status for post ${pid} to topic room`);
+					}
+					if (userRoom) {
+						userRoom.emit('event:post_translation_status', successStatusData);
+					}
+				}
+
+				// Also emit post_edited event for backward compatibility
+				if (websockets && typeof websockets.in === 'function') {
+					const eventData = {
+						post: {
+							pid: pid,
+							tid: tid,
+							content: content,
+							isEnglish: detected,
+							translatedContent: translated,
+							deleted: false,
+							changed: false,
+						},
+						topic: { tid: tid },
+					};
+					// Emit to topic room (for users viewing the topic)
+					websockets.in(`topic_${tid}`)?.emit('event:post_edited', eventData);
+					// Also emit to post author's room (in case they just created the topic and haven't joined the room yet)
+					websockets.in(`uid_${uid}`)?.emit('event:post_edited', eventData);
+				}
+			}).catch(async (err) => {
+				// Translation failed - update status in database
 				console.error('[translator] Background translation failed:', err.message);
+
+				await Posts.setPostFields(pid, {
+					translationStatus: 'fail', // Mark as failed
+				});
+
+				if (websockets && typeof websockets.in === 'function') {
+					const failStatusData = {
+						pid: pid,
+						tid: tid,
+						status: 'fail',
+						error: err.message,
+					};
+					websockets.in(`topic_${tid}`)?.emit('event:post_translation_status', failStatusData);
+					websockets.in(`uid_${uid}`)?.emit('event:post_translation_status', failStatusData);
+				}
 			});
 		}
 
-		let postData = { pid, uid, tid, content, sourceContent, timestamp, isEnglish, translatedContent };
+		let postData = {
+			pid, uid, tid, content, sourceContent, timestamp,
+			isEnglish, translatedContent, translationStatus,
+		};
 
 		if (data.toPid) {
 			postData.toPid = data.toPid;

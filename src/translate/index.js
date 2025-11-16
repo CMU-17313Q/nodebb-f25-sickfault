@@ -67,9 +67,9 @@ translatorApi.translate = async function (postData) {
 		try {
 			const TRANSLATOR_API = 'http://crs-17313-sickfault-gpu.qatar.cmu.edu';
 
-			// Set up timeout to prevent hanging
-			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), 35000); // 35 second timeout
+		// Set up timeout to prevent hanging
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minute timeout
 
 			const response = await fetch(
 				`${TRANSLATOR_API}/?content=${encodeURIComponent(postData.content)}`,
@@ -89,15 +89,13 @@ translatorApi.translate = async function (postData) {
 			// Cache the result
 			translationCache.set(contentHash, result);
 
-			return result;
-		} catch (error) {
-			// Fallback: assume English if translation fails (timeout, network error, etc.)
-			if (error.name === 'AbortError') {
-				console.warn('[translator] Request timeout after 10 seconds');
-			} else {
-				console.error('[translator] Translation failed:', error.message);
-			}
-			return [true, ''];
+		return result;
+	} catch (error) {
+		// Fallback: assume English if translation fails (timeout, network error, etc.)
+		if (error.name === 'AbortError') {
+			console.warn('[translator] Request timeout after 5 minutes');
+		} else {
+			console.error('[translator] Translation failed:', error.message);
 		}
 	});
 };

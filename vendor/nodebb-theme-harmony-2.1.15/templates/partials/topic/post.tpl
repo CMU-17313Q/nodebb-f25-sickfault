@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="content text-break" component="post/content" itemprop="text">
-			{posts.content}			
+			{posts.content}
 			{{{if (!posts.isEnglish && !posts.deleted)  }}}
 		        <div class="sensitive-content-message">
 		        <a class="btn btn-sm btn-primary view-translated-btn">Click here to view the translated message.</a>
@@ -91,6 +91,17 @@
 		        </div>
 	        {{{end}}}
 		</div>
+
+		{{{ if (posts.translationStatus == "pending") }}}
+		<div class="translation-status-badge" style="margin-top: 10px;">
+			<span class="badge bg-warning text-dark"><i class="fa fa-spinner fa-spin"></i> Translating...</span>
+		</div>
+		{{{ end }}}
+		{{{ if (posts.translationStatus == "fail") }}}
+		<div class="translation-status-badge" style="margin-top: 10px;">
+			<span class="badge bg-danger"><i class="fa fa-times"></i> Translation failed</span>
+		</div>
+		{{{ end }}}
 
 		<div component="post/footer" class="post-footer border-bottom pb-2">
 			{{{ if posts.user.signature }}}
