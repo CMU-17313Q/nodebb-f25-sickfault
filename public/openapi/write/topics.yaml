@@ -16,6 +16,10 @@ post:
             title:
               type: string
               example: Test topic
+            isEnglish:
+              type: boolean
+            translatedContent:
+              type: string
             content:
               type: string
               example: This is the test topic's content
