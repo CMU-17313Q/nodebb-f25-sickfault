@@ -141,4 +141,10 @@ function modifyTopic(topic, fields) {
 			};
 		});
 	}
+	if (!fields.length || fields.includes('isEnglish') || fields.includes('translatedContent')) {
+		topic.isEnglish = topic.isEnglish == 'true' || topic.isEnglish === undefined;
+		if (topic.translatedContent === undefined) {
+			topic.translatedContent = '';
+		}
+	}
 }

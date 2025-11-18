@@ -16,11 +16,13 @@ const posts = require('../posts');
 const privileges = require('../privileges');
 const categories = require('../categories');
 const translator = require('../translator');
+const translate = require('../translate');
 
 module.exports = function (Topics) {
 	Topics.create = async function (data) {
 		// This is an internal method, consider using Topics.post instead
 		const timestamp = data.timestamp || Date.now();
+		const [is_english, translated_content] = await translate.translate({ content: data.title });
 
 		const tid = data.tid || await db.incrObjectField('global', 'nextTid');
 
@@ -35,6 +37,8 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
+			isEnglish: is_english,
+			translatedContent: translated_content,
 		};
 
 		if (Array.isArray(data.tags) && data.tags.length) {

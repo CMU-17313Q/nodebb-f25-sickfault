@@ -35,6 +35,10 @@ get:
                 properties:
                   title:
                     type: string
+                  isEnglish:
+                    type: boolean
+                  translatedContent:
+                    type: string
                   slug:
                     type: string
                   teaserPid:
