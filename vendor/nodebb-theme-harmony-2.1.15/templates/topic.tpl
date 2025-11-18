@@ -21,32 +21,40 @@
 		{{{ if author.userslug }}}<meta itemprop="url" content="{config.relative_path}/user/{author.userslug}">{{{ end }}}
 	</div>
 
-	<div class="d-flex flex-column gap-3">
-		<div class="d-flex gap-2 flex-wrap">
-			<div class="d-flex flex-column gap-3 flex-grow-1 flex-1">
-				<h1 component="post/header" class="tracking-tight fw-semibold fs-3 mb-0 text-break {{{ if config.theme.centerHeaderElements }}}text-center{{{ end }}}">
+		<div class="d-flex flex-column gap-3">
+			<div class="d-flex gap-2 flex-wrap">
+				<div class="d-flex flex-column gap-3 flex-grow-1 flex-1">
 
+					<h1 component="post/header"
+						class="tracking-tight fw-semibold fs-3 mb-0 text-break {{{ if config.theme.centerHeaderElements }}}text-center{{{ end }}}">
+
+				<!-- Row containing title + toggle button -->
 				<div class="topic-title-wrapper d-flex align-items-center">
 					<span class="topic-title fs-3" component="topic/title">{title}</span>
 
 					{{{ if !isEnglish }}}
-					<a href="#"
-						class="btn btn-sm btn-primary view-translated-title-btn ms-3"
+					<a href="#" class="btn btn-sm btn-primary view-translated-title-btn ms-3"
 						onclick="(function(el){
-						const t = el.nextElementSibling;
-						if (!t) return false;
-						const visible = window.getComputedStyle(t).display !== 'none';
-						t.style.display = visible ? 'none' : 'inline-block';
-						el.textContent = visible ? 'View translated title' : 'Hide translated title';
+							const t = document.querySelector('.translated-title');
+							if (!t) return false;
+							const visible = window.getComputedStyle(t).display !== 'none';
+							t.style.display = visible ? 'none' : 'block';
+							el.textContent = visible ? 'View translated title' : 'Hide translated title';
 						})(this); return false;">
 						View translated title
 					</a>
-
-					<div class="translated-title ms-3" style="display: none;">{translatedContent}</div>
 					{{{ end }}}
 				</div>
 
-				</h1>
+				<!-- TRANSLATED TITLE (placed BELOW the title row) -->
+				{{{ if !isEnglish }}}
+				<div class="translated-title mt-2" style="display: none;">
+					{translatedContent}
+				</div>
+				{{{ end }}}
+
+			</h1>
+
 
 				<div class="topic-info d-flex gap-2 align-items-center flex-wrap {{{ if config.theme.centerHeaderElements }}}justify-content-center{{{ end }}}">
 					<span component="topic/labels" class="d-flex gap-2 {{{ if (!scheduled && (!pinned && (!locked && (!icons.length && (!oldCid || (oldCid == "-1")))))) }}}hidden{{{ end }}}">
