@@ -97,6 +97,7 @@ translatorApi.translate = async function (postData) {
 			} else {
 				console.error('[translator] Translation failed:', error.message);
 			}
+			return [true, ''];
 		}
 	});
 };
